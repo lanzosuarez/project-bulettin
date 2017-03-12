@@ -1,8 +1,99 @@
-body {
+/*body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}*/
+html {
+	font-family: 'Roboto', sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+	font-size: 15px;
+	margin: 0;
+	line-height: 24px;
+}
+
+body {
+	margin: 0;
+	background-color: #efefef;
+}
+
+body, html, #app, #app > div {
+	height: 100%;
+}
+
+a {
+	color: #ff4081;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.m-b-15 {
+	margin-bottom: 15px;
+}
+
+#appbar {
+  position: fixed !important;
+  top: 0 !important;
+  overflow: hidden !important;
+  max-height: 57 !important;
+}
+#chatbox{
+    /*width: 236px!important;
+    right: 0!important;
+    height: 100%;
+    top: 57px!important;
+    z-index: 2!important; 
+    position: fixed;*/
+}
+.scrollbar {
+  height: 568px;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
+
+/*.chatScroll {
+    height: 568px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}*/
+
+.scroll-box {
+  height: 568px;
+  overflow-y: scroll;
+}
+.scroll-box::-webkit-scrollbar {
+  width: .4em; 
+}
+.scroll-box::-webkit-scrollbar,
+.scroll-box::-webkit-scrollbar-thumb {
+  overflow:visible;
+  border-radius: 4px;
+}
+.scroll-box::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.2); 
+}
+.cover-bar {
+  position: absolute;
+  background: #fff;;
+  height: 100%;  
+  top: 0;
+  right: 0;
+  width: .4em;
+  -webkit-transition: all .5s;
+  opacity: 1;
+}
+.scroll-bar-wrap:hover .cover-bar {
+   opacity: 0;
+  -webkit-transition: all .5s;
+}
+.cdrawer{
+  color:white;
 }
