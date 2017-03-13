@@ -9,10 +9,11 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import {grey400, cyan600, white} from 'material-ui/styles/colors';
+import ActionGrade from 'material-ui/svg-icons/action/grade'
 import {typography} from 'material-ui/styles';
 import Wallpaper from 'material-ui/svg-icons/device/wallpaper';
 
-const RecentlyProducts = (props) => {
+const DeptTop = (props) => {
 
   const styles = {
     subheader: {
@@ -20,6 +21,9 @@ const RecentlyProducts = (props) => {
       fontWeight: typography.fontWeightLight,
       backgroundColor: cyan600,
       color: white
+    },
+    star:{
+      color:"rgb(255, 167, 0)"
     }
   };
 
@@ -41,13 +45,13 @@ const RecentlyProducts = (props) => {
   return (
     <Paper>
       <List>
-        <Subheader style={styles.subheader}>Recent Products</Subheader>
+        <Subheader style={styles.subheader}>Departmental Exams Topnotchers</Subheader>
         {props.data.map(item =>
           <div key={item.title}>
             <ListItem
-              leftAvatar={<Avatar icon={<Wallpaper />} />}
-              primaryText={item.title}
-              secondaryText={item.text}
+              leftAvatar={<ActionGrade style={styles.star}/>}
+              primaryText={item.name}
+              secondaryText={item.subject}
               rightIconButton={rightIconMenu}
             />
             <Divider inset={true} />
@@ -58,8 +62,8 @@ const RecentlyProducts = (props) => {
   );
 };
 
-RecentlyProducts.propTypes = {
+DeptTop.propTypes = {
   data: PropTypes.array
 };
 
-export default RecentlyProducts;
+export default DeptTop;

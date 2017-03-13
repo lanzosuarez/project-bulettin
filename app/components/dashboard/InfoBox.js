@@ -12,25 +12,26 @@ class InfoBox extends React.Component {
       content: {
         padding: '5px 10px',
         marginLeft: 90,
-        height: 80
+        height: 80,
+        backgroundColor: "#2b2838"
       },
-      number: {
+      sub: {
         display: 'block',
-        fontWeight: typography.fontWeightMedium,
-        fontSize: 18,
-        color: grey800
+        fontWeight: "300",
+        fontSize: 14,
+        color: "white"
       },
       text: {
         fontSize: 20,
         fontWeight: typography.fontWeightLight,
-        color: grey800
+        color: "white"
       },
       iconSpan: {
         float: 'left',
         height: 90,
         width: 90,
         textAlign: 'center',
-        backgroundColor: color
+        backgroundColor: "#2b2838"
       },
       icon: {
         height: 48,
@@ -38,11 +39,17 @@ class InfoBox extends React.Component {
         marginTop: 20,
         maxWidth: '100%'
 
+      },
+      bg:{
+        backgroundColor:"#2b2838",
+        borderLeftWidth: "10px",
+        borderLeftStyle: "solid",
+        borderLeftColor: color
       }
     };
 
     return (
-      <Paper>
+      <Paper style={styles.bg}>
         <span style={styles.iconSpan}>
           <Icon color={white}
                 style={styles.icon}
@@ -51,7 +58,7 @@ class InfoBox extends React.Component {
 
         <div style={styles.content}>
           <span style={styles.text}>{title}</span>
-          <span style={styles.number}>{value}</span>
+          <span style={styles.sub}>{value}</span>
         </div>
       </Paper>
       );

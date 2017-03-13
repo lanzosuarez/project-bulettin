@@ -9,29 +9,38 @@ const SearchBox = () => {
   const styles = {
     iconButton: {
       float: 'left',
-      paddingTop: 17
+      paddingTop: 12
     },
     textField: {
       color: white,
       backgroundColor: blue500,
       borderRadius: 2,
-      height: 35
+      height: 35,
+      width:"77% !important",
+      marginTop:"5px",
+      paddingTop:"5px !important", 
+      paddingBottom:"5px !important"
     },
     inputStyle: {
       color: white,
-      paddingLeft: 5
+      paddingLeft: 5,
+      width:"95%"
     },
     hintStyle: {
       height: 16,
+      width:"initial",
       paddingLeft: 5,
       color: white
+    },
+    marg:{
+       marginTop:"5px !important"
     }
   };
 
   return (
-    <div>
+    <div style={styles.marg}>
       <IconButton style={styles.iconButton} >
-        <Search color={white} />
+        <Search color={"black"} />
       </IconButton>
       <TextField
         hintText="Search..."

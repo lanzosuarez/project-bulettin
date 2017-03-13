@@ -5,19 +5,21 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {grey400, cyan600, white} from 'material-ui/styles/colors';
 
 const ChatSend = () => {
-  let s1 = {width:"794px!important"}
+  let s1={height:"101px"}
   let s2 = {position: "absolute", right: "6px", top: "46px"}
   let s3 = {backgroundColor: "#00E5FF!important", color: "white!important"}
 
   return (
     <div>
         <form>
-            <div>
+            <div style={s1}>
               <TextField
               hintText="Message Field"
               floatingLabelText="Message"
               multiLine={true}
+              underlineShow={false}
               rows={2}
+              rowsMax={3}
               fullWidth={true}
               />
             </div>
@@ -26,7 +28,7 @@ const ChatSend = () => {
                 label="SEND"
                 fullWidth={true}
                 icon={<ContentSend />}
-                backGroundColor="#0097A7"
+                backgroundColor="#0097A7"
                 style={s3}
               />
             </div>

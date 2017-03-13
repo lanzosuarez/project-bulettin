@@ -19,7 +19,8 @@ body, h1, h2, h3, h4, h5, h6 {
 
 body {
 	margin: 0;
-	background-color: #efefef;
+	background-color: #38354a !important;
+  color: rgba(255, 255, 255, 0.870588) !important;
 }
 
 body, html, #app, #app > div {
@@ -44,6 +45,8 @@ a:hover {
   top: 0 !important;
   overflow: hidden !important;
   max-height: 57 !important;
+  color: rgba(255, 255, 255, 0.870588) !important;
+  background-color: #2b2838 !important;
 }
 #chatbox{
     /*width: 236px!important;
@@ -81,9 +84,8 @@ a:hover {
   background: rgba(0,0,0,.2); 
 }
 .cover-bar {
-  position: absolute;
-  background: #fff;;
-  height: 100%;  
+  background: #fff;
+  height: initial;  
   top: 0;
   right: 0;
   width: .4em;
@@ -96,4 +98,25 @@ a:hover {
 }
 .cdrawer{
   color:white;
+}
+/*----------CALENDAR-----------*/
+.rbc-toolbar{
+  width: 100%!important;
+}
+.rbc-calendar{
+  height: 493px!important;
+}
+.rbc-today {
+    background-color: rgba(165, 164, 173, 0.51)!important;
+}
+.rbc-toolbar button.rbc-active {
+    box-shadow: none!important; 
+    background-color: #00acc1!important;
+    color: white!important;
+}
+.rbc-toolbar button {
+    color: #ffffff!important;
+}
+.rbc-toolbar button:hover {
+    background-color: #696773!important;
 }

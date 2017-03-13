@@ -8,14 +8,18 @@ import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const ChatHeader = () => {
+   const styles = {
+      tool: {
+        backgroundColor:"rgb(165, 164, 173)"
+      }
+    };
 
   return (
-      <Toolbar>
-        <ToolbarGroup>
+      <Toolbar style={styles.tool}>
+        <ToolbarGroup >
           <ToolbarTitle text="Options" />
           <FontIcon className="muidocs-icon-custom-sort" />
           <ToolbarSeparator />
-          <RaisedButton label="Create Broadcast" primary={true} />
           <IconMenu
             iconButtonElement={
               <IconButton touch={true}>

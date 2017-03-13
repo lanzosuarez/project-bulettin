@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import LeftDrawer from '../components/LeftDrawer';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import ThemeDefault from '../theme-default';
-import ChatBoxCon from '../containers/ChatBoxCon';
 import ChatToggle from './ChatToggle';
 import Data from '../data';
 
@@ -35,7 +34,8 @@ class App extends React.Component {
 
     const styles = {
       header: {
-        paddingLeft: navDrawerOpen ? paddingLeftDrawerOpen : 0
+        paddingLeft: navDrawerOpen ? paddingLeftDrawerOpen : 0,
+        backgroundColor: "white",
       },
       container: {
         margin: '80px 20px 20px 20px',
@@ -54,7 +54,6 @@ class App extends React.Component {
                 <div style={styles.container}>
                   {this.props.children}
                 </div>
-            <ChatToggle/>
         </div>
       </MuiThemeProvider>
     );

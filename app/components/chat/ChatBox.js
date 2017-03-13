@@ -6,8 +6,9 @@ const ChatBox = (props) => {
   const styles = {
     paper: {
       height: "794px",
-      padding: 10
-    },
+      padding: 10,
+      overflow: "hidden"
+    }
   };
 
   return (
