@@ -120,3 +120,83 @@ a:hover {
 .rbc-toolbar button:hover {
     background-color: #696773!important;
 }
+/*----------GUEST HEADER-----------*/
+#guestHeader{
+    position: relative;
+    height: 393px;
+    /*background-image: url(../images/bg.jpg);*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgb(24, 23, 35);
+}
+#guestRow{
+  padding: 86px 30px 86px 30px;
+}
+#guestHd{
+  padding: 72px 108px;
+}
+#cpe{
+    font-size: 76px;
+    font-weight: 300;
+    line-height: 107px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+#cpeSub{
+    margin: 0px;
+    font-size: 22px;
+    color: #e0dfe2;
+    font-weight: 200;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+#cpeLogo{
+    text-align: center;
+}
+#cpeLg{
+    max-width: 677px;
+}
+#guestBar{
+  background-color: rgb(16, 14, 31)!important;
+  position: fixed;
+}
+#gb{
+  color:white!important;
+}
+#gCon {
+    margin: 28px 20px 110px 20px !important;
+}
+#gConHeader{
+    max-width: 571px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 31px 0px;
+}
+#gCon1{
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 67px;
+}
+#gPage{
+  min-height: 500px;
+  width: 100%;
+}
+#footLg{
+  max-width: 200px;
+  padding: 14px 0px;
+}
+.footh1{
+  line-height: 31px;
+  color: white;
+  letter-spacing: 3px;
+  font-weight: 200;
+}
+#gCard{
+  background-color: #2b2838 !important;
+  color:white;
+}
+.eventPads{
+  padding: 47px 0px;
+}
+/*-------------END-----------------*/

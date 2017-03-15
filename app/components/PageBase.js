@@ -4,7 +4,7 @@ import Divider from 'material-ui/Divider';
 import globalStyles from '../styles';
 
 const PageBase = (props) => {
-
+  
     const {title, navigation} = props;
 
     return (

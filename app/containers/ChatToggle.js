@@ -18,7 +18,7 @@ class ChatToggle extends React.Component {
     };
 
   render() {
-    let s1 ={backgroundColor:"rgb(43, 40, 56)"};
+    let s1 ={backgroundColor:"#100e1f"};
     let s2 = {top: "-23px!important", right:"7px!important"}
     return (
       <div>

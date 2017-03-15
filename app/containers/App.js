@@ -5,6 +5,7 @@ import LeftDrawer from '../components/LeftDrawer';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import ThemeDefault from '../theme-default';
 import ChatToggle from './ChatToggle';
+import GuestHeader from '../components/guest/GuestHeader';
 import Data from '../data';
 
 class App extends React.Component {
@@ -40,20 +41,31 @@ class App extends React.Component {
       container: {
         margin: '80px 20px 20px 20px',
         paddingLeft: navDrawerOpen && this.props.width !== SMALL ? paddingLeftDrawerOpen : 0
+      },
+      container2:{
+        margin: "50px 0px 0px 0px"
       }
     };
 
     return (
+      // <MuiThemeProvider muiTheme={ThemeDefault}>
+      //   <div>
+      //     <Header styles={styles.header}
+      //             handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
+      //       <LeftDrawer navDrawerOpen={navDrawerOpen}
+      //                   menus={Data.menus}
+      //                   username="User Admin"/>
+      //           <div style={styles.container}>
+      //             {this.props.children}
+      //           </div>
+      //   </div>
+      // </MuiThemeProvider>
       <MuiThemeProvider muiTheme={ThemeDefault}>
         <div>
-          <Header styles={styles.header}
-                  handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
-            <LeftDrawer navDrawerOpen={navDrawerOpen}
-                        menus={Data.menus}
-                        username="User Admin"/>
-                <div style={styles.container}>
-                  {this.props.children}
-                </div>
+            <GuestHeader />
+            <div style={styles.container2}>
+              {this.props.children}
+            </div>
         </div>
       </MuiThemeProvider>
     );
