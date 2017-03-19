@@ -4,8 +4,6 @@ import Avatar from 'material-ui/Avatar';
 import Dp from 'material-ui/svg-icons/action/perm-identity';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
-import Divider from 'material-ui/Divider';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 
@@ -21,20 +19,24 @@ const loopTruMsgs = (messages)=>{
         }
     };
     return messages.map((msg)=>{
-        return <div   style={styles.chat}>
+        return 
+        <div style={styles.chat}>
             <ListItem
                 leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
                 secondaryTextLines={2}
                 >
-                <div>
-                    <div id={styles.chat}>
-                        <p>{msg.nickname}</p>
+                <div className="talk-bubble tri-right left-top"> 
+                    <div className="text-head">
+                        <p>{msg.nickname} | 09:43am</p>
+                    </div>   
+                    <div id={styles.chat} className="talk">
                         <p style={{wordBreak:"break-all"}}>{msg.message}</p>
+                    </div>
+                    <div className="seen">
+                        <p>&#10004; Seen 1:29pm</p>
                     </div>
                 </div>
             </ListItem>
-            <Divider inset={true} />  
         </div>
     });
     

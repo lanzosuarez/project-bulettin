@@ -12,7 +12,7 @@ var auth = require('./routes/auth');
 const passport = require('passport'),
     session = require('express-session'),
     LocalStrategy = require('passport-local').Strategy,
-    //store = require('./session-store'),
+    store = require('./session-store'),
     methodOverride = require('method-override'),
     restify = require('express-restify-mongoose');
 
@@ -48,7 +48,7 @@ app.use(session({
   cookie: {
     maxAge: 1000 * 60 * 60
   },
-  //store: store,
+  store: store,
   resave: false,
   saveUninitialized: true
 }));
