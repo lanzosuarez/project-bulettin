@@ -9,7 +9,7 @@ import GuestTitle from '../components/guest/GuestTitle';
 import GuestPage from '../components/guest/GuestPage';
 import InfoBox from '../components/dashboard/InfoBox';
 import Footer from '../components/Footer';
-import Schedules from './Schedules';
+import Schedules from '../components/schedules/Schedules';
 import Data from '../data';
 
 import { connect } from 'react-redux';
