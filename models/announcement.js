@@ -4,7 +4,7 @@ let mongoose = require('mongoose'),
 
 const announcementSchema = new Schema({
   admin: { 
-    type: Schema.Types.ObjectId red:'User'
+    type: Schema.Types.ObjectId, ref:'User',
     required: [true, "Admin ID is missing"]
   },
   title: {
@@ -25,4 +25,4 @@ const announcementSchema = new Schema({
   }
 });
 
-module.exports = mongooses.model('Event' eventSchema);
+module.exports = mongooses.model('Announcement', announcementSchema);

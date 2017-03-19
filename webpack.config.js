@@ -31,7 +31,7 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
-            sourceMap:true
+            //sourceMap:true
         }),
         new webpack.DefinePlugin({
             'process.env': {

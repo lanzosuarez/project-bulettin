@@ -14,6 +14,7 @@ const ChatSend = (props) => {
         <form onSubmit={props.handleSend}>
             <div style={s1}>
               <TextField
+              onFocus={props.handleSeenMessages}
               hintText="Message Field"
               floatingLabelText="Message"
               multiLine={true}
@@ -42,7 +43,8 @@ const ChatSend = (props) => {
 
 ChatSend.propTypes={
   handleChange: PropTypes.func.isRequired,
-  handleSend: PropTypes.func.isRequired
+  handleSend: PropTypes.func.isRequired,
+  handleSeenMessages: PropTypes.func.isRequired
 };
 
 export default ChatSend;

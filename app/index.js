@@ -7,7 +7,7 @@ import 'flexboxgrid/css/flexboxgrid.css';
 import configureStore from './store/ConfigureStore';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { initializeSocket, onMessageFromServer, onAllUser } from './actions/SocketActions';
+import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages } from './actions/SocketActions';
 
 injectTapEventPlugin();
 const store = configureStore();
@@ -15,6 +15,7 @@ const store = configureStore();
 store.dispatch(initializeSocket()); //initialize socket
 store.dispatch(onAllUser()); 
 store.dispatch(onMessageFromServer());
+store.dispatch(onAllMessages());
 
 render(
     <Provider store={store}>

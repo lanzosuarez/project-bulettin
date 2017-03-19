@@ -28,6 +28,23 @@ class AuthApi {
         throw err;
       });
   }
+  static onLogout(){
+    return axios.post('/auth/logout')
+    .then(res=>{
+      return res;
+    }).catch(err=>{
+      throw err;
+    });
+  }
+  static saveData(){
+    return axios.get('/auth/save')
+    .then(res=>{
+      console.log(res)
+    }).catch(err=>{
+      throw err;
+      console.log(err);
+    })
+  }
 }
 
 export default AuthApi;

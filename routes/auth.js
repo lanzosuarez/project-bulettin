@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var data = require('./data');
+var Schedule = require('../models/schedule');
 
 /* GET users listing. */
 router.post('/login', function(req, res, next) {
@@ -67,4 +69,29 @@ router.post('/logout', (req, res)=>{
     redirect:'/'
   });
 });
+
+router.get('/save',(req,res)=>{
+  data.map(d=>{
+    let s = new Schedule({
+        year:2,
+        subject_code: d.subject_code,
+        description: d.description,
+        section_code: d.section_code,
+        lec: d.lec,
+        lab: d.lab,
+        units: d.units,
+        room_no: d.room_no,
+        schedule: d.schedule,
+        section: 5
+    });
+    s.save(err=>{
+      if(err) {
+        return res.json({success:false});
+      }
+    });
+  });
+  res.json({success:true});
+});
+
+
 module.exports = router;

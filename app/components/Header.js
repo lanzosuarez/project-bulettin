@@ -8,8 +8,23 @@ import Menu from 'material-ui/svg-icons/navigation/menu';
 import ChatToggle from '../containers/ChatToggle';
 import ViewModule from 'material-ui/svg-icons/action/view-module';
 import {white} from 'material-ui/styles/colors';
+import AuthApi from '../api/AuthApi';
 
 class Header extends React.Component {
+  constructor(props){
+    super(props);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout(){
+    console.log("hello");
+    AuthApi.onLogout().then(res=>{
+      window.location = res.data.redirect;
+    }).catch(err=>{
+      throw err;
+      alert(err);
+    });
+  }
 
   render() {
     const {styles, handleChangeRequestNavDrawer} = this.props;
@@ -42,7 +57,7 @@ class Header extends React.Component {
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                   >
-                    <MenuItem primaryText="Sign out"/>
+                    <MenuItem onItemTouchTap={this.handleLogout} primaryText="Sign out"/>
                   </IconMenu>
                 </div>
               }

@@ -3,7 +3,11 @@ let mongoose = require('mongoose'),
     passportLocalMongoose = require('passport-local-mongoose');
 
 const schedSchema = new Schema({
-  subjectCode:{
+  year: {
+    type: Number,
+    require:[true, "Year required"]
+  },
+  subject_code:{
     type: String,
     required: [true, "Please supply a subject code"]
   },
@@ -11,29 +15,33 @@ const schedSchema = new Schema({
     type: String,
     required: [true, "Please supply a description"]
   },
-  sectionCode:{
+  section_code:{
     type: String,
     default: "0"
   },
-  lecHrs:{
+  lec:{
     type: String,
     default: "0"
   },
-  labHrs:{
+  lab:{
     type: String,
-    required: [true]
+    default: "0"
   },
   units:{
-    type: Number,
-    default: 0
-  }
-  Room:{
+    type: String,
+    default: "0"
+  },
+  room_no:{
     type: String,
     default: ""
   },
-  sched:{
+  schedule:{
     type: String,
     required: [true, "Subject schedule is required"]
+  },
+  section: {
+    type:Number,
+    required: [true,"Section is required"]
   }
 });
 

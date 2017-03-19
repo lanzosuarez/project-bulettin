@@ -14,7 +14,7 @@ import Data from '../data';
 
 import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
-import {isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
 import * as adminActions from '../actions/AdminActions';
 import { bindActionCreators } from 'redux';
 
@@ -24,78 +24,29 @@ class GuestCon extends React.Component {
         this.state = {
             access: false
         };
+        this.symbols = [Faculties, Face, Assessment];
+        this.save = this.save.bind(this);
     }
 
     componentDidMount() {
-        this.props.adminActions.checkAdminAccess().then(()=>{
-            console.log(this.props.admin)
+        this.props.adminActions.checkAdminAccess().then(() => {
+            this.setState({ access: this.props.admin !== null ? true : false });
         });
     }
-   
+
+    save(){
+        AuthApi.saveData();
+    }
+
     render() {
-        console.log(this.state.access);
         return (
             <div>
+                <button onClick={this.save}>SAVEV</button>
                 <GuestTitle title={"Annoucements"} />
                 <div className="row" id="gCon">
                     <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
                         <InfoBox Icon={Faculties}
                             color={pink600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Face}
-                            color={cyan600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Assessment}
-                            color={purple600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Face}
-                            color={orange600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Faculties}
-                            color={pink600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Face}
-                            color={cyan600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Assessment}
-                            color={purple600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Face}
-                            color={orange600}
                             title="Announcement"
                             value="Announcement subheader"
                         />
@@ -150,7 +101,7 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
         adminActions: bindActionCreators(adminActions, dispatch)
     };

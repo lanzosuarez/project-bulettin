@@ -5,7 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ChatBoxCon from './ChatBoxCon';
 import Badge from 'material-ui/Badge';
 import { connect } from 'react-redux';
-import {isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
+
+import {seenAll} from '../actions/SocketActions';
 
 class ChatToggle extends React.Component {
 
@@ -15,25 +17,40 @@ class ChatToggle extends React.Component {
     this.state = { open: false, access: false };
     this.checkUnreads = this.checkUnreads.bind(this);
   }
-  
-  componentWillMount(){
-    if(!isEmpty(this.props.admin)){
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.admin != nextProps.admin) {
       this.setState({access:true});
     }
   }
 
-  checkUnreads(){
-    const unreads=this.props.messages.filter(message=>message.seen===false);
+  checkUnreads() {
+    const unreads = this.props.messages.filter(message => message.seen === false);
     return unreads.length;
   }
 
   handleToggle() {
-    this.setState({ open: !this.state.open })
+    if(this.state.access===true){
+      if(!this.state.open===true){
+        this.props.dispatch(seenAll());
+      }
+    }
+    this.setState({ open: !this.state.open });
   };
 
   render() {
     let s1 = { backgroundColor: "#100e1f" };
     let s2 = { top: "-23px!important", right: "7px!important" }
+
+    let badge = null;
+    if(this.state.access){
+      badge = <Badge
+        badgeContent={this.checkUnreads()}
+        primary={true}
+        style={s2}
+        />
+    }
+
     return (
       <div>
         <RaisedButton
@@ -43,11 +60,7 @@ class ChatToggle extends React.Component {
           width={100}
           style={s1}
         />
-        <Badge
-          badgeContent={this.checkUnreads()}
-          primary={true}
-          style={s2}
-        />
+        {badge}
         <Drawer width={400} openSecondary={true} open={this.state.open}>
           <ChatBoxCon />
         </Drawer>
@@ -56,7 +69,7 @@ class ChatToggle extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state, ownProps) {
   return {
     messages: state.messages,
     admin: state.admin,

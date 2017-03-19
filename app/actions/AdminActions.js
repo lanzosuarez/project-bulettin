@@ -27,7 +27,6 @@ export function checkAdminAccess(){
       if (res.data.response!==null) {
         let r = Object.assign({}, res.data.response)
         dispatch(checkedAdminSuccess(r));
-      
       }
     }).catch(err => {
       throw err;
