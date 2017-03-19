@@ -10,307 +10,50 @@ import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 
 
 
-const ChatItem = () => {
+const loopTruMsgs = (messages)=>{
     const styles = {
         bubble:{
             fill:"rgb(0, 151, 167)"
+        },
+        chat:{
+            overflow: "initial",
+            "whiteSpace": "initial"
         }
     };
+    return messages.map((msg)=>{
+        return <div   style={styles.chat}>
+            <ListItem
+                leftAvatar={<Avatar>A</Avatar>}
+                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
+                secondaryTextLines={2}
+                >
+                <div>
+                    <div id={styles.chat}>
+                        <p>{msg.nickname}</p>
+                        <p style={{wordBreak:"break-all"}}>{msg.message}</p>
+                    </div>
+                </div>
+            </ListItem>
+            <Divider inset={true} />  
+        </div>
+    });
+    
+};
+
+const ChatItem = (props) => {
   return (
     <div className="scroll-box">
         <List>
-            <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-            <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-            <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble} />}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
-                rightIcon={<CommunicationChatBubble style={styles.bubble}/>}
-                primaryText="Brunch this weekend?"
-                secondaryText={
-                <p>
-                    <span style={{color: darkBlack}}>Brendan Lim</span> --
-                    I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
-                </p>
-                }
-                secondaryTextLines={2}
-            />
-            <Divider inset={true} />
-            
+            {loopTruMsgs(props.messages)}
         </List>
         
         <div className="cover-bar"></div>
     </div>
   );
+};
+
+ChatItem.propTypes={
+    messages: PropTypes.array.isRequired
 };
 
 export default ChatItem;

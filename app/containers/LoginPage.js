@@ -84,12 +84,14 @@ const LoginPage = () => {
                 hintText="E-mail"
                 floatingLabelText="E-mail"
                 fullWidth={true}
+                name="username"
               />
               <TextField
                 hintText="Password"
                 floatingLabelText="Password"
                 fullWidth={true}
                 type="password"
+                name="password"
               />
 
               <div>

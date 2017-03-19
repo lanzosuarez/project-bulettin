@@ -1,12 +1,32 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express = require('express'),
+  path = require('path'),
+  favicon = require('serve-favicon'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var auth = require('./routes/auth');
+
+const passport = require('passport'),
+    session = require('express-session'),
+    LocalStrategy = require('passport-local').Strategy,
+    //store = require('./session-store'),
+    methodOverride = require('method-override'),
+    restify = require('express-restify-mongoose');
+
+//const uri = process.env.MONGOLAB_URI || 'mongodb://lanzosuarez:bobotngacla1234@ds143777.mlab.com:43777/cpe-bulettin';
+const uri = 'localhost:27017/cpe-bulletin';
+mongoose.connect(uri, function(err){
+    if(err){
+        console.log("Error connection to DB!");
+        return;
+    }
+    else{
+        console.log("Successfully connected!");
+    }
+});
 
 var app = express();
 
@@ -22,8 +42,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//SESSION SETUP
+app.use(session({
+  secret: 'This is a secret',
+  cookie: {
+    maxAge: 1000 * 60 * 60
+  },
+  //store: store,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+require('./passport-init');
+
+
 app.use('/', index);
-app.use('/users', users);
+app.use('/auth', auth);
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
+    next();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

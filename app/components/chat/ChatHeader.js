@@ -7,7 +7,7 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const ChatHeader = () => {
+const ChatHeader = (props) => {
    const styles = {
       tool: {
         backgroundColor:"rgb(165, 164, 173)"

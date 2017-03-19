@@ -1,13 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
-new webpack.DefinePlugin({
-  'process.env': {
-    NODE_ENV: JSON.stringify('production')
-  }
-}),
+
 
 module.exports = {
+    devtool: "eval-cheap-module-source-map",
     entry:{
        app: './app/index'
     },
@@ -33,6 +30,11 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
     ],
 }
