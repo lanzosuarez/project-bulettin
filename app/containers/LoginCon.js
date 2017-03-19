@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import AuthApi from '../api/AuthApi';
 import {connect} from 'react-redux';
-import LoginPage from '../components/LoginPage'
+import FormLogin from '../components/forms/FormLogin'
 
 class LoginCon extends React.Component{
   constructor(props){
@@ -58,7 +58,7 @@ class LoginCon extends React.Component{
   render(){
     return(
       <div>
-        <LoginPage onLogin={this.handleLogin}
+        <FormLogin onLogin={this.handleLogin}
                    onChange={this.handleChange}
         />
       </div>
