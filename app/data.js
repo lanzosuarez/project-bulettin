@@ -13,7 +13,7 @@ import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 const data = {
   menus: [
     { text: 'DashBoard', icon: <Assessment/>, link: '/dashboard' },
-    { text: 'Contact Us', icon: <Web/>, link: '/form' },
+    { text: 'Announcements', icon: <Web/>, link: '/announcements' },
     { text: 'CpE Schedules', icon: <GridOn/>, link: '/schedules' },
     { text: 'Calendar', icon: <Event/>, link: '/event' },
     { text: 'Chat Admin', icon: <Chat/>, link: '/chat' },
