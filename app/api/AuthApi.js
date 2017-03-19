@@ -36,6 +36,15 @@ class AuthApi {
       throw err;
     });
   }
+  static saveData(){
+    return axios.get('/auth/save')
+    .then(res=>{
+      console.log(res)
+    }).catch(err=>{
+      throw err;
+      console.log(err);
+    })
+  }
 }
 
 export default AuthApi;

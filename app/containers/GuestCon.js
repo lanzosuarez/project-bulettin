@@ -25,6 +25,7 @@ class GuestCon extends React.Component {
             access: false
         };
         this.symbols = [Faculties, Face, Assessment];
+        this.save = this.save.bind(this);
     }
 
     componentDidMount() {
@@ -33,10 +34,14 @@ class GuestCon extends React.Component {
         });
     }
 
+    save(){
+        AuthApi.saveData();
+    }
 
     render() {
         return (
             <div>
+                <button onClick={this.save}>SAVEV</button>
                 <GuestTitle title={"Annoucements"} />
                 <div className="row" id="gCon">
                     <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
