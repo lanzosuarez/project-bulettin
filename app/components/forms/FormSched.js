@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
 import PageBase from '../PageBase';
 
 const FormSched = () => {
@@ -44,27 +46,54 @@ const FormSched = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <TextField
-              hintText="Section Code"
-              floatingLabelText="Section Code"
-              fullWidth={true}
-            />
+          <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
+             <SelectField
+                floatingLabelText="Year"
+                value=""
+                fullWidth={true}>
+                <MenuItem key={0} primaryText="1"/>
+                <MenuItem key={1} primaryText="2"/>
+                <MenuItem key={2} primaryText="3"/>
+                <MenuItem key={3} primaryText="4"/>
+                <MenuItem key={4} primaryText="5"/>
+            </SelectField>
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-b-15 ">
-            <TextField
-              hintText="Lec"
-              floatingLabelText="Lecture Unit"
-              fullWidth={true}
-            />
+           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
+             <SelectField
+                floatingLabelText="Sec"
+                value=""
+                fullWidth={true}>
+                <MenuItem key={0} primaryText="1"/>
+                <MenuItem key={1} primaryText="2"/>
+                <MenuItem key={2} primaryText="3"/>
+                <MenuItem key={3} primaryText="4"/>
+                <MenuItem key={4} primaryText="5"/>
+            </SelectField>
+          </div>
+          <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
+             <SelectField
+                floatingLabelText="Lec"
+                value=""
+                fullWidth={true}>
+                <MenuItem key={0} primaryText="1"/>
+                <MenuItem key={1} primaryText="2"/>
+                <MenuItem key={2} primaryText="3"/>
+                <MenuItem key={3} primaryText="4"/>
+                <MenuItem key={4} primaryText="5"/>
+            </SelectField>
           </div>
 
-          <div className="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-b-15 ">
-            <TextField
-              hintText="Lab "
-              floatingLabelText="Lab Unit"
-              fullWidth={true}
-            />
+          <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
+            <SelectField
+                floatingLabelText="Lab"
+                value=""
+                fullWidth={true}>
+                <MenuItem key={0} primaryText="1"/>
+                <MenuItem key={1} primaryText="2"/>
+                <MenuItem key={2} primaryText="3"/>
+                <MenuItem key={3} primaryText="4"/>
+                <MenuItem key={4} primaryText="5"/>
+            </SelectField>
           </div>
 
           <div className="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-b-15 ">
