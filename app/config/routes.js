@@ -8,7 +8,7 @@ import Calendar from '../components/dashboard/Calendar';
 import ChatBoxCon from '../containers/ChatBoxCon';
 import GuestCon from '../containers/GuestCon';
 import Register from '../containers/Register';
-import Login from '../containers/Login';
+import LoginCon from '../containers/LoginCon';
 
 const routes = (
         <Route path="/" component={App}>
@@ -19,8 +19,7 @@ const routes = (
             <Route path="event" component={Calendar}/>
             <Route path="chat" component={ChatBoxCon}/>
             <Route path="register" component={Register} />
-            <Route path="login" component={Login} />
-
+            <Route path="login" component={LoginCon} />
         </Route>
 );
 

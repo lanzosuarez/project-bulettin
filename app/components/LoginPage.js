@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import {grey500, white} from 'material-ui/styles/colors';
@@ -11,17 +10,13 @@ import TextField from 'material-ui/TextField';
 import {Link} from 'react-router';
 import ThemeDefault from '../theme-default';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
 
   const styles = {
     loginContainer: {
       minWidth: 320,
       maxWidth: 400,
       height: 'auto',
-      position: 'absolute',
-      top: '20%',
-      left: 0,
-      right: 0,
       margin: 'auto'
     },
     paper: {
@@ -79,12 +74,13 @@ const LoginPage = () => {
 
           <Paper style={styles.paper}>
 
-            <form>
+            <form onSubmit={props.onLogin}>
               <TextField
                 hintText="E-mail"
                 floatingLabelText="E-mail"
                 fullWidth={true}
                 name="username"
+                onChange={props.onChange}
               />
               <TextField
                 hintText="Password"
@@ -92,6 +88,7 @@ const LoginPage = () => {
                 fullWidth={true}
                 type="password"
                 name="password"
+                onChange={props.onChange}
               />
 
               <div>
@@ -102,11 +99,10 @@ const LoginPage = () => {
                   iconStyle={styles.checkRemember.iconStyle}
                 />
 
-                <Link to="/">
-                  <RaisedButton label="Login"
-                                primary={true}
-                                style={styles.loginBtn}/>
-                </Link>
+                <FlatButton label="Login"
+                              primary={true}
+                              style={styles.loginBtn}
+                              type="submit"/>
               </div>
             </form>
           </Paper>
@@ -126,21 +122,15 @@ const LoginPage = () => {
               icon={<Help />}
             />
           </div>
-
-          <div style={styles.buttonsDiv}>
-            <Link to="/" style={{...styles.btn, ...styles.btnFacebook}}>
-              <i className="fa fa-facebook fa-lg"/>
-              <span style={styles.btnSpan}>Log in with Facebook</span>
-            </Link>
-            <Link to="/" style={{...styles.btn, ...styles.btnGoogle}}>
-              <i className="fa fa-google-plus fa-lg"/>
-              <span style={styles.btnSpan}>Log in with Google</span>
-            </Link>
-          </div>
         </div>
       </div>
     </MuiThemeProvider>
   );
+};
+
+LoginPage.propTypes={
+    onLogin: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 export default LoginPage;

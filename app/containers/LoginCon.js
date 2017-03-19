@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import AuthApi from '../api/AuthApi';
 import {connect} from 'react-redux';
+import LoginPage from '../components/LoginPage'
 
-class Login extends React.Component{
+class LoginCon extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -57,16 +58,13 @@ class Login extends React.Component{
   render(){
     return(
       <div>
-        <h1>Login</h1>
-        <form onSubmit={this.handleLogin}>
-          <input type="text" name="username" onChange={this.handleChange}/>
-          <input type="text" name="password" onChange={this.handleChange}/>
-          <input type="submit" value="Login" />
-        </form>
+        <LoginPage onLogin={this.handleLogin}
+                   onChange={this.handleChange}
+        />
       </div>
     );
   }
 }
 
 
-export default Login;
+export default LoginCon;
