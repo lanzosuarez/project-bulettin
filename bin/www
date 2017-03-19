@@ -93,7 +93,8 @@ function onListening() {
 /*
 * socket io
 */
-
+const _ = require('lodash');
+let messages = [];
 let users = [];
 let io = require('socket.io')(server);
 io.on('connect', socket => {
@@ -106,22 +107,37 @@ io.on('connect', socket => {
       id: socket.id
     });
     io.emit('all-users', users);
+    if(messages.length>110){
+      _.drop(messages,10)
+    }
+    io.emit('all-messages',messages);
+    console.log("messages", messages);
   });
 
   socket.on('message-from-user', data => {
-    console.log(data);
     let toSend = {
       nickname: socket.nickname,
       message: data.message,
       seen: false
     };
+    console.log(toSend);
+    messages.push(toSend);
     io.emit('message-from-server', toSend);
+  });
+
+  socket.on('seen-all',()=>{
+    messages.map(msg=>{
+      if(msg.nickname!==socket.nickname){
+        msg.seen=true;
+      }
+      });
+    io.emit('all-messages', messages);
   });
 
   socket.on('disconnect', () => {
     console.log(socket.nickname + ' has disconnected');
     users.splice(users.indexOf(socket.id), 1);
-    console.log(users);
+    console.log(users.length);
     io.emit('all-users', users);
   });
 });

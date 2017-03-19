@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import { cyan600, pink600, purple600, orange600 } from 'material-ui/styles/colors';
 import Assessment from 'material-ui/svg-icons/action/assessment';
 import Face from 'material-ui/svg-icons/action/face';
@@ -18,18 +18,24 @@ import * as adminActions from '../actions/AdminActions';
 import {bindActionCreators} from 'redux';
 
 class DashboardCon extends React.Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.navigateToGuest = this.navigateToGuest.bind(this);
   }
 
   componentDidMount() {
     this.props.adminActions.checkAdmin();
   }
 
+  navigateToGuest(){
+    this.context.router.push("/");
+  }
+
   render() {
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
+        <button onClick={this.navigateToGuest}>Go to Guest</button>
 
         <div className="row">
 
@@ -90,6 +96,10 @@ class DashboardCon extends React.Component {
     );
   }
 }
+
+DashboardCon.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 function mapStateToProps(state, ownProps) {
   return {

@@ -32,6 +32,17 @@ export function onMessageFromServer() {
     };
 };
 
+//load all messages for newly joined user
+export function onAllMessages() {
+    return function (dispatch, getState) {
+        const { socket } = getState();
+        socket.on('all-messages', messages => {
+            console.log("all-messages", messages);
+            dispatch(messagesActions.loadMessagesSuccess(messages));
+        });
+    };
+};
+
 //message emitter
 export function emitMessageFromUser(message) {
     return function (dispatch, getState) {
@@ -46,5 +57,12 @@ export function emitJoinClient(nickname) {
         socket.emit('join', nickname);
     };
 };
+
+export function seenAll(){
+    return function(dispatch, getState){
+        const {socket} = getState();
+        socket.emit('seen-all');
+    };
+}
 
 
