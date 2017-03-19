@@ -12,12 +12,12 @@ var auth = require('./routes/auth');
 const passport = require('passport'),
     session = require('express-session'),
     LocalStrategy = require('passport-local').Strategy,
-    //store = require('./session-store'),
+    store = require('./session-store'),
     methodOverride = require('method-override'),
     restify = require('express-restify-mongoose');
 
-//const uri = process.env.MONGOLAB_URI || 'mongodb://lanzosuarez:bobotngacla1234@ds143777.mlab.com:43777/cpe-bulettin';
-const uri = 'localhost:27017/cpe-bulletin';
+const uri = process.env.MONGOLAB_URI || 'mongodb://lanzosuarez:bobotngacla1234@ds143777.mlab.com:43777/cpe-bulettin';
+//const uri = 'localhost:27017/cpe-bulletin';
 mongoose.connect(uri, function(err){
     if(err){
         console.log("Error connection to DB!");
@@ -48,7 +48,7 @@ app.use(session({
   cookie: {
     maxAge: 1000 * 60 * 60
   },
-  //store: store,
+  store: store,
   resave: false,
   saveUninitialized: true
 }));
