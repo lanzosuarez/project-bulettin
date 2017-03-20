@@ -23,6 +23,11 @@ const Schedules = (props) => {
     editButton: {
       fill: grey500
     },
+    header: {
+      paddingLeft: "0px!important",
+      paddingRight: "0px!important",
+      textAlign: "center"
+    },
     columns: {
       subject_code: {
         width: '10%'
@@ -54,18 +59,18 @@ const Schedules = (props) => {
     }
   };
 
-  let scheds = props.schedules.map(sched => 
+  let scheds = props.schedules.map(sched =>
     <TableRow key={sched._id}>
       <TableRowColumn style={styles.columns.subject_code}>{sched.subject_code}</TableRowColumn>
       <TableRowColumn style={styles.columns.description}>{sched.description}</TableRowColumn>
       <TableRowColumn style={styles.columns.section_code}>{sched.section_code}</TableRowColumn>
-      <TableRowColumn style={styles.columns.lec}>{sched.lec}</TableRowColumn>
-      <TableRowColumn style={styles.columns.lab}>{sched.lab}</TableRowColumn>
-      <TableRowColumn style={styles.columns.units}>{sched.units}</TableRowColumn>
-      <TableRowColumn style={styles.columns.room_no}>{sched.room_number}</TableRowColumn>
+      <TableRowColumn style={styles.columns.lec} className="sscenter">{sched.lec} </TableRowColumn>
+      <TableRowColumn style={styles.columns.lab} className="sscenter">{sched.lab}</TableRowColumn>
+      <TableRowColumn style={styles.columns.units} className="sscenter">{sched.units}</TableRowColumn>
+      <TableRowColumn style={styles.columns.room_no} className="sscenter">{sched.room_no}</TableRowColumn>
       <TableRowColumn style={styles.columns.schedule}>{sched.schedule}</TableRowColumn>
       <TableRowColumn style={styles.columns.edit}>
-        <Link className="button" to={"/schedules/"+sched._id}>
+        <Link className="button" to={"/schedules/" + sched._id}>
           <FloatingActionButton zDepth={0}
             mini={true}
             backgroundColor={grey200}
@@ -75,7 +80,7 @@ const Schedules = (props) => {
         </Link>
       </TableRowColumn>
     </TableRow>
-);
+  );
 
   return (
     <div>
@@ -84,7 +89,9 @@ const Schedules = (props) => {
         <SchedHeader
           onSearch={props.onSearch}
           defYearValue={props.defYearValue}
-          updateState={props.updateState} />
+          updateState={props.updateState}
+          style={styles.header}
+        />
         <Table
           selectable={false}
           multiSelectable={false}
@@ -95,20 +102,21 @@ const Schedules = (props) => {
             adjustForCheckbox={false}
             enableSelectAll={false}>
             <TableRow>
-              <TableHeaderColumn style={styles.columns.subject_code}>SUBJECT CODE</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.description}>DESCRIPTION</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.section_code}>SECTION CODE</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.lec}>LEC</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.lab}>LAB</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.units}>UNITS</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.room_no}>ROOM</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.schedule}>SCHEDULE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.subject_code} className="ssheader">SUBJECT CODE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.description} className="ssheader">DESCRIPTION</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.section_code} className="ssheader">SECTION CODE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.lec} className="ssheader">LEC</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.lab} className="ssheader">LAB</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.units} className="ssheader">UNITS</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.room_no} className="ssheader">ROOM</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.schedule} className="ssheader">SCHEDULE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.edit} className="ssheader">EDIT</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
             displayRowCheckbox={false}
             deselectOnClickaway={false}>
-            {scheds.length>0?scheds:<h1>No Schedules Found!</h1>}
+            {scheds.length > 0 ? scheds : <h1>No Schedules Found!</h1>}
           </TableBody>
         </Table>
       </PageBase>

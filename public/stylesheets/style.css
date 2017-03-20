@@ -269,3 +269,15 @@ a:hover {
 }
 
 /*------------END-------------------*/
+
+/*------------END-------------------*/
+ /*------------SCHEDULES-------------*/
+ .ssheader{
+   padding-left:0px !important;
+   padding-right:0px !important;
+  text-align:center !important;
+ }
+ .sscenter{
+   text-align:center !important;
+ }
+ /*--------------END-----------------*/ 
