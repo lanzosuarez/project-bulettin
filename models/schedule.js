@@ -1,6 +1,5 @@
 let mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    passportLocalMongoose = require('passport-local-mongoose');
+    Schema = mongoose.Schema;
 
 const schedSchema = new Schema({
   year: {

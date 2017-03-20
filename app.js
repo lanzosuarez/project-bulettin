@@ -8,6 +8,7 @@ var express = require('express'),
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
+var sched = require('./routes/sched');
 
 const passport = require('passport'),
     session = require('express-session'),
@@ -59,6 +60,7 @@ require('./passport-init');
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/sched', sched);
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');

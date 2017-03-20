@@ -9,18 +9,24 @@ import Sort from 'material-ui/svg-icons/content/sort';
 /**
  * Example of nested menus within an IconMenu.
  */
-const BySection = () => (
-  <IconMenu
+const BySection = (props) => {
+  const menuChange = (event, child)=>{
+    props.updateState(child.props.value,"section");
+  };
+  return (
+    <IconMenu
+      onItemTouchTap={menuChange}
       iconButtonElement={<IconButton><Sort/></IconButton>}
       anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
       targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
     >
-      <MenuItem primaryText="Section 1" />
-      <MenuItem primaryText="Section 2" />
-      <MenuItem primaryText="Section 3" />
-      <MenuItem primaryText="Section 4" />
-      <MenuItem primaryText="Section 5" />
+      <MenuItem value={1} primaryText="Section 1" />
+      <MenuItem value={2} primaryText="Section 2" />
+      <MenuItem value={3} primaryText="Section 3" />
+      <MenuItem value={4} primaryText="Section 4" />
+      <MenuItem value={5} primaryText="Section 5" />
     </IconMenu>
-);
+  );
+}
 
 export default BySection;

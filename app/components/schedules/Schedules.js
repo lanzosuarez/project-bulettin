@@ -1,14 +1,14 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import { Link } from 'react-router';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
-import {pink500, grey200, grey500} from 'material-ui/styles/colors';
+import { pink500, grey200, grey500 } from 'material-ui/styles/colors';
 import SchedHeader from './SchedHeader';
 import PageBase from '../PageBase';
 import Data from '../../data';
 
-const Schedules = () => {
+const Schedules = (props) => {
 
   const styles = {
     floatingActionButton: {
@@ -18,7 +18,7 @@ const Schedules = () => {
       bottom: 20,
       left: 'auto',
       position: 'fixed',
-      zIndex:"3" 
+      zIndex: "3"
     },
     editButton: {
       fill: grey500
@@ -54,15 +54,40 @@ const Schedules = () => {
     }
   };
 
+  let scheds = props.schedules.map(sched => 
+    <TableRow key={sched._id}>
+      <TableRowColumn style={styles.columns.subject_code}>{sched.subject_code}</TableRowColumn>
+      <TableRowColumn style={styles.columns.description}>{sched.description}</TableRowColumn>
+      <TableRowColumn style={styles.columns.section_code}>{sched.section_code}</TableRowColumn>
+      <TableRowColumn style={styles.columns.lec}>{sched.lec}</TableRowColumn>
+      <TableRowColumn style={styles.columns.lab}>{sched.lab}</TableRowColumn>
+      <TableRowColumn style={styles.columns.units}>{sched.units}</TableRowColumn>
+      <TableRowColumn style={styles.columns.room_no}>{sched.room_number}</TableRowColumn>
+      <TableRowColumn style={styles.columns.schedule}>{sched.schedule}</TableRowColumn>
+      <TableRowColumn style={styles.columns.edit}>
+        <Link className="button" to="/form">
+          <FloatingActionButton zDepth={0}
+            mini={true}
+            backgroundColor={grey200}
+            iconStyle={styles.editButton}>
+            <ContentCreate />
+          </FloatingActionButton>
+        </Link>
+      </TableRowColumn>
+    </TableRow>
+);
+
   return (
     <div>
       <PageBase title="Schedules"
-                navigation="Application / CpE Schedules">
-        <SchedHeader />
+        navigation="Application / CpE Schedules">
+        <SchedHeader
+          defYearValue={props.defYearValue}
+          updateState={props.updateState} />
         <Table
           selectable={true}
           multiSelectable={true}
-          showCheckboxes ={true}
+          showCheckboxes={true}
           displaySelectAll={true}>
           <TableHeader
             displaySelectAll={true}
@@ -77,34 +102,12 @@ const Schedules = () => {
               <TableHeaderColumn style={styles.columns.units}>UNITS</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.room_no}>ROOM</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.schedule}>SCHEDULE</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.edit}>EDIT</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
             displayRowCheckbox={true}
-            deselectOnClickaway={true}>
-            {Data.tablePage.items.map(item =>
-              <TableRow key={item.id}>
-                <TableRowColumn style={styles.columns.subject_code}>{item.subject_code}</TableRowColumn>
-                <TableRowColumn style={styles.columns.description}>{item.description}</TableRowColumn>
-                <TableRowColumn style={styles.columns.section_code}>{item.section_code}</TableRowColumn>
-                <TableRowColumn style={styles.columns.lec}>{item.lec}</TableRowColumn>
-                <TableRowColumn style={styles.columns.lab}>{item.lab}</TableRowColumn>
-                <TableRowColumn style={styles.columns.units}>{item.units}</TableRowColumn>
-                <TableRowColumn style={styles.columns.room_no}>{item.room_number}</TableRowColumn>
-                <TableRowColumn style={styles.columns.schedule}>{item.schedule}</TableRowColumn>
-                <TableRowColumn style={styles.columns.edit}>
-                  <Link className="button" to="/form">
-                    <FloatingActionButton zDepth={0}
-                                          mini={true}
-                                          backgroundColor={grey200}
-                                          iconStyle={styles.editButton}>
-                      <ContentCreate  />
-                    </FloatingActionButton>
-                  </Link>
-                </TableRowColumn>
-              </TableRow>
-            )}
+            deselectOnClickaway={false}>
+            {scheds.length>0?scheds:<h1>No Schedules Found!</h1>}
           </TableBody>
         </Table>
       </PageBase>

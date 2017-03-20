@@ -5,6 +5,7 @@ export default {
     guests: [],
     messages: [],
     posts: [],
+    schedules: [],
     socket: null,
     ajaxCallInProgress:0
 };
