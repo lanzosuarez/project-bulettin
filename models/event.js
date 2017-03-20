@@ -3,10 +3,6 @@ let mongoose = require('mongoose'),
     passportLocalMongoose = require('passport-local-mongoose');
 
 const eventSchema = new Schema({
-  admin: { 
-    type: Schema.Types.ObjectId, ref:'User',
-    required: [true, "Admin ID is missing"]
-  },
   title: {
     type: String,
     required: [true, "Please supply a title"]
@@ -15,13 +11,13 @@ const eventSchema = new Schema({
     type: String,
     required: [true, "Please supply a description"]
   },
-  createDate:{
+  start:{
     type: Date,
     default: Date.now()
   },
-  finishDate:{
+  end:{
     type: Date
   }
 });
 
-module.exports = mongooses.model('Event', eventSchema);
+module.exports = mongoose.model('Event', eventSchema);

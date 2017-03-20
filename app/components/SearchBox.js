@@ -4,7 +4,7 @@ import {white, blue500} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import Search from 'material-ui/svg-icons/action/search';
 
-const SearchBox = () => {
+const SearchBox = (props) => {
 
   const styles = {
     iconButton: {
@@ -43,6 +43,7 @@ const SearchBox = () => {
         <Search color={"black"} />
       </IconButton>
       <TextField
+        onChange={props.onSearch}
         hintText="Search..."
         underlineShow={false}
         fullWidth={true}

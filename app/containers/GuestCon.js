@@ -16,16 +16,24 @@ import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
 import { isEmpty } from 'lodash';
 import * as adminActions from '../actions/AdminActions';
+import * as scheduleActions from '../actions/ScheduleActions';
 import { bindActionCreators } from 'redux';
 
 class GuestCon extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            access: false
+            access: false,
+            infos: {
+                year: 1,
+                section: 1
+            },
+            keyword: ""
         };
         this.symbols = [Faculties, Face, Assessment];
-        this.save = this.save.bind(this);
+        this.filterScheds = this.filterScheds.bind(this);
+        this.updateState = this.updateState.bind(this);
+        this.onSearch = this.onSearch.bind(this);
     }
 
     componentDidMount() {
@@ -33,15 +41,37 @@ class GuestCon extends React.Component {
             this.setState({ access: this.props.admin !== null ? true : false });
         });
     }
+    updateState(value, field) {
+        let i = this.state.infos;
+        i[field] = value;
+        this.setState({ infos: i })
+    }
 
-    save(){
-        AuthApi.saveData();
+    filterScheds() {
+        let s;
+        let keyword = this.state.keyword;
+        let { year, section } = this.state.infos;
+        s = this.props.schedules.filter(s => {
+            return s.year === year && s.section === section;
+        });
+        if (keyword) {
+            s = s.filter(s => {
+                return s.subject_code.indexOf(keyword) > -1 ||
+                    s.section_code.indexOf(keyword) > -1
+            });
+        }
+
+        return s
+    }
+
+    onSearch(e) {
+        this.setState({ keyword: e.target.value });
     }
 
     render() {
+        let filtered = this.filterScheds();
         return (
             <div>
-                <button onClick={this.save}>SAVEV</button>
                 <GuestTitle title={"Annoucements"} />
                 <div className="row" id="gCon">
                     <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
@@ -55,7 +85,12 @@ class GuestCon extends React.Component {
                 <GuestPage color={"#2b2838"}>
                     <GuestTitle title={"Schedules"}
                         size={2} />
-                    <Schedules />
+                    <Schedules
+                        onSearch={this.onSearch}
+                        schedules={filtered}
+                        defYearValue={this.state.infos.year}
+                        updateState={this.updateState}
+                    />
                 </GuestPage>
                 <GuestPage color={"rgb(56, 53, 74)"}>
                     <GuestTitle title={"Events"}
@@ -97,13 +132,15 @@ function mapStateToProps(state, ownProps) {
     console.log(state);
     return {
         guests: state.guests,
-        admin: state.admin
+        admin: state.admin,
+        schedules: state.schedules
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        adminActions: bindActionCreators(adminActions, dispatch)
+        adminActions: bindActionCreators(adminActions, dispatch),
+        scheduleActions: bindActionCreators(scheduleActions, dispatch)
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GuestCon);

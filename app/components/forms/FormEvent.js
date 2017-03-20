@@ -5,7 +5,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 import PageBase from '../PageBase';
 
-const FormEvent = () => {
+const FormEvent = (props) => {
 
   const styles = {
     buttons: {
@@ -24,22 +24,27 @@ const FormEvent = () => {
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-8 col-lg-8 m-b-15 ">
             <TextField
+              name="title"
               hintText="Title"
               floatingLabelText="Title"
               fullWidth={true}
+              onChange={props.updateState}
             />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 m-b-15 ">
             <DatePicker
                 hintText="Expiration Date"
-                floatingLabelText="Expiration Date"
+                floatingLabelText="End Date"
                 fullWidth={true}
+                onChange={props.updateDate}
             />
           </div>
         </div>
         <div className="row">
             <div className="col-xs-12 col-sm-6 col-md-12 col-lg-12 m-b-15 ">
                 <TextField
+                name="description"
+                onChange={props.updateState}
                 hintText="Description"
                 floatingLabelText="Description"
                 multiLine={true}
