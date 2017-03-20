@@ -32,7 +32,7 @@ const SchedHeader = (props)=>{
           <ToolbarTitle text="Options" />
           <BySection updateState={props.updateState}/>
           <ToolbarSeparator />
-          <SearchBox />
+          <SearchBox onSearch={props.onSearch}/>
         </ToolbarGroup>
       </Toolbar>
     );
@@ -40,7 +40,8 @@ const SchedHeader = (props)=>{
 
   SchedHeader.propTypes = {
     updateState: PropTypes.func.isRequired,
-    defYearValue: PropTypes.number.isRequired
+    defYearValue: PropTypes.number.isRequired,
+    onSearch: PropTypes.func.isRequired
   };
 
 export default SchedHeader;

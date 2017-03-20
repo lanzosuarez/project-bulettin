@@ -65,7 +65,7 @@ const Schedules = (props) => {
       <TableRowColumn style={styles.columns.room_no}>{sched.room_number}</TableRowColumn>
       <TableRowColumn style={styles.columns.schedule}>{sched.schedule}</TableRowColumn>
       <TableRowColumn style={styles.columns.edit}>
-        <Link className="button" to="/form">
+        <Link className="button" to={"/schedules/"+sched._id}>
           <FloatingActionButton zDepth={0}
             mini={true}
             backgroundColor={grey200}
@@ -82,17 +82,18 @@ const Schedules = (props) => {
       <PageBase title="Schedules"
         navigation="Application / CpE Schedules">
         <SchedHeader
+          onSearch={props.onSearch}
           defYearValue={props.defYearValue}
           updateState={props.updateState} />
         <Table
-          selectable={true}
-          multiSelectable={true}
-          showCheckboxes={true}
-          displaySelectAll={true}>
+          selectable={false}
+          multiSelectable={false}
+          showCheckboxes={false}
+          displaySelectAll={false}>
           <TableHeader
-            displaySelectAll={true}
-            adjustForCheckbox={true}
-            enableSelectAll={true}>
+            displaySelectAll={false}
+            adjustForCheckbox={false}
+            enableSelectAll={false}>
             <TableRow>
               <TableHeaderColumn style={styles.columns.subject_code}>SUBJECT CODE</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.description}>DESCRIPTION</TableHeaderColumn>
@@ -105,7 +106,7 @@ const Schedules = (props) => {
             </TableRow>
           </TableHeader>
           <TableBody
-            displayRowCheckbox={true}
+            displayRowCheckbox={false}
             deselectOnClickaway={false}>
             {scheds.length>0?scheds:<h1>No Schedules Found!</h1>}
           </TableBody>

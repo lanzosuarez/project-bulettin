@@ -9,6 +9,7 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages } from './actions/SocketActions';
 import { loadScheds } from './actions/ScheduleActions';
+import { loadEvents } from './actions/EventActions';
 
 injectTapEventPlugin();
 const store = configureStore();
@@ -18,6 +19,8 @@ store.dispatch(onAllUser()); //listener for  all users event
 store.dispatch(onMessageFromServer()); //initialize listener for messages from server
 store.dispatch(onAllMessages()); //listener for all messages event
 store.dispatch(loadScheds())//load schedules
+store.dispatch(loadEvents());//load events
+
 
 
 render(

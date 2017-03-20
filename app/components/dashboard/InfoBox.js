@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import Paper from 'material-ui/Paper';
 import {white, grey800} from 'material-ui/styles/colors';
 import {typography} from 'material-ui/styles';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 class InfoBox extends React.Component {
 
@@ -28,7 +30,7 @@ class InfoBox extends React.Component {
       },
       iconSpan: {
         float: 'left',
-        height: 90,
+        height: "auto",
         width: 90,
         textAlign: 'center',
         backgroundColor: "#2b2838"
@@ -36,7 +38,6 @@ class InfoBox extends React.Component {
       icon: {
         height: 48,
         width: 48,
-        marginTop: 20,
         maxWidth: '100%'
 
       },
@@ -44,23 +45,48 @@ class InfoBox extends React.Component {
         backgroundColor:"#2b2838",
         borderLeftWidth: "10px",
         borderLeftStyle: "solid",
-        borderLeftColor: color
+        borderLeftColor: color,
+        overflow:"hidden",
+        wordWrap:"break-word"
+      },
+      fontcolor:{
+          color: "white"
+      },
+      oT:{
+        wordWrap:"break-word",
+        overflow:"hidden",
+        textOverflow:"ellipsis",
+        whiteSpace: "pre" 
       }
     };
 
     return (
-      <Paper style={styles.bg}>
-        <span style={styles.iconSpan}>
-          <Icon color={white}
-                style={styles.icon}
-          />
-        </span>
-
-        <div style={styles.content}>
-          <span style={styles.text}>{title}</span>
-          <span style={styles.sub}>{value}</span>
-        </div>
-      </Paper>
+    <div>
+      <Card style={styles.bg}>
+        <CardHeader
+          title={<span style={styles.text} textStyle={styles.oT}>{title}</span>}
+          subtitle={<span style={styles.sub}>{value}</span>}
+          avatar={
+          <span style={styles.iconSpan}>
+            <Icon color={white}
+                  style={styles.icon}
+            />
+          </span>}
+          actAsExpander={true}
+          showExpandableButton={true}
+          style={styles.fontcolor}
+          titleColor={"white"}
+          subtitleColor={"white"}
+        />
+        <CardText style={styles.fontcolor} expandable={true}>
+          {value}
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+        </CardText>
+      </Card>
+      </div>
       );
   }
 }

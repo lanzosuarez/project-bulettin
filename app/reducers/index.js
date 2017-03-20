@@ -4,13 +4,15 @@ import guests from './GuestReducer';
 import socket from './SocketReducer';
 import admin from './AdminReducer';
 import schedules from './ScheduleReducer';
+import events from './EventReducer';
 
 const rootReducer = combineReducers({
     messages,
     guests,
     socket,
     admin,
-    schedules
+    schedules,
+    events
 });
 
 export default rootReducer;

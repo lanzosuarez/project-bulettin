@@ -8,6 +8,14 @@ class SchedApi {
       throw err;
     });
   }
+
+  static saveSched(schedule) {
+    return axios.post('/sched', schedule).then(res => {
+      return res;
+    }).catch(err => {
+      throw err;
+    });
+  }
 }
 
-  export default SchedApi;
+export default SchedApi;

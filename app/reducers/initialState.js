@@ -6,6 +6,7 @@ export default {
     messages: [],
     posts: [],
     schedules: [],
+    events:[],
     socket: null,
     ajaxCallInProgress:0
 };

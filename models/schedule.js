@@ -4,7 +4,7 @@ let mongoose = require('mongoose'),
 const schedSchema = new Schema({
   year: {
     type: Number,
-    require:[true, "Year required"]
+    default:1
   },
   subject_code:{
     type: String,
@@ -40,7 +40,7 @@ const schedSchema = new Schema({
   },
   section: {
     type:Number,
-    required: [true,"Section is required"]
+    default:1
   }
 });
 
