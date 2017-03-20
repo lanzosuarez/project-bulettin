@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from '../components/Header';
 import LeftDrawer from '../components/LeftDrawer';
-import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
+import withWidth, { LARGE, SMALL } from 'material-ui/utils/withWidth';
 import ThemeDefault from '../theme-default';
 import ChatToggle from './ChatToggle';
 import GuestHeader from '../components/guest/GuestHeader';
@@ -11,16 +11,25 @@ import Data from '../data';
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
-      navDrawerOpen: false
+      navDrawerOpen: false,
+      admin: false
     };
+    console.log(context.store);
+  }
+
+  componentDidMount(){
+    this.context.store.subscribe(()=>{
+      console.log(this.context.store.getState());
+      this.setState({admin:this.context.store.getState().admin})
+    })
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.width !== nextProps.width) {
-      this.setState({navDrawerOpen: nextProps.width === LARGE});
+      this.setState({ navDrawerOpen: nextProps.width === LARGE });
     }
   }
 
@@ -43,34 +52,42 @@ class App extends React.Component {
         margin: '80px 20px 20px 20px',
         paddingLeft: navDrawerOpen && this.props.width !== SMALL ? paddingLeftDrawerOpen : 0
       },
-      container2:{
+      container2: {
         margin: "50px 0px 0px 0px"
       }
     };
 
-    return (
-      // <MuiThemeProvider muiTheme={ThemeDefault}>
-      //   <div>
-      //     <Header styles={styles.header}
-      //             handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
-      //       <LeftDrawer navDrawerOpen={navDrawerOpen}
-      //                   menus={Data.menus}
-      //                   username="User Admin"/>
-      //           <div style={styles.container}>
-      //             {this.props.children}
-      //           </div>
-      //   </div>
-      // </MuiThemeProvider>
-      <MuiThemeProvider muiTheme={ThemeDefault}>
-        <div>
+    if (this.state.admin) {
+      return (
+        <MuiThemeProvider muiTheme={ThemeDefault}>
+          <div>
+            <Header styles={styles.header}
+              handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)} />
+            <LeftDrawer navDrawerOpen={navDrawerOpen}
+              menus={Data.menus}
+              username="User Admin" />
+            <div style={styles.container}>
+              {this.props.children}
+            </div>
+          </div>
+        </MuiThemeProvider>
+      );
+    } else {
+      return (
+        <MuiThemeProvider muiTheme={ThemeDefault}>
+          <div>
             <GuestHeader />
             <div style={styles.container2}>
               {this.props.children}
             </div>
-        </div>
-      </MuiThemeProvider>
-    );
+          </div>
+        </MuiThemeProvider>
+      );
+    }
   }
+}
+App.contextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 App.propTypes = {
@@ -78,4 +95,6 @@ App.propTypes = {
   width: PropTypes.number
 };
 
+
 export default withWidth()(App);
+

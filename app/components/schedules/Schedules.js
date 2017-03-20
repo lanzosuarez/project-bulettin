@@ -23,10 +23,10 @@ const Schedules = (props) => {
     editButton: {
       fill: grey500
     },
-    header:{
-      paddingLeft:"0px!important",
-      paddingRight:"0px!important",
-      textAlign:"center"
+    header: {
+      paddingLeft: "0px!important",
+      paddingRight: "0px!important",
+      textAlign: "center"
     },
     columns: {
       subject_code: {
@@ -59,18 +59,18 @@ const Schedules = (props) => {
     }
   };
 
-  let scheds = props.schedules.map(sched => 
+  let scheds = props.schedules.map(sched =>
     <TableRow key={sched._id}>
       <TableRowColumn style={styles.columns.subject_code}>{sched.subject_code}</TableRowColumn>
       <TableRowColumn style={styles.columns.description}>{sched.description}</TableRowColumn>
-      <TableRowColumn style={styles.columns.section_code} className="sscenter">{sched.section_code}</TableRowColumn>
+      <TableRowColumn style={styles.columns.section_code}>{sched.section_code}</TableRowColumn>
       <TableRowColumn style={styles.columns.lec} className="sscenter">{sched.lec} </TableRowColumn>
       <TableRowColumn style={styles.columns.lab} className="sscenter">{sched.lab}</TableRowColumn>
       <TableRowColumn style={styles.columns.units} className="sscenter">{sched.units}</TableRowColumn>
-      <TableRowColumn style={styles.columns.room_no} className="sscenter">{sched.room_number}</TableRowColumn>
+      <TableRowColumn style={styles.columns.room_no} className="sscenter">{sched.room_no}</TableRowColumn>
       <TableRowColumn style={styles.columns.schedule}>{sched.schedule}</TableRowColumn>
       <TableRowColumn style={styles.columns.edit}>
-        <Link className="button" to={"/schedules/"+sched._id}>
+        <Link className="button" to={"/schedules/" + sched._id}>
           <FloatingActionButton zDepth={0}
             mini={true}
             backgroundColor={grey200}
@@ -80,7 +80,7 @@ const Schedules = (props) => {
         </Link>
       </TableRowColumn>
     </TableRow>
-);
+  );
 
   return (
     <div>
@@ -91,7 +91,7 @@ const Schedules = (props) => {
           defYearValue={props.defYearValue}
           updateState={props.updateState}
           style={styles.header}
-           />
+        />
         <Table
           selectable={false}
           multiSelectable={false}
@@ -110,13 +110,13 @@ const Schedules = (props) => {
               <TableHeaderColumn style={styles.columns.units} className="ssheader">UNITS</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.room_no} className="ssheader">ROOM</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.schedule} className="ssheader">SCHEDULE</TableHeaderColumn>
-               <TableHeaderColumn style={styles.columns.edit} className="ssheader">EDIT</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.edit} className="ssheader">EDIT</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
             displayRowCheckbox={false}
             deselectOnClickaway={false}>
-            {scheds.length>0?scheds:<h1>No Schedules Found!</h1>}
+            {scheds.length > 0 ? scheds : <h1>No Schedules Found!</h1>}
           </TableBody>
         </Table>
       </PageBase>

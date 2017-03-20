@@ -34,6 +34,8 @@ class GuestCon extends React.Component {
         this.filterScheds = this.filterScheds.bind(this);
         this.updateState = this.updateState.bind(this);
         this.onSearch = this.onSearch.bind(this);
+        this.onEditEvent = this.onEditEvent.bind(this);
+        this.onDeleteEvent = this.onDeleteEvent.bind(this);
     }
 
     componentDidMount() {
@@ -68,6 +70,16 @@ class GuestCon extends React.Component {
         this.setState({ keyword: e.target.value });
     }
 
+    onEditEvent(id) {
+        console.log(id);
+        this.context.router.push('/events/' + id);
+    }
+
+    onDeleteEvent(id) {
+        this.context.router.push('/events/' + id);
+    }
+
+
     render() {
         let filtered = this.filterScheds();
         return (
@@ -96,18 +108,15 @@ class GuestCon extends React.Component {
                     <GuestTitle title={"Events"}
                         size={0} />
                     <div className="row eventPads" >
-                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                            <GuestEvent />
-                        </div>
-                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                            <GuestEvent />
-                        </div>
-                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                            <GuestEvent />
-                        </div>
-                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                            <GuestEvent />
-                        </div>
+                        {this.props.events.map((ev, index) =>
+                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
+                                <GuestEvent onEditEvent={this.onEditEvent} 
+                                            onDeleteEvent={this.onDeleteEvent} 
+                                            index={index} ev={ev} 
+                                            param={this.props.routeParams.event}
+                                            />
+                            </div>
+                        )}
                     </div>
                 </GuestPage>
                 <Footer />
@@ -133,7 +142,8 @@ function mapStateToProps(state, ownProps) {
     return {
         guests: state.guests,
         admin: state.admin,
-        schedules: state.schedules
+        schedules: state.schedules,
+        events: state.events
     };
 }
 

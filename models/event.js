@@ -13,7 +13,7 @@ const eventSchema = new Schema({
   },
   start:{
     type: Date,
-    default: Date.now()
+    default: new Date()
   },
   end:{
     type: Date

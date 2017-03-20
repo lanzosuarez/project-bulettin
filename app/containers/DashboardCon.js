@@ -89,7 +89,6 @@ class DashboardCon extends React.Component {
           </div>
 
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-            <Calendar />
           </div>
         </div>
       </div>
@@ -103,7 +102,8 @@ DashboardCon.contextTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    admin: state.admin
+    admin: state.admin,
+    events: state.events
   };
 }
 

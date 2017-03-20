@@ -267,15 +267,14 @@ a:hover {
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
 }
-
 /*------------END-------------------*/
-/*------------SCHEDULES-------------*/
-.ssheader{
-  padding-left:0px !important;
-  padding-right:0px !important;
+ /*------------SCHEDULES-------------*/
+ .ssheader{
+   padding-left:0px !important;
+   padding-right:0px !important;
   text-align:center !important;
-}
-.sscenter{
+ }
+ .sscenter{
    text-align:center !important;
-}
-/*--------------END-----------------*/
+ }
+ /*--------------END-----------------*/ 

@@ -31,6 +31,7 @@ const SchedHeader = (props)=>{
         <ToolbarGroup>
           <ToolbarTitle text="Options" />
           <BySection updateState={props.updateState}/>
+          <RaisedButton label="Delete" secondary={true} />
           <ToolbarSeparator />
           <SearchBox onSearch={props.onSearch}/>
         </ToolbarGroup>
