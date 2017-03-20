@@ -15,9 +15,10 @@ const data = {
     { text: 'DashBoard', icon: <Assessment/>, link: '/dashboard' },
     { text: 'Announcements', icon: <Web/>, link: '/announcements' },
     { text: 'CpE Schedules', icon: <GridOn/>, link: '/schedules' },
-    { text: 'Calendar', icon: <Event/>, link: '/event' },
+    { text: 'Calendar', icon: <Event/>, link: '/events' },
     { text: 'Chat Admin', icon: <Chat/>, link: '/chat' },
-    { text: 'Login Page', icon: <PermIdentity/>, link: '/login' }
+    { text: 'Guest View', icon:<Web/>, link: '/Guest' },
+    { text: 'Sign Out', icon: <PermIdentity/>, link: '/signout' }
   ],
   tablePage: {
     items: [

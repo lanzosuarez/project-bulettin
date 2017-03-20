@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { cyan600, pink600, purple600, orange600 } from 'material-ui/styles/colors';
+import RaisedButton from 'material-ui/RaisedButton';
 import Assessment from 'material-ui/svg-icons/action/assessment';
 import Face from 'material-ui/svg-icons/action/face';
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
@@ -35,8 +36,7 @@ class DashboardCon extends React.Component {
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
-        <button onClick={this.navigateToGuest}>Go to Guest</button>
-
+        <RaisedButton label="Go to Guest" secondary={true} className="goTo" onTouchTap={this.navigateToGuest} />
         <div className="row">
 
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
@@ -89,6 +89,7 @@ class DashboardCon extends React.Component {
           </div>
 
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
+            <Calendar />
           </div>
         </div>
       </div>
