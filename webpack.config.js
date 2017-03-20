@@ -30,9 +30,9 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            //sourceMap:true
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     //sourceMap:true
+        // }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
