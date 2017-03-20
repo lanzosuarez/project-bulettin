@@ -25,7 +25,7 @@ class GuestCon extends React.Component {
         this.state = {
             access: false,
             infos: {
-                year: 1,
+                year: 2,
                 section: 1
             },
             keyword: ""
@@ -91,6 +91,29 @@ class GuestCon extends React.Component {
                             color={pink600}
                             title="Announcement"
                             value="Announcement subheader"
+                        />
+                    </div>
+                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+                        <InfoBox Icon={ThumbUp}
+                        color={cyan600}
+                        title="Announcement"
+                        value="Announcement subheader"
+                        />
+                    </div>
+
+                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+                        <InfoBox Icon={Assessment}
+                        color={purple600}
+                        title="Announcement"
+                        value="Announcement subheader"
+                        />
+                    </div>
+
+                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+                        <InfoBox Icon={Face}
+                        color={orange600}
+                        title="Announcement"
+                        value="Announcement subheader"
                         />
                     </div>
                 </div>

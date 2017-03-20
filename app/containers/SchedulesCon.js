@@ -18,7 +18,7 @@ class SchedulesCon extends React.Component {
     this.state = {
       sched: Object.assign({}, props.sched),
       infos: {
-        year: 1,
+        year: 2,
         section: 1
       },
       keyword: ""

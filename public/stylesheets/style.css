@@ -46,7 +46,7 @@ a:hover {
   overflow: hidden !important;
   max-height: 57 !important;
   color: rgba(255, 255, 255, 0.870588) !important;
-  background-color: #2b2838 !important;
+  background-color: #100e1f !important;
 }
 #chatbox{
     /*width: 236px!important;
@@ -68,6 +68,9 @@ a:hover {
     overflow-x: hidden;
 }*/
 
+.goTo{
+  margin: 0px 0px 20px 0px;
+}
 .scroll-box {
   height: 568px;
   overflow-y: scroll;

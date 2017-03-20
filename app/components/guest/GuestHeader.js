@@ -28,7 +28,6 @@ const GuestHeader = () => {
             </div>
             <AppBar id="guestBar"
                 title= {<GuestButton />}
-                iconClassNameRight="muidocs-icon-navigation-expand-more"
                 iconElementRight={
                 <div style={style.iconsRightContainer}>
                   <IconMenu color={white}

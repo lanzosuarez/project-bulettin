@@ -31,7 +31,7 @@ class InfoBox extends React.Component {
       iconSpan: {
         float: 'left',
         height: "auto",
-        width: 90,
+        width: "auto",
         textAlign: 'center',
         backgroundColor: "#2b2838"
       },
