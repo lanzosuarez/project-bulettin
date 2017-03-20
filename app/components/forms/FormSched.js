@@ -150,6 +150,9 @@ const FormSched = (props) => {
           </div>
         </div>
         <div style={styles.buttons}>
+           <RaisedButton label="Cancel"
+            style={styles.saveButton}
+            type="submit" />
           <RaisedButton label="Delete"
             style={styles.saveButton}
             type="submit"
