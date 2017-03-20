@@ -150,9 +150,10 @@ const FormSched = (props) => {
           </div>
         </div>
         <div style={styles.buttons}>
-          <Link to="/schedules">
-            <RaisedButton label="Cancel" />
-          </Link>
+          <RaisedButton label="Delete"
+            style={styles.saveButton}
+            type="submit"
+            secondary={true} />
           <RaisedButton label="Save"
             style={styles.saveButton}
             type="submit"
