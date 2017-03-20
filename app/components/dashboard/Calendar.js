@@ -24,7 +24,7 @@ const Calendar = (props) => {
         <div>
             <Paper style={styles.paper}>
                 <BigCalendar
-                events={Data.dashBoardPage.events}
+                events={props.events}
                 startAccessor='startDate'
                 endAccessor='endDate'
                 />

@@ -25,7 +25,13 @@ class ChatToggle extends React.Component {
   }
 
   checkUnreads() {
-    const unreads = this.props.messages.filter(message => message.seen === false);
+    let msgs;
+    if(this.props.admin){
+      msgs = this.props.messages.filter(msg=>msg.nickname!=="admin");
+    } else {
+      msgs = this.props.messages.filter(msg=>msg.nickname!==localStorage.getItem('nickname'));
+    }
+    const unreads = msgs.filter(message => message.seen === false);
     return unreads.length;
   }
 

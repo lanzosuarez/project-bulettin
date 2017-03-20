@@ -16,7 +16,8 @@ const routes = (
             <Route path="dashboard" component={DashboardCon}/>
             <Route path="announcements" component={AnnounceCon}/>
             <Route path="schedules" component={SchedulesCon}/>
-            <Route path="event" component={CalendarCon}/>
+            <Route path="schedules/:sched" component={SchedulesCon}/>
+            <Route path="events" component={CalendarCon}/>
             <Route path="chat" component={ChatBoxCon}/>
             <Route path="register" component={RegisterCon} />
             <Route path="login" component={LoginCon} />
