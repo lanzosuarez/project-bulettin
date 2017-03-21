@@ -45,8 +45,9 @@ class ChatToggle extends React.Component {
   };
 
   render() {
-    let s1 = { backgroundColor: "#100e1f" };
+    let s1 = { backgroundColor: "rgb(16, 14, 31)"};
     let s2 = { top: "-23px!important", right: "7px!important" }
+    let s3 = { backgroundColor: "rgb(43, 40, 56)", border: "1px solid white"}
 
     let badge = null;
     if(this.state.access){
@@ -60,10 +61,12 @@ class ChatToggle extends React.Component {
     return (
       <div>
         <RaisedButton
-          label="Chat Me"
+          label={<div><p id="pToggle">Chat Me</p><i className="fa fa-circle online" id="indicatorOnline"></i></div>}
           onTouchTap={this.handleToggle}
+          buttonStyle={s3}
+          labelColor={"white"}
           backgroundColor="rgb(165, 164, 173)"
-          width={100}
+          fullWidth={true}
           style={s1}
         />
         {badge}
