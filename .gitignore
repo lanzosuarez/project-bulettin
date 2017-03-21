@@ -7,5 +7,5 @@
 *.sublime-workspace
 .idea
 
-#public/js/*.js
-#public/**/app.bundle.js
+public/js/*.js
+public/**/app.bundle.js
