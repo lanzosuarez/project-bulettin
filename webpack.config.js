@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 
 module.exports = {
-    devtool: "eval-cheap-module-source-map",
+    devtool: "cheap-module-source-map",
     entry:{
        app: './app/index'
     },
@@ -29,14 +29,4 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx']
     },
-    plugins: [
-        // new webpack.optimize.UglifyJsPlugin({
-        //     //sourceMap:true
-        // }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
-        }),
-    ],
 }

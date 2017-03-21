@@ -10,6 +10,9 @@
     "build": "webpack -p",
     "watch": "webpack -w"
   },
+  "engines": {
+    "node": "7.3.0"
+  },
   "dependencies": {
     "axios": "^0.15.3",
     "babel-polyfill": "^6.23.0",
