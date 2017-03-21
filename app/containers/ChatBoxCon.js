@@ -4,6 +4,8 @@ import ChatItem from '../components/chat/ChatItem';
 import ChatSend from '../components/chat/ChatSend';
 import ChatBox from '../components/chat/ChatBox';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -90,17 +92,53 @@ class ChatBoxCon extends React.Component {
             paper: {
                 height: "100%",
                 padding: 10
+            },
+            nick:{
+                maxWidth: "309px",
+                padding: "27px",
+                margin: "157px 0px 0px 47px",
+                color: "rgb(255, 255, 255) !important",
+                backgroundColor: "rgb(127, 126, 138) !important"
+            },
+            nickSubmit:{
+               backgroundColor:" #525154",
+               boxShadow:"none !important",
+            },
+            float:{
+                color:"white"
+            },
+            input:{
+                color:"rgb(199, 199, 199)"
             }
         };
         if (!this.state.joined) {
             return (
-                <div>
-                    <h2>Enter your twitter username or a nickname</h2>
+                <Paper style={styles.nick} zDepth={2} className="nickPaper">
                     <form onSubmit={this.handleJoin}>
-                        <input type="text" name="nickname" onChange={this.handleChange} />
-                        <button>Join and Chat!</button>
+                        <div id="cpeLogo"><img id="nickLg" src ="/images/1.png" /></div>
+                        <h2 id="nickh2">Enter your twitter username or a nickname</h2>
+                        <TextField
+                            hintText="Your Nickname"
+                            floatingLabelText="Nickname"
+                            name="nickname"
+                            fullWidth={true}
+                            onChange={this.handleChange}
+                            underlineShow={false}
+                            className="nickText"
+                            floatingLabelStyle={styles.float}
+                            inputStyle={styles.input}
+                            />
+                        <div>
+                        <RaisedButton label="Submit"
+                            type="submit"
+                            style={styles.nickSubmit}
+                            labelColor={"white"}
+                            backgroundColor={"#2b2838"}
+                            buttonSyle={styles.float}
+                            fullWidth={true}/>
+                        </div>
                     </form>
-                </div>
+                </Paper>
             );
         }
         return (

@@ -8,6 +8,7 @@ const ChatSend = (props) => {
   let s1={height:"101px"}
   let s2 = {position: "absolute", right: "6px", top: "46px"}
   let s3 = {backgroundColor: "#00E5FF!important", color: "white!important"}
+  let s4 = {color: "rgba(134, 130, 130, 0.870588)"}
 
   return (
     <div>
@@ -17,6 +18,7 @@ const ChatSend = (props) => {
               onFocus={props.handleSeenMessages}
               hintText="Message Field"
               floatingLabelText="Message"
+              floatingLabelStyle={s4}
               multiLine={true}
               underlineShow={false}
               rows={2}
@@ -31,8 +33,9 @@ const ChatSend = (props) => {
                 label="SEND"
                 fullWidth={true}
                 icon={<ContentSend />}
-                backgroundColor="#0097A7"
-                style={s3}
+                labelColor={"white"}
+                backgroundColor={"#2b2838"}
+                style={s4}
                 type="submit"
               />
             </div>
