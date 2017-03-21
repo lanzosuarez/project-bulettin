@@ -21,7 +21,7 @@ const loopTruMsgs = (messages) => {
     return messages.map((msg) => {
         return <div style={styles.chat}>
             <ListItem
-                leftAvatar={<Avatar>A</Avatar>}
+                leftAvatar={<Avatar src="/images/jenny.jpg"/>}
                 secondaryTextLines={2}
             >
                 <div className="talk-bubble tri-right left-top">
