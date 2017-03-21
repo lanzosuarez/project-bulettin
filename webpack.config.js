@@ -1,10 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
-
-
 module.exports = {
-    devtool: "eval-cheap-module-source-map",
+    devtool: "cheap-module-source-map",
     entry:{
        app: './app/index'
     },
@@ -26,6 +24,9 @@ module.exports = {
             {test: /\.css$/, loader:'style-loader!css-loader'}
         ]
     },
+    plugins:[
+        new webpack.NoEmitOnErrorsPlugin()
+    ],
     resolve: {
         extensions: ['.js', '.jsx']
     },
