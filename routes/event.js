@@ -32,6 +32,12 @@ router.post('/', (req, res) => {
           response: "Unauthorized"
         });
       }
+      if (!event) {
+        return res.json({
+          success: false,
+          response: "Event not found!"
+        });
+      }
       event.title = req.body.title;
       event.description = req.body.description;
       event.end = req.body.end
@@ -89,6 +95,12 @@ router.delete('/:id', (req, res) => {
         success: false,
         response: "Unauthorized"
       })
+    }
+    if (!event) {
+      return res.json({
+        success: false,
+        response: "Event not found!"
+      });
     }
     event.remove((err, event) => {
       if (err) {

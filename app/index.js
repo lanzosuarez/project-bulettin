@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages } from './actions/SocketActions';
 import { loadScheds } from './actions/ScheduleActions';
 import { loadEvents } from './actions/EventActions';
+import { loadAnnouncements } from './actions/AnnouncementActions';
 
 injectTapEventPlugin();
 const store = configureStore();
@@ -20,8 +21,7 @@ store.dispatch(onMessageFromServer()); //initialize listener for messages from s
 store.dispatch(onAllMessages()); //listener for all messages event
 store.dispatch(loadScheds())//load schedules
 store.dispatch(loadEvents());//load events
-
-
+store.dispatch(loadAnnouncements());//load loadAnnouncements
 
 render(
     <Provider store={store}>

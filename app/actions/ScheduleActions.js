@@ -9,11 +9,18 @@ function saveSchedSuccess(schedule) {
   return { type: types.SAVE_SCHEDULE_SUCCESS, schedule }
 }
 
+export function deleteSchedSuccess(schedule){
+  return { type: types.DELETE_SCHEDULE_SUCCESS, schedule };
+}
+
+
+
 export function loadScheds() {
   return function (dispatch) {
     SchedApi.getAllScheds().then(res => {
       console.log(res);
       if (res.data.success) {
+        console.log("on loadScheds", res.data.response);
         dispatch(loadSchedsSuccess(res.data.response));
       }
     }).catch(err => {
@@ -49,4 +56,15 @@ export function saveSched(schedule) {
     });
   }
 
+}
+
+
+export function deleteEvent(id) {
+  return function (dispatch) {
+    return SchedApi.onDeleteEvent(id).then(res => {
+      return res;
+    }).catch(err => {
+      throw err;
+    });
+  }
 }

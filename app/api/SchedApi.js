@@ -16,6 +16,13 @@ class SchedApi {
       throw err;
     });
   }
+  static onDeleteEvent(id) {
+    return axios.delete('/sched/' + id).then(res => {
+      return res;
+    }).catch(err => {
+      throw err;
+    });
+  }
 }
 
 export default SchedApi;

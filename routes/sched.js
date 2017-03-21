@@ -28,7 +28,7 @@ function saveItem(item, res, req) {
       handleUnautorized(res);
       return;
     }
-    handleSuccess(sched,res);
+    handleSuccess(sched, res);
   });
 }
 
@@ -43,6 +43,12 @@ router.post('/', (req, res) => {
       if (!req.user) {
         handleUnautorized(res);
         return;
+      }
+      if (!sched) {
+        return res.json({
+          success: false,
+          response: "Schedule not found!"
+        });
       }
       sched.year = req.body.year;
       sched.section = req.body.section;
@@ -72,6 +78,42 @@ router.post('/', (req, res) => {
     saveItem(newSched, res, req);
     return;
   }
+});
+
+
+router.delete('/:id', (req, res) => {
+  Schedule.findById(req.params.id, (err, sched) => {
+    if (err) {
+      return res.json({
+        success: false,
+        response: err
+      });
+    }
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        response: "Unauthorized"
+      })
+    }
+    if (!sched) {
+      return res.json({
+        success: false,
+        response: "Schedule not found!"
+      });
+    }
+    sched.remove((err, sched) => {
+      if (err) {
+        return res.json({
+          success: false,
+          response: err
+        });
+      }
+      res.json({
+        success: true,
+        response: sched
+      });
+    })
+  });
 });
 
 

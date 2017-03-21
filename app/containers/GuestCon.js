@@ -10,7 +10,9 @@ import GuestPage from '../components/guest/GuestPage';
 import InfoBox from '../components/dashboard/InfoBox';
 import Footer from '../components/Footer';
 import Schedules from '../components/schedules/Schedules';
+import FlatButton from 'material-ui/FlatButton';
 import Data from '../data';
+import {Link} from 'react-router';
 
 import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
@@ -30,12 +32,12 @@ class GuestCon extends React.Component {
             },
             keyword: ""
         };
-        this.symbols = [Faculties, Face, Assessment];
         this.filterScheds = this.filterScheds.bind(this);
         this.updateState = this.updateState.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.onEditEvent = this.onEditEvent.bind(this);
         this.onDeleteEvent = this.onDeleteEvent.bind(this);
+        this.getRandomColor = this.getRandomColor.bind(this)
     }
 
     componentDidMount() {
@@ -62,8 +64,7 @@ class GuestCon extends React.Component {
                     s.section_code.indexOf(keyword) > -1
             });
         }
-
-        return s
+        return s;
     }
 
     onSearch(e) {
@@ -79,72 +80,72 @@ class GuestCon extends React.Component {
         this.context.router.push('/events/' + id);
     }
 
+    getRandomColor(arr) {
+        let randNum = Math.floor(Math.random() * 4);
+        return arr[randNum];
+    }
+
+    supplyIcon(arr) {
+        let randNum = Math.floor(Math.random() * 2)
+        return arr[randNum];
+    }
+
 
     render() {
-        let filtered = this.filterScheds();
-        return (
-            <div>
-                <GuestTitle title={"Annoucements"} />
-                <div className="row" id="gCon">
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Faculties}
-                            color={pink600}
-                            title="Announcement"
-                            value="Announcement subheader"
-                        />
-                    </div>
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={ThumbUp}
-                        color={cyan600}
-                        title="Announcement"
-                        value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Assessment}
-                        color={purple600}
-                        title="Announcement"
-                        value="Announcement subheader"
-                        />
-                    </div>
-
-                    <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={Face}
-                        color={orange600}
-                        title="Announcement"
-                        value="Announcement subheader"
-                        />
-                    </div>
-                </div>
-                <GuestPage color={"#2b2838"}>
-                    <GuestTitle title={"Schedules"}
-                        size={2} />
-                    <Schedules
-                        onSearch={this.onSearch}
-                        schedules={filtered}
-                        defYearValue={this.state.infos.year}
-                        updateState={this.updateState}
-                    />
-                </GuestPage>
-                <GuestPage color={"rgb(56, 53, 74)"}>
-                    <GuestTitle title={"Events"}
-                        size={0} />
-                    <div className="row eventPads" >
-                        {this.props.events.map((ev, index) =>
-                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                                <GuestEvent onEditEvent={this.onEditEvent} 
-                                            onDeleteEvent={this.onDeleteEvent} 
-                                            index={index} ev={ev} 
-                                            param={this.props.routeParams.event}
-                                            />
-                            </div>
-                        )}
-                    </div>
-                </GuestPage>
-                <Footer />
+        const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let colors = [pink600, cyan600, purple600, orange600];
+        let icons = [Faculties, Assessment];
+        let announcements = this.props.announcements.map((announcement, index) => {
+            let getColor = this.getRandomColor(colors);
+            let getIcon = this.supplyIcon(icons);
+            let d = new Date(announcement.createDate);
+            return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+                <InfoBox Icon={getIcon}
+                    color={getColor}
+                    title={announcement.title}
+                    value={announcement.description}
+                    date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
+                />
+                <Link to={"/announcements/"+announcement._id}><FlatButton style={{ color: "white" }} label="Edit" /></Link>
             </div>
-        );
+        });
+        
+           
+        let filtered = this.filterScheds();
+return (
+    <div>
+        <GuestTitle title={"Annoucements"} />
+        <div className="row" id="gCon">
+            {announcements}
+        </div>
+        <GuestPage color={"#2b2838"}>
+            <GuestTitle title={"Schedules"}
+                size={2} />
+            <Schedules
+                onSearch={this.onSearch}
+                schedules={filtered}
+                defYearValue={this.state.infos.year}
+                updateState={this.updateState}
+            />
+        </GuestPage>
+        <GuestPage color={"rgb(56, 53, 74)"}>
+            <GuestTitle title={"Events"}
+                size={0} />
+            <div className="row eventPads" >
+                {this.props.events.map((ev, index) =>
+                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
+                        <GuestEvent onEditEvent={this.onEditEvent}
+                            onDeleteEvent={this.onDeleteEvent}
+                            index={index} ev={ev}
+                            param={this.props.routeParams.event}
+                        />
+                    </div>
+                )}
+            </div>
+        </GuestPage>
+        <Footer />
+    </div>
+);
     }
 }
 
@@ -166,7 +167,8 @@ function mapStateToProps(state, ownProps) {
         guests: state.guests,
         admin: state.admin,
         schedules: state.schedules,
-        events: state.events
+        events: state.events,
+        announcements: state.announcements
     };
 }
 

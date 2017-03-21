@@ -29,6 +29,7 @@ class SchedulesCon extends React.Component {
     this.updateSchedForSelect = this.updateSchedForSelect.bind(this);
     this.onSaveSched = this.onSaveSched.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onDeleteEvent = this.onDeleteEvent.bind(this);
   }
   componentDidMount() {
     this.props.adminActions.checkAdmin();
@@ -87,15 +88,30 @@ class SchedulesCon extends React.Component {
     this.props.scheduleActions.saveSched(this.state.sched);
   }
 
+  onDeleteEvent(id) {
+    this.props.scheduleActions.deleteEvent(id).then(res => {
+      if (res.data.success) {
+        this.context.router.push('/schedules');
+        this.props.scheduleActions.deleteSchedSuccess(res.data.response);
+        return;
+      }
+      console.log(res.data);
+    }).catch(err => {
+      throw err;
+    });
+  }
+
   render() {
     let filtered = this.filterScheds();
     return (
       <div>
         <FormSched
+          params={this.props.routeParams.sched}
           onSaveSched={this.onSaveSched}
           sched={this.state.sched}
           updateSchedForText={this.updateSchedForText}
           updateSchedForSelect={this.updateSchedForSelect}
+          onDeleteEvent={this.onDeleteEvent}
         />
         <Schedules
           onSearch={this.onSearch}

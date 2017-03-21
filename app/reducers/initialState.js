@@ -4,7 +4,7 @@ export default {
     admin: null,
     guests: [],
     messages: [],
-    posts: [],
+    announcements: [],
     schedules: [],
     events:[],
     socket: null,

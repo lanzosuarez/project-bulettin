@@ -70,28 +70,5 @@ router.post('/logout', (req, res)=>{
   });
 });
 
-router.get('/save',(req,res)=>{
-  data.map(d=>{
-    let s = new Schedule({
-        year:2,
-        subject_code: d.subject_code,
-        description: d.description,
-        section_code: d.section_code,
-        lec: d.lec,
-        lab: d.lab,
-        units: d.units,
-        room_no: d.room_no,
-        schedule: d.schedule,
-        section: 5
-    });
-    s.save(err=>{
-      if(err) {
-        return res.json({success:false});
-      }
-    });
-  });
-  res.json({success:true});
-});
-
 
 module.exports = router;

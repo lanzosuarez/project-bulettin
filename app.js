@@ -1,15 +1,16 @@
 var express = require('express'),
-  path = require('path'),
-  favicon = require('serve-favicon'),
-  logger = require('morgan'),
-  cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
 var sched = require('./routes/sched');
 var event = require('./routes/event');
+var announcement = require('./routes/announcement');
 
 const passport = require('passport'),
     session = require('express-session'),
@@ -20,12 +21,12 @@ const passport = require('passport'),
 
 const uri = process.env.MONGOLAB_URI || 'mongodb://lanzosuarez:bobotngacla1234@ds143777.mlab.com:43777/cpe-bulettin';
 //const uri = 'localhost:27017/cpe-bulletin';
-mongoose.connect(uri, function(err){
-    if(err){
+mongoose.connect(uri, function (err) {
+    if (err) {
         console.log("Error connection to DB!");
         return;
     }
-    else{
+    else {
         console.log("Successfully connected!");
     }
 });
@@ -46,13 +47,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //SESSION SETUP
 app.use(session({
-  secret: 'This is a secret',
-  cookie: {
-    maxAge: 1000 * 60 * 60
-  },
-  store: store,
-  resave: false,
-  saveUninitialized: true
+    secret: 'This is a secret',
+    cookie: {
+        maxAge: 1000 * 60 * 60
+    },
+    store: store,
+    resave: false,
+    saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -63,6 +64,7 @@ app.use('/', index);
 app.use('/auth', auth);
 app.use('/sched', sched);
 app.use('/event', event);
+app.use('/announcement', announcement);
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -72,11 +74,11 @@ app.use(function (req, res, next) {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  return res.render('index');
-  // var err = new Error('Not Found');
-  // err.status = 404;
-  // next(err);
+app.use(function (req, res, next) {
+    return res.render('index');
+    // var err = new Error('Not Found');
+    // err.status = 404;
+    // next(err);
 });
 
 // error handler
