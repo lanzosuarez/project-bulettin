@@ -25,9 +25,8 @@ class GuestCon extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            access: false,
             infos: {
-                year: 2,
+                year: 1,
                 section: 1
             },
             keyword: ""
@@ -41,9 +40,7 @@ class GuestCon extends React.Component {
     }
 
     componentDidMount() {
-        this.props.adminActions.checkAdminAccess().then(() => {
-            this.setState({ access: this.props.admin !== null ? true : false });
-        });
+        this.props.adminActions.checkAdminAccess();
     }
     updateState(value, field) {
         let i = this.state.infos;
@@ -105,8 +102,13 @@ class GuestCon extends React.Component {
                     title={announcement.title}
                     value={announcement.description}
                     date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
+                    key={index}
                 />
-                <Link to={"/announcements/"+announcement._id}><FlatButton style={{ color: "white" }} label="Edit" /></Link>
+                {
+                    this.props.admin?
+                    <Link to={"/announcements/"+announcement._id}><FlatButton style={{ color: "white" }} label="Edit" /></Link>:
+                    null
+                }
             </div>
         });
         
@@ -122,6 +124,7 @@ return (
             <GuestTitle title={"Schedules"}
                 size={2} />
             <Schedules
+                id={this.props.admin}
                 onSearch={this.onSearch}
                 schedules={filtered}
                 defYearValue={this.state.infos.year}
@@ -134,7 +137,10 @@ return (
             <div className="row eventPads" >
                 {this.props.events.map((ev, index) =>
                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                        <GuestEvent onEditEvent={this.onEditEvent}
+                        <GuestEvent 
+                            key={index}
+                            id={this.props.admin}
+                            onEditEvent={this.onEditEvent}
                             onDeleteEvent={this.onDeleteEvent}
                             index={index} ev={ev}
                             param={this.props.routeParams.event}
@@ -150,9 +156,9 @@ return (
 }
 
 GuestCon.propTypes = {
-    messages: PropTypes.array.isRequired,
-    guests: PropTypes.array.isRequired,
-    socket: PropTypes.object.isRequired,
+    messages: PropTypes.array,
+    guests: PropTypes.array,
+    socket: PropTypes.object,
     socketActions: PropTypes.object.isRequired,
     admin: PropTypes.object
 };

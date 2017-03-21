@@ -29,10 +29,10 @@ const GuestEvent = (props) => {
         subtitleColor={"white"}
       />
       <CardActions>
-        <FlatButton style={styles.fontcolor} label="Edit" 
+        {props.id?<FlatButton style={styles.fontcolor} label="Edit" 
         onTouchTap={()=>{
           props.onEditEvent(props.ev._id);
-        }}/>
+        }}/>:null}
         {props.param?<FlatButton style={styles.fontcolor} label="Delete"  
         onTouchTap={()=>{
           props.onDeleteEvent(props.ev._id);

@@ -60,7 +60,7 @@ const FormEvent = (props) => {
           </div>
         </div>
         <div style={styles.buttons}>
-          <Link to="/events">
+          <Link to={props.params?"/events":"/"}>
             <RaisedButton label="Cancel" />
           </Link>
           <RaisedButton label="Save"

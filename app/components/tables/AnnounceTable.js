@@ -47,7 +47,7 @@ const AnnounceTable = (props) => {
         <TableRowColumn style={styles.columns.description}>{item.description}</TableRowColumn>
         <TableRowColumn style={styles.columns.date}>{item.createDate}</TableRowColumn>
         <TableRowColumn style={styles.columns.edit}>
-          <Link className="button" to={"/announcements/+" +item._id}>
+          <Link className="button" to={"/announcements/" +item._id}>
             <FloatingActionButton zDepth={0}
               mini={true}
               backgroundColor={grey200}

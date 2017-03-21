@@ -18,6 +18,7 @@ class AnnounceCon extends React.Component {
 
         this.updateState = this.updateState.bind(this);
         this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     componentDidMount() {
@@ -25,8 +26,10 @@ class AnnounceCon extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(this.state.announcement);
         console.log("on next", nextProps);
-        if (nextProps.announcement._id) {
+        if (nextProps.announcement.title!==this.state.announcement.title) {
+            console.log("satisfied");
             this.setState({ announcement: Object.assign({}, nextProps.announcement) });
         }
     }
@@ -43,24 +46,45 @@ class AnnounceCon extends React.Component {
         this.props.announcementActions.saveAnnouncement(this.state.announcement).then(res => {
             console.log(res);
             if (res.data.success) {
-                this.props.announcementActions.saveAnnouncementSuccess(res.data.response);
-                this.setState({
-                    announcement:{}
-                });
-                this.context.router.push("/announcements");
+                this.pushRoute();
+                !this.state.announcement._id ?
+                    this.props.announcementActions.saveAnnouncementSuccess(res.data.response) :
+                    this.props.announcementActions.updateAnnouncementSuccess(res.data.response);
+                
                 return;
             }
             console.log(res.data.response);
         }).catch(err => {
             throw err;
         });
-
     }
+
+    onDelete(id){
+        console.log(id);
+        this.props.announcementActions.deleteAnnouncement(id).then(res=>{
+            console.log(res);
+            if(res.data.success){
+                this.pushRoute()
+                this.props.announcementActions.deleteAnnouncementSuccess(id);
+                return;
+            }
+            console.log(res.data.response);
+        }).catch(err=>{
+            throw err;
+        });
+    }
+
+    pushRoute(){
+        this.context.router.push("/announcements");
+    }
+
     render() {
         console.log(this.state);
         return (
             <div>
                 <FormAnnounce
+                    param={this.props.routeParams.ann}
+                    onDelete={this.onDelete}
                     announcement={this.state.announcement}
                     updateState={this.updateState}
                     onSave={this.onSave}
@@ -88,7 +112,13 @@ function mapStateToProps(state, ownProps) {
         if (state.announcements.length > 0) {
             let found = findAnnouncement(state.announcements, ownProps.routeParams.ann);
             console.log(found);
+            if(!found.length){
+                window.location = "/announcements";
+            }
             ann = found[0];
+        }
+        else {
+            ann = { title: "", description: "" };
         }
     } else {
         ann = { title: "", description: "" };

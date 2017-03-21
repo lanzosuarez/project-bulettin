@@ -8,7 +8,7 @@ import SelectField from 'material-ui/SelectField';
 import PageBase from '../PageBase';
 
 const FormAnnounce = (props) => {
-
+  let {announcement, param} = props;
   const styles = {
     buttons: {
       marginTop: 30,
@@ -26,6 +26,7 @@ const FormAnnounce = (props) => {
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-8 col-lg-8 m-b-15 ">
             <TextField
+              value={announcement.title}
               onChange={props.updateState}
               name="title"
               hintText="Title"
@@ -38,6 +39,7 @@ const FormAnnounce = (props) => {
           <div className="col-xs-12 col-sm-6 col-md-12 col-lg-12 m-b-15 ">
             <TextField
               onChange={props.updateState}
+              value={announcement.description}
               name="description"
               hintText="Description"
               floatingLabelText="Description"
@@ -48,15 +50,17 @@ const FormAnnounce = (props) => {
           </div>
         </div>
         <div style={styles.buttons}>
-          <Link to="/announcements">
+          <Link to={announcement._id?"/announcements":"/"}>
           <RaisedButton label="Cancel"
             style={styles.saveButton}
             type="submit" />
           </Link>
-          <RaisedButton label="Delete"
+          {param?<RaisedButton label="Delete"
+            onTouchTap={()=>{
+              props.onDelete(announcement._id);
+            }}
             style={styles.saveButton}
-            type="submit"
-            secondary={true} />
+            secondary={true} />:null}
           <RaisedButton label="Save"
             style={styles.saveButton}
             type="submit"

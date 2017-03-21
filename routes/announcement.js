@@ -40,12 +40,47 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/', (req,res)=>{
-  let announcement = new Announcement({
-    title: req.body.title,
-    description: req.body.description
-  });
-  announcement.save((err,announcement)=>{
+router.post('/', (req, res) => {
+  if (req.body._id) {
+    Announcement.findById(req.body._id, (err, announcement)=>{
+      if(err){
+        handleError(err,res);
+        return;
+      }
+      if(!req.user){
+        handleUnautorized
+      }
+      announcement.title=req.body.title,
+      announcement.description=req.body.description
+      announcement.save(err=>{
+        if(err){
+          handleError(err,res);
+          return;
+        }
+        handleSuccess(announcement,res);
+      })
+    });
+  } else {
+    let announcement = new Announcement({
+      title: req.body.title,
+      description: req.body.description
+    });
+    announcement.save((err, announcement) => {
+      if (err) {
+        handleError(err, res);
+        return;
+      }
+      if (!req.user) {
+        handleUnautorized(res);
+        return;
+      }
+      handleSuccess(announcement, res);
+    });
+  }
+});
+
+router.delete('/:id', (req,res)=>{
+  Announcement.findById(req.params.id, (err,announcement)=>{
     if(err){
       handleError(err,res);
       return;
@@ -54,11 +89,15 @@ router.post('/', (req,res)=>{
       handleUnautorized(res);
       return;
     }
-    handleSuccess(announcement,res);
+    announcement.remove((err, announcement)=>{
+      if(err){
+        handleError(err,res);
+        return;
+      }
+      handleSuccess(announcement,res);
+    });
   });
 });
-
-
 
 
 module.exports = router;

@@ -30,13 +30,8 @@ class CalendarCon extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("on next", nextProps);
-        if (nextProps.event._id) {
+        if (nextProps.event.title !== this.state.event.title) {
             this.setState({ event: Object.assign({}, nextProps.event) });
-        } else {
-            if (nextProps.event.end) {
-                this.setState({ event: Object.assign({}, nextProps.event) });
-            }
         }
     }
 
@@ -55,7 +50,19 @@ class CalendarCon extends React.Component {
 
     saveEvent(e) {
         e.preventDefault();
-        this.props.eventActions.saveEvent(this.state.event);
+        this.props.eventActions.saveEvent(this.state.event).then(res => {
+            console.log(res);
+            if (res.data.success) {
+                this.routerPush();
+                this.state._id ?
+                    this.props.eventActions.updateEventSuccess(res.data.response) :
+                    this.props.eventActions.saveEventSuccess(res.data.response);
+                return;
+            }
+            console.log(res)
+        }).catch(err => {
+            throw err;
+        })
     }
 
     onEditEvent(id) {
@@ -67,14 +74,18 @@ class CalendarCon extends React.Component {
         console.log(id);
         this.props.eventActions.deleteEvent(id).then(res => {
             if (res.data.success) {
-                this.context.router.push('/events');
+                this.routerPush();
                 this.props.eventActions.deleteEventSuccess(res.data.response);
                 return;
             }
             console.log(res.data);
-        }).catch(err=>{
+        }).catch(err => {
             throw err;
         });
+    }
+
+    routerPush() {
+        this.context.router.push('/events');
     }
 
     render() {
@@ -82,6 +93,7 @@ class CalendarCon extends React.Component {
         return (
             <div>
                 <FormEvent
+                    param={this.props.routeParams.event}
                     event={this.state.event}
                     onSaveEvent={this.saveEvent}
                     updateState={this.updateState}
@@ -125,6 +137,8 @@ function mapStateToProps(state, ownProps) {
             let found = findEvent(state.events, ownProps.routeParams.event);
             console.log(found);
             event = found[0];
+        } else {
+            event = { title: "", description: "", end: new Date() };
         }
     } else {
         event = { title: "", description: "", end: new Date() };
