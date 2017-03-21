@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 class InfoBox extends React.Component {
 
   render() {
-    const {color, title, value, Icon} = this.props;
+    const {color, title, value, Icon, date} = this.props;
 
     const styles = {
       content: {
@@ -65,7 +65,7 @@ class InfoBox extends React.Component {
       <Card style={styles.bg}>
         <CardHeader
           title={<span style={styles.text} textStyle={styles.oT}>{title}</span>}
-          subtitle={<span style={styles.sub}>{value}</span>}
+          subtitle={<span style={styles.sub}>{date}</span>}
           avatar={
           <span style={styles.iconSpan}>
             <Icon color={white}
@@ -80,10 +80,6 @@ class InfoBox extends React.Component {
         />
         <CardText style={styles.fontcolor} expandable={true}>
           {value}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
         </CardText>
       </Card>
       </div>

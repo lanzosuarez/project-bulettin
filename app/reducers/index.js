@@ -5,6 +5,7 @@ import socket from './SocketReducer';
 import admin from './AdminReducer';
 import schedules from './ScheduleReducer';
 import events from './EventReducer';
+import announcements from './AnnouncementReducer';
 
 const rootReducer = combineReducers({
     messages,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     socket,
     admin,
     schedules,
-    events
+    events,
+    announcements
 });
 
 export default rootReducer;

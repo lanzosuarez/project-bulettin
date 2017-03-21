@@ -1,2 +1,11 @@
 /node_modules
-app.bundle.js
+
+.vscode
+.idea
+*.log*
+*.sublime-project
+*.sublime-workspace
+.idea
+
+public/js/*.js
+public/**/app.bundle.js

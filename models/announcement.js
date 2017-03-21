@@ -13,12 +13,8 @@ const announcementSchema = new Schema({
   },
   createDate:{
     type: Date,
-    default: Date.now()
-  },
-  isExpired:{
-    type: Boolean,
-    default: false
+    default: new Date()
   }
 });
 
-module.exports = mongooses.model('Announcement', announcementSchema);
+module.exports = mongoose.model('Announcement', announcementSchema);

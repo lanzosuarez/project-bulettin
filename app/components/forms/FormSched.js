@@ -7,7 +7,7 @@ import SelectField from 'material-ui/SelectField';
 import PageBase from '../PageBase';
 
 const FormSched = (props) => {
-  let { sched, updateSchedForText, updateSchedForSelect, onSaveSched } = props;
+  let { sched, updateSchedForText, updateSchedForSelect, onSaveSched, params } = props;
   const styles = {
     buttons: {
       marginTop: 30,
@@ -150,13 +150,19 @@ const FormSched = (props) => {
           </div>
         </div>
         <div style={styles.buttons}>
-           <RaisedButton label="Cancel"
-            style={styles.saveButton}
-            type="submit" />
-          <RaisedButton label="Delete"
-            style={styles.saveButton}
-            type="submit"
-            secondary={true} />
+          <Link to="/schedules">
+            <RaisedButton label="Cancel"
+              style={styles.saveButton}
+              type="submit" />
+          </Link>
+          {params ?
+            <RaisedButton label="Delete"
+              style={styles.saveButton}
+              onTouchTap={(e) => {
+                e.preventDefault();
+                props.onDeleteEvent(sched._id);
+              }}
+              secondary={true} /> : null}
           <RaisedButton label="Save"
             style={styles.saveButton}
             type="submit"

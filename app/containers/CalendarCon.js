@@ -17,11 +17,6 @@ class CalendarCon extends React.Component {
         super(props, context);
         this.state = {
             event: Object.assign({}, props.event),
-            infos: {
-                title: "",
-                description: "",
-                end: new Date()
-            }
         }
         this.updateState = this.updateState.bind(this);
         this.updateDate = this.updateDate.bind(this);

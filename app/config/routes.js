@@ -15,6 +15,7 @@ const routes = (
         <IndexRoute component={GuestCon} />
         <Route path="dashboard" component={DashboardCon} />
         <Route path="announcements" component={AnnounceCon} />
+        <Route path="announcements/:ann" component={AnnounceCon} />
         <Route path="schedules" component={SchedulesCon} />
         <Route path="schedules/:sched" component={SchedulesCon} />
         <Route path="events/:event" component={CalendarCon} />

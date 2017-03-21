@@ -7,6 +7,8 @@ export default function scheduleReducer(state = initialState.schedules, action) 
       return action.schedules;
     case types.SAVE_SCHEDULE_SUCCESS:
       return [...state, Object.assign({}, action.schedule)];
+    case types.DELETE_SCHEDULE_SUCCESS:
+      return [...state.filter(sched => sched._id !== action.schedule._id)];
     default:
       return state;
   }
