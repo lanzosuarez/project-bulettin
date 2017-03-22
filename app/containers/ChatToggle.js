@@ -47,7 +47,7 @@ class ChatToggle extends React.Component {
   render() {
     let s1 = { backgroundColor: "rgb(16, 14, 31)"};
     let s2 = { top: "-23px!important", right: "7px!important" }
-    let s3 = { backgroundColor: "rgb(43, 40, 56)", border: "1px solid white"}
+    let s3 = { backgroundColor: "rgb(43, 40, 56)", border: "1px solid white", width:"130px"}
 
     //let badge = null;
     // if(this.state.access){
@@ -66,7 +66,6 @@ class ChatToggle extends React.Component {
           buttonStyle={s3}
           labelColor={"white"}
           backgroundColor="rgb(165, 164, 173)"
-          fullWidth={true}
           style={s1}
         />
         {badge}

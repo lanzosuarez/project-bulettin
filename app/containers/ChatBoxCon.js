@@ -145,7 +145,7 @@ class ChatBoxCon extends React.Component {
                             style={styles.nickSubmit}
                             labelColor={"white"}
                             backgroundColor={"#2b2838"}
-                            buttonSyle={styles.float}
+                            buttonStyle={styles.float}
                             fullWidth={true}/>
                         </div>
                     </form>

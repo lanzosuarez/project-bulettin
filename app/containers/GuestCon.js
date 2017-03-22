@@ -131,7 +131,7 @@ return (
                 updateState={this.updateState}
             />
         </GuestPage>
-        <GuestPage color={"rgb(56, 53, 74)"}>
+        <GuestPage color={"rgb(56, 53, 74)"} shadow={"none"}>
             <GuestTitle title={"Events"}
                 size={0} />
             <div className="row eventPads" >

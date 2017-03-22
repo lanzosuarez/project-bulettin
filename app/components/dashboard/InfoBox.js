@@ -26,7 +26,7 @@ class InfoBox extends React.Component {
       text: {
         fontSize: 20,
         fontWeight: typography.fontWeightLight,
-        color: "white"
+        color: "white",
       },
       iconSpan: {
         float: 'left',
@@ -47,16 +47,23 @@ class InfoBox extends React.Component {
         borderLeftStyle: "solid",
         borderLeftColor: color,
         overflow:"hidden",
-        wordWrap:"break-word"
+        wordWrap:"break-word",
       },
       fontcolor:{
-          color: "white"
+          color: "white",
+          height:"108px",
+          wordWrap:"break-word",
+          overflow: "hidden",
+          textOverflow: "clip",
       },
       oT:{
         wordWrap:"break-word",
         overflow:"hidden",
         textOverflow:"ellipsis",
-        whiteSpace: "pre" 
+        whiteSpace: "pre",
+      },
+      white:{
+        color:"white"
       }
     };
 
@@ -78,6 +85,9 @@ class InfoBox extends React.Component {
           titleColor={"white"}
           subtitleColor={"white"}
         />
+        <CardActions>
+          <FlatButton style={styles.white} label="Edit" />
+        </CardActions>
         <CardText style={styles.fontcolor} expandable={true}>
           {value}
         </CardText>
