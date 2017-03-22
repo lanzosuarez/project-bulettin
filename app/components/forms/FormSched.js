@@ -7,6 +7,7 @@ import SelectField from 'material-ui/SelectField';
 import PageBase from '../PageBase';
 
 const FormSched = (props) => {
+  console.log(props);
   let { sched, updateSchedForText, updateSchedForSelect, onSaveSched, params } = props;
   const styles = {
     buttons: {
@@ -25,7 +26,6 @@ const FormSched = (props) => {
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-5 col-lg-5 m-b-15 ">
             <TextField
-              required={true}
               onChange={updateSchedForText}
               name="description"
               hintText="Description"
@@ -36,7 +36,6 @@ const FormSched = (props) => {
           </div>
           <div className="col-xs-12 col-sm-6 col-md-5 col-lg-5 m-b-15 ">
             <TextField
-              required={true}
               onChange={updateSchedForText}
               name="schedule"
               hintText="Schedule"
@@ -47,7 +46,6 @@ const FormSched = (props) => {
           </div>
           <div className="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-b-15 ">
             <TextField
-              required={true}
               onChange={updateSchedForText}
               name="subject_code"
               hintText="Subject Code"
@@ -60,8 +58,9 @@ const FormSched = (props) => {
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
             <SelectField
+              hintText={sched.year}
               onChange={updateSchedForSelect}
-              value={sched.year}
+              value={String(sched.year)}
               floatingLabelText="Year"
               fullWidth={true}>
               <MenuItem value="year" primaryText="1" />
@@ -116,7 +115,6 @@ const FormSched = (props) => {
 
           <div className="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-b-15 ">
             <TextField
-              required={true}
               onChange={updateSchedForText}
               value={sched.section_code}
               name="section_code"
@@ -128,7 +126,6 @@ const FormSched = (props) => {
 
           <div className="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-b-15 ">
             <TextField
-              required={true}
               onChange={updateSchedForText}
               value={sched.units}
               name="units"

@@ -19,7 +19,7 @@ const Footer = () => {
     return (
       <Paper style={styles.size} zDepth={1}>
         <div id="cpeLogo"><img id="footLg" src ="/images/1.png" /></div>
-            <h1 className="footh1">Team 17</h1>
+            <h1 className="footh1">Team 16</h1>
             <h1 className="footh1">Computer Engineering 5-1</h1>
             <h1 className="footh1">Polytechnic University of the Philippines</h1>
             <h1 className="footh1">All rights reserved 2017</h1>

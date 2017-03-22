@@ -31,7 +31,7 @@ class AuthApi {
   static onLogout(){
     return axios.post('/auth/logout')
     .then(res=>{
-      return res;
+      window.location=res.data.redirect
     }).catch(err=>{
       throw err;
     });

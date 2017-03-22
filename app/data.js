@@ -17,8 +17,8 @@ const data = {
     { text: 'CpE Schedules', icon: <GridOn/>, link: '/schedules' },
     { text: 'Calendar', icon: <Event/>, link: '/events' },
     { text: 'Chat Admin', icon: <Chat/>, link: '/chat' },
-    { text: 'Guest View', icon:<Web/>, link: '/Guest' },
-    { text: 'Sign Out', icon: <PermIdentity/>, link: '/signout' }
+    { text: 'Guest View', icon:<Web/>, link: '/' },
+
   ],
   tablePage: {
     items: [

@@ -7,6 +7,11 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import Data from '../../data';
 
+function getFormattedDate(d){
+  const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear();
+}
+
 const AnnounceTable = (props) => {
 
   const styles = {
@@ -42,10 +47,11 @@ const AnnounceTable = (props) => {
     announcements = <h1>No Annnouncements yet!</h1>
   } else {
     announcements = props.announcements.map(item => {
+      let d = getFormattedDate(new Date(item.createDate));
       return <TableRow key={item.id}>
         <TableRowColumn style={styles.columns.title}>{item.title}</TableRowColumn>
         <TableRowColumn style={styles.columns.description}>{item.description}</TableRowColumn>
-        <TableRowColumn style={styles.columns.date}>{item.createDate}</TableRowColumn>
+        <TableRowColumn style={styles.columns.date}>{d}</TableRowColumn>
         <TableRowColumn style={styles.columns.edit}>
           <Link className="button" to={"/announcements/" +item._id}>
             <FloatingActionButton zDepth={0}

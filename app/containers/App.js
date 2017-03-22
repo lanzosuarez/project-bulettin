@@ -8,7 +8,6 @@ import ChatToggle from './ChatToggle';
 import GuestHeader from '../components/guest/GuestHeader';
 import Data from '../data';
 
-
 class App extends React.Component {
 
   constructor(props, context) {
@@ -20,10 +19,10 @@ class App extends React.Component {
     console.log(context.store);
   }
 
-  componentDidMount(){
-    this.context.store.subscribe(()=>{
+  componentDidMount() {
+    this.context.store.subscribe(() => {
       console.log(this.context.store.getState());
-      this.setState({admin:this.context.store.getState().admin})
+      this.setState({ admin: this.context.store.getState().admin })
     })
   }
 
@@ -42,7 +41,6 @@ class App extends React.Component {
   render() {
     let { navDrawerOpen } = this.state;
     const paddingLeftDrawerOpen = 236;
-
     const styles = {
       header: {
         paddingLeft: navDrawerOpen ? paddingLeftDrawerOpen : 0,
@@ -56,14 +54,23 @@ class App extends React.Component {
         margin: "50px 0px 0px 0px"
       }
     };
+    let guestHeader;
+    if(location.pathname==="/login"||location.pathname==="/register"){
+      guestHeader=null;
+    } else {
+      guestHeader=<GuestHeader admin={this.state.admin}/>
+    }
 
     if (this.state.admin) {
       return (
         <MuiThemeProvider muiTheme={ThemeDefault}>
           <div>
+            {guestHeader}
             <Header styles={styles.header}
               handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)} />
-            <LeftDrawer navDrawerOpen={navDrawerOpen}
+            <LeftDrawer 
+              socket={this.context.store.getState().socket}
+              navDrawerOpen={navDrawerOpen}
               menus={Data.menus}
               username="User Admin" />
             <div style={styles.container}>
@@ -76,7 +83,7 @@ class App extends React.Component {
       return (
         <MuiThemeProvider muiTheme={ThemeDefault}>
           <div>
-            <GuestHeader />
+             {guestHeader}
             <div style={styles.container2}>
               {this.props.children}
             </div>

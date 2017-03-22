@@ -26,14 +26,14 @@ const loopTruMsgs = (messages) => {
             >
                 <div className="talk-bubble tri-right left-top">
                     <div className="text-head">
-                        <p>{msg.nickname} | 09:43am</p>
+                        <p>{msg.nickname} | {msg.sendDate}</p>
                     </div>
                     <div id={styles.chat} className="talk">
                         <p style={{ wordBreak: "break-all" }}>{msg.message}</p>
                     </div>
-                    <div className="seen">
-                        <p>&#10004; Seen 1:29pm</p>
-                    </div>
+                    {msg.seenDate?<div className="seen">
+                        <p>&#10004; {msg.seenDate}</p>
+                    </div>:null}
                 </div>
             </ListItem>
         </div>

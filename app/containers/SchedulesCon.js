@@ -82,18 +82,46 @@ class SchedulesCon extends React.Component {
     this.setState({ sched: Object.assign({}, sched) });
   }
 
+  handleErrors(errs){
+        let errMsg="";
+        Object.keys(errs).forEach(err=>{
+        errMsg+=`- ${errs[err].message} \n`;
+        }); 
+        this.errorAlert(errMsg);
+    }
+
+  checkErrors(errObj){
+      if(errObj.errors){
+          this.handleErrors(errObj.errors);
+      } else {
+          this.errorAlert(errObj.response);
+      }
+  }
+
+  errorAlert(err){
+    swal("Oooops!",err,"error")
+  }
+
+  successAlert(msg){
+    swal("Success",msg,"success");
+  } 
+
   onSaveSched(e) {
     e.preventDefault();
     this.props.scheduleActions.saveSched(this.state.sched).then(res => {
-      console.log(res);
       if (res.data.success) {
         let { updateSchedSuccess, saveSchedSuccess } = this.props.scheduleActions;
+        this.routerPush();
         this.state.sched._id ?
         updateSchedSuccess(res.data.response) :
         saveSchedSuccess(res.data.response);
-        this.routerPush();
+        this.successAlert("Schedule Added!")
+        
+      } else {
+        this.checkErrors(res.data.response);
       }
     }).catch(err => {
+      this.errorAlert(err);
       throw err;
     })
   }
@@ -104,9 +132,11 @@ class SchedulesCon extends React.Component {
         this.routerPush();
         this.props.scheduleActions.deleteSchedSuccess(res.data.response);
         return;
+      } else {
+        this.checkErrors(res.data.response);
       }
-      console.log(res.data);
     }).catch(err => {
+      this.errorAlert(err);
       throw err;
     });
   }

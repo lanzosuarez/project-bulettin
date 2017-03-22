@@ -5,10 +5,27 @@ import {white, blue600} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import {Link} from 'react-router';
 import Avatar from 'material-ui/Avatar';
+import PermIdentity from 'material-ui/svg-icons/action/perm-identity'
+import AuthApi from '../api/AuthApi';
+import swal from 'sweetalert';
+
+
+const redirect = ()=>{
+    swal({
+        title: "Logging out",
+        text: "Redirecting to dashboard...",
+        timer: 4000,
+        showConfirmButton: false
+      });
+  }
+
+const logout = ()=>{
+  redirect();
+  AuthApi.onLogout();
+}
 
 const LeftDrawer = (props) => {
   let { navDrawerOpen } = props;
-
   const styles = {
     logo: {
       cursor: 'pointer',
@@ -43,6 +60,15 @@ const LeftDrawer = (props) => {
               containerElement={<Link to={menu.link}/>}
             />
           )}
+          <MenuItem
+              onTouchTap={()=>{
+                props.socket.emit('admin-logout');
+                logout();
+              }}
+              style={styles.menuItem}
+              primaryText="Sign Out"
+              leftIcon={<PermIdentity/>}
+            />
         </div>
     </Drawer>
   );

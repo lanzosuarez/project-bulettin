@@ -8,6 +8,7 @@ export default function eventReducer(state = initialState.events, action) {
     case types.SAVE_EVENT_SUCCESS:
       return [...state, Object.assign({}, action.event)];
     case types.UPDATE_EVENT_SUCCESS:
+      console.log("on update reducer",action.event);
       return [
         ...state.filter(event => event._id !== action.event._id),
         Object.assign({}, action.event)

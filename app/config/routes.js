@@ -9,6 +9,7 @@ import ChatBoxCon from '../containers/ChatBoxCon';
 import GuestCon from '../containers/GuestCon';
 import RegisterCon from '../containers/RegisterCon';
 import LoginCon from '../containers/LoginCon';
+import NotFoundPage from '../containers/NotFoundPage';
 
 const routes = (
     <Route path="/" component={App}>
@@ -23,6 +24,7 @@ const routes = (
         <Route path="chat" component={ChatBoxCon} />
         <Route path="register" component={RegisterCon} />
         <Route path="login" component={LoginCon} />
+        <Route path="*" component={NotFoundPage} />
     </Route>
 );
 

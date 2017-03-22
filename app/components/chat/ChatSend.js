@@ -15,6 +15,7 @@ const ChatSend = (props) => {
         <form onSubmit={props.handleSend}>
             <div style={s1}>
               <TextField
+              disabled={!props.isOnline}
               onFocus={props.handleSeenMessages}
               hintText="Message Field"
               floatingLabelText="Message"
@@ -30,6 +31,7 @@ const ChatSend = (props) => {
             </div>
             <div>
               <RaisedButton
+                disabled={!props.isOnline}
                 label="SEND"
                 fullWidth={true}
                 icon={<ContentSend />}

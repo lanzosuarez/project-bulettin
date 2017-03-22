@@ -7,8 +7,13 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import Data from '../../data';
 
-const EventTable = () => {
+function getFormattedDate(d){
+  const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear();
+}
 
+const EventTable = (props) => {
+  console.log("event table",props);
   const styles = {
     floatingActionButton: {
       margin: 0,
@@ -38,6 +43,28 @@ const EventTable = () => {
     }
   };
 
+  let events = props.events.map(item =>{
+    let s = getFormattedDate(new Date(item.start));
+    let e = getFormattedDate(new Date(item.end));
+    return <TableRow key={item._id}>
+      <TableRowColumn style={styles.columns.title}>{item.title}</TableRowColumn>
+      <TableRowColumn style={styles.columns.description}>{item.description}</TableRowColumn>
+      <TableRowColumn style={styles.columns.date}>{s}</TableRowColumn>
+      <TableRowColumn style={styles.columns.date}>{e}</TableRowColumn>
+      <TableRowColumn style={styles.columns.edit}>
+          <Link className="button" to={"/events/"+item._id}>
+          <FloatingActionButton zDepth={0}
+              mini={true}
+              backgroundColor={grey200}
+              iconStyle={styles.editButton}>
+              <ContentCreate />
+          </FloatingActionButton>
+          </Link>
+      </TableRowColumn>
+    </TableRow>
+  });
+            
+
   return (
     <div>
       <PageBase title="Announcements"
@@ -51,32 +78,17 @@ const EventTable = () => {
             adjustForCheckbox={false}
             enableSelectAll={false}>
             <TableRow>
-              <TableHeaderColumn style={styles.columns.title}>SUBJECT CODE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.title}>TITLE</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.description}>DESCRIPTION</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.date}>SECTION CODE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.date}>START DATE</TableHeaderColumn>
+              <TableHeaderColumn style={styles.columns.date}>END DATE</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.edit}>EDIT</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
              displayRowCheckbox={false}
             deselectOnClickaway={false}>
-            {Data.tablePage.items.map(item =>
-              <TableRow key={item.id}>
-                <TableRowColumn style={styles.columns.title}>{item.subject_code}</TableRowColumn>
-                <TableRowColumn style={styles.columns.description}>{item.description}</TableRowColumn>
-                <TableRowColumn style={styles.columns.date}>{item.section_code}</TableRowColumn>
-               <TableRowColumn style={styles.columns.edit}>
-                    <Link className="button" >
-                    <FloatingActionButton zDepth={0}
-                        mini={true}
-                        backgroundColor={grey200}
-                        iconStyle={styles.editButton}>
-                        <ContentCreate />
-                    </FloatingActionButton>
-                    </Link>
-                </TableRowColumn>
-              </TableRow>
-            )}
+            {events}
           </TableBody>
         </Table>
       </PageBase>

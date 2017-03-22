@@ -17,14 +17,14 @@ function handleError(err, res) {
   });
 }
 function handleUnautorized(res) {
-  res.status(401).json({
+  res.json({
     success: false,
     response: "Unauthorized"
   });
 }
 
 function handleNotFound(res) {
-  res.status(404).json({
+  res.json({
     success: false,
     response: "Announcement Not Found"
   });
@@ -48,7 +48,12 @@ router.post('/', (req, res) => {
         return;
       }
       if(!req.user){
-        handleUnautorized
+        handleUnautorized(res);
+        return;
+      }
+      if(!announcement){
+        handleNotFound(res);
+        return;
       }
       announcement.title=req.body.title,
       announcement.description=req.body.description
@@ -87,6 +92,10 @@ router.delete('/:id', (req,res)=>{
     }
     if(!req.user){
       handleUnautorized(res);
+      return;
+    }
+    if(!announcement){
+      handleNotFound(res);
       return;
     }
     announcement.remove((err, announcement)=>{
