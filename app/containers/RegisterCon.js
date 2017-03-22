@@ -1,6 +1,10 @@
 import React, {PropTypes} from 'react';
 import AuthApi from '../api/AuthApi';
 import FormRegister from '../components/forms/FormRegister';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'react-redux';
+import * as adminActions from '../actions/AdminActions'
+import swal from 'sweetalert';
 
 
 class RegisterCon extends React.Component{
@@ -15,6 +19,10 @@ class RegisterCon extends React.Component{
     this.handleRegister = this.handleRegister.bind(this); 
     this.handleChange = this.handleChange.bind(this);
   }
+
+  componentDidMount() {
+    this.props.dispatch(adminActions.checkAdmin());
+  }
   
   handleChange(e){
     let user = this.state.user;
@@ -28,30 +36,46 @@ class RegisterCon extends React.Component{
       console.log(errs[err].message);
       errMsg+=`- ${errs[err].message} \n`;
     }); 
-    alert(errMsg);
+    swal("Oooops!",errMsg,"error");
+  }
+
+  redirectAlert(){
+    swal({
+      title: "You've been registered",
+      text: "Redirecting to login page...",
+      timer: 3000,
+      showConfirmButton: false
+    });
+  }
+
+  errorAlert(err){
+    swal("Oooops!",err,"error")
   }
 
   handleRegister(e){
+    if(this.state.password<6){
+      this.errorAlert("Password is too short");
+      return;
+    }
     e.preventDefault();
     AuthApi.onSignup(this.state.user).then(res=>{
-      console.log(res);
       if(!res.data.success){
         if(res.data.response.errors){
           this.handleErrors(res.data.response.errors);
           return;
         }
-        alert(res.data.response.message);
+        this.errorAlert(res.data.response.message);
         return;
       }
+      this.redirectAlert();
       window.location = "/login";
     }).catch(err=>{
-      alert(err);
-      throw(err);
+      this.errorAlert(err);
+      throw err;
     });
   }
 
   render(){
-    console.log(this.state.user);
     return(
        <FormRegister onRegister={this.handleRegister}
                    onChange={this.handleChange}
@@ -60,4 +84,4 @@ class RegisterCon extends React.Component{
   }
 }
 
-export default RegisterCon;
+export default connect()(RegisterCon);

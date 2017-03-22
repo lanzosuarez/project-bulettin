@@ -93,24 +93,32 @@ function onListening() {
 /*
 * socket io
 */
+const moment = require('moment');
 const _ = require('lodash');
+let admin;
 let messages = [];
 let users = [];
 let io = require('socket.io')(server);
 io.on('connect', socket => {
-  socket.on('join', name => {
-    console.log(name + " has connected!");
-    socket.nickname = name;
-    users[socket.nickname] = socket;
-    users.push({
-      nickname: socket.nickname,
-      id: socket.id
-    });
-    io.emit('all-users', users);
-    if(messages.length>110){
-      _.drop(messages,10)
+  socket.on('join', user => {
+    console.log(user.nickname + " has connected!");
+    if (user.nickname === "admin" && user.password) { //check if admin
+      admin = socket;
+      socket.nickname = user.nickname;
+      io.emit('admin-online', true); //then broadcast tat admin is online
+    } else {
+       socket.nickname = user.nickname;
     }
-    io.emit('all-messages',messages);
+    if (messages.length > 110) {
+      _.drop(messages, 10)
+    }
+    if(admin){
+      console.log("emit online");
+      io.emit('admin-online', true);
+    } else {
+      io.emit('admin-online', false);
+    }
+    socket.emit('all-messages', messages);
     console.log("messages", messages);
   });
 
@@ -118,26 +126,57 @@ io.on('connect', socket => {
     let toSend = {
       nickname: socket.nickname,
       message: data.message,
-      seen: false
+      seen: false,
+      sendDate: moment().format('LT'),
+      seenDate: null
     };
     console.log(toSend);
     messages.push(toSend);
     io.emit('message-from-server', toSend);
   });
 
-  socket.on('seen-all',()=>{
-    messages.map(msg=>{
-      if(msg.nickname!==socket.nickname){
-        msg.seen=true;
+  socket.on('seen-all', () => {
+    console.log("on seen all");
+    if(socket.nickname ==="admin"){
+      messages.map(msg=>{
+          if (msg.nickname !== "admin") {
+            if(!msg.seen){
+              msg.seen = true;
+              msg.seenDate = moment().format('LT');
+            }
+          }
+      })
+    } else {
+      messages.map(msg => {
+      if (msg.nickname !== socket.nickname && msg.nickname==="admin") {
+        if (!msg.seen) {
+          msg.seen = true;
+          msg.seenDate = moment().format('LT')
+        }
       }
-      });
+    });
+    }
+    io.emit('all-messages', messages);
+  });
+
+  socket.on('admin-logout', ()=>{
+    console.log("onlogout")
+    admin.disconnect();
+    admin=null;
+  });
+
+  socket.on('clear', ()=>{
+    console.log("on clear");
+    messages=[];
     io.emit('all-messages', messages);
   });
 
   socket.on('disconnect', () => {
+    if (socket.nickname === "admin") {
+      io.emit('admin-online', false);
+      console.log(socket.nickname + ' has disconnected');
+      return;
+    }
     console.log(socket.nickname + ' has disconnected');
-    users.splice(users.indexOf(socket.id), 1);
-    console.log(users.length);
-    io.emit('all-users', users);
   });
 });

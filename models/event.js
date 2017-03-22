@@ -5,11 +5,11 @@ let mongoose = require('mongoose'),
 const eventSchema = new Schema({
   title: {
     type: String,
-    required: [true, "Please supply a title"]
+    required: [true, "An event needs to have a title"]
   },
   description:{
     type: String,
-    required: [true, "Please supply a description"]
+    required: [true, "You need to supply a description"]
   },
   start:{
     type: Date,

@@ -26,8 +26,9 @@ class ChatBoxCon extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSend = this.handleSend.bind(this);
-        this.handleJoin = this.handleJoin.bind(this);
+        this.handleGuestJoin = this.handleGuestJoin.bind(this);
         this.handleSeenMessages = this.handleSeenMessages.bind(this);
+        this.clear = this.clear.bind(this);
     }
 
     componentDidMount(){
@@ -46,7 +47,7 @@ class ChatBoxCon extends React.Component {
                 },
                 joined:true
             });
-            this.props.socketActions.emitJoinClient("admin");
+            this.props.socketActions.emitJoinClient("admin", "d887d8s7ds8");
         }
     }
 
@@ -56,9 +57,13 @@ class ChatBoxCon extends React.Component {
         this.setState({ joined: true });
     }
 
-    handleJoin(e) {
+    handleGuestJoin(e) {
         e.preventDefault();
-        this.emitJoin(this.state.infos.nickname);
+        if(this.state.infos.nickname==="admin"){
+            alert("Please try another nickname");
+        } else {
+            this.emitJoin(this.state.infos.nickname);
+        }
     }
 
     getNickname() {
@@ -87,6 +92,12 @@ class ChatBoxCon extends React.Component {
         this.setState({unreads:unreads.length});
     }
 
+    clear(){
+        console.log("dsdsa");
+        this.props.socketActions.clearAll();
+    }
+
+
     render() {    
         const styles = {
             paper: {
@@ -114,7 +125,7 @@ class ChatBoxCon extends React.Component {
         if (!this.state.joined) {
             return (
                 <Paper style={styles.nick} zDepth={2} className="nickPaper">
-                    <form onSubmit={this.handleJoin}>
+                    <form onSubmit={this.handleGuestJoin}>
                         <div id="cpeLogo"><img id="nickLg" src ="/images/1.png" /></div>
                         <h2 id="nickh2">Enter your twitter username or a nickname</h2>
                         <TextField
@@ -144,9 +155,13 @@ class ChatBoxCon extends React.Component {
         return (
             <div>
                 <ChatBox >
-                    <ChatHeader />
+                    <ChatHeader 
+                        clear={this.clear}
+                        admin={this.props.admin}
+                        isOnline={this.props.isOnline}/>
                     <ChatItem messages={this.props.messages} />
                     <ChatSend
+                        isOnline={this.props.isOnline}
                         handleSeenMessages={this.handleSeenMessages}
                         handleChange={this.handleChange}
                         handleSend={this.handleSend}
@@ -158,10 +173,12 @@ class ChatBoxCon extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
+    console.log("on chat box con",state);
     return {
         messages: state.messages,
         guests: state.guests,
-        admin: state.admin
+        admin: state.admin,
+        isOnline: state.isOnline
     };
 }
 

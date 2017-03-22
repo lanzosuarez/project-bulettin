@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Calendar from '../components/dashboard/Calendar';
 import FormAnnounce from '../components/forms/FormAnnounce';
 import AnnounceTable from '../components/tables/AnnounceTable';
+import swal from 'sweetalert';
 
 import { connect } from 'react-redux';
 import * as announcementActions from '../actions/AnnouncementActions';
@@ -18,6 +19,7 @@ class AnnounceCon extends React.Component {
 
         this.updateState = this.updateState.bind(this);
         this.onSave = this.onSave.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     componentDidMount() {
@@ -25,8 +27,12 @@ class AnnounceCon extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(this.state.announcement);
         console.log("on next", nextProps);
-        if (nextProps.announcement._id) {
+        if (nextProps.announcement._id!==this.state.announcement._id) {
+            this.setState({ announcement: Object.assign({}, nextProps.announcement) });
+        } else {
+            if(nextProps.announcement.title!==this.state.announcement.title);
             this.setState({ announcement: Object.assign({}, nextProps.announcement) });
         }
     }
@@ -38,29 +44,77 @@ class AnnounceCon extends React.Component {
         this.setState({ announcement: Object.assign({}, i) });
     }
 
+    handleErrors(errs){
+        let errMsg="";
+        Object.keys(errs).forEach(err=>{
+        errMsg+=`- ${errs[err].message} \n`;
+        }); 
+        this.errorAlert(errMsg);
+    }
+
+    checkErrors(errObj){
+        if(errObj.errors){
+            this.handleErrors(errObj.errors);
+        } else {
+            this.errorAlert(errObj.response);
+        }
+    }
+
+    errorAlert(err){
+        swal("Oooops!",err,"error")
+    }
+
+    successAlert(msg){
+        swal("Success",msg,"success");
+    } 
+
+
     onSave(e) {
         e.preventDefault();
         this.props.announcementActions.saveAnnouncement(this.state.announcement).then(res => {
-            console.log(res);
             if (res.data.success) {
-                this.props.announcementActions.saveAnnouncementSuccess(res.data.response);
-                this.setState({
-                    announcement:{}
-                });
-                this.context.router.push("/announcements");
+                this.pushRoute();
+                !this.state.announcement._id ?
+                    this.props.announcementActions.saveAnnouncementSuccess(res.data.response) :
+                    this.props.announcementActions.updateAnnouncementSuccess(res.data.response);
+                    this.successAlert("Announcement saved!");
                 return;
+            } else{
+                this.checkErrors(res.data.response);
             }
-            console.log(res.data.response);
         }).catch(err => {
+            this.errorAlert(err);
             throw err;
         });
-
     }
+
+    onDelete(id){
+        console.log(id);
+        this.props.announcementActions.deleteAnnouncement(id).then(res=>{
+            if(res.data.success){
+                this.pushRoute()
+                this.props.announcementActions.deleteAnnouncementSuccess(id);
+                return;
+            } else {
+                this.checkErrors(res.data.response);
+            }
+        }).catch(err=>{
+            this.errorAlert(err);
+            throw err;
+        });
+    }
+
+    pushRoute(){
+        this.context.router.push("/announcements");
+    }
+
     render() {
-        console.log(this.state);
+        console.log("on render",this.state.announcement);
         return (
             <div>
                 <FormAnnounce
+                    param={this.props.routeParams.ann}
+                    onDelete={this.onDelete}
                     announcement={this.state.announcement}
                     updateState={this.updateState}
                     onSave={this.onSave}
@@ -82,13 +136,17 @@ function findAnnouncement(announcements, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log("on state", state);
     let ann;
     if (ownProps.routeParams.ann) {
         if (state.announcements.length > 0) {
             let found = findAnnouncement(state.announcements, ownProps.routeParams.ann);
-            console.log(found);
+            if(!found.length){
+                window.location = "/*";
+            }
             ann = found[0];
+        }
+        else {
+            ann = { title: "", description: "" };
         }
     } else {
         ann = { title: "", description: "" };

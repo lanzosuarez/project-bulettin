@@ -69,7 +69,7 @@ const Schedules = (props) => {
       <TableRowColumn style={styles.columns.units} className="sscenter">{sched.units}</TableRowColumn>
       <TableRowColumn style={styles.columns.room_no} className="sscenter">{sched.room_no}</TableRowColumn>
       <TableRowColumn style={styles.columns.schedule}>{sched.schedule}</TableRowColumn>
-      <TableRowColumn style={styles.columns.edit}>
+      {props.id?<TableRowColumn style={styles.columns.edit}>
         <Link className="button" to={"/schedules/" + sched._id}>
           <FloatingActionButton zDepth={0}
             mini={true}
@@ -78,7 +78,7 @@ const Schedules = (props) => {
             <ContentCreate />
           </FloatingActionButton>
         </Link>
-      </TableRowColumn>
+      </TableRowColumn>:null}
     </TableRow>
   );
 
@@ -110,7 +110,7 @@ const Schedules = (props) => {
               <TableHeaderColumn style={styles.columns.units} className="ssheader">UNITS</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.room_no} className="ssheader">ROOM</TableHeaderColumn>
               <TableHeaderColumn style={styles.columns.schedule} className="ssheader">SCHEDULE</TableHeaderColumn>
-              <TableHeaderColumn style={styles.columns.edit} className="ssheader">EDIT</TableHeaderColumn>
+              {props.id?<TableHeaderColumn style={styles.columns.edit} className="ssheader">EDIT</TableHeaderColumn>:null}
             </TableRow>
           </TableHeader>
           <TableBody

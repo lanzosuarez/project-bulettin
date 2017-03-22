@@ -84,16 +84,10 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   Schedule.findById(req.params.id, (err, sched) => {
     if (err) {
-      return res.json({
-        success: false,
-        response: err
-      });
+      return handleError(err,res);
     }
     if (!req.user) {
-      return res.status(401).json({
-        success: false,
-        response: "Unauthorized"
-      })
+      return handleUnautorized(res);
     }
     if (!sched) {
       return res.json({
@@ -103,15 +97,9 @@ router.delete('/:id', (req, res) => {
     }
     sched.remove((err, sched) => {
       if (err) {
-        return res.json({
-          success: false,
-          response: err
-        });
+        return handleError(err,res);
       }
-      res.json({
-        success: true,
-        response: sched
-      });
+      handleSuccess(sched,res);
     })
   });
 });
@@ -126,11 +114,11 @@ function handleSuccess(r, res) {
 function handleError(r, res) {
   res.json({
     success: false,
-    response: err
+    response: r
   });
 }
 function handleUnautorized(res) {
-  res.status(401).json({
+  res.json({
     success: false,
     response: "Unauthorized"
   });

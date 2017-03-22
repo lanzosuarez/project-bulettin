@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
         });
       }
       if (!req.user) {
-        return res.status(401).json({
+        return res.json({
           success: false,
           response: "Unauthorized"
         });
@@ -40,6 +40,7 @@ router.post('/', (req, res) => {
       }
       event.title = req.body.title;
       event.description = req.body.description;
+      event.start = req.body.start,
       event.end = req.body.end
       event.save(err => {
         if (err) {
@@ -58,6 +59,7 @@ router.post('/', (req, res) => {
     let event = new Event({
       title: req.body.title,
       description: req.body.description,
+      start: req.body.start,      
       end: req.body.end
     });
     event.save((err, event) => {
@@ -91,7 +93,7 @@ router.delete('/:id', (req, res) => {
       });
     }
     if (!req.user) {
-      return res.status(401).json({
+      return res.json({
         success: false,
         response: "Unauthorized"
       })

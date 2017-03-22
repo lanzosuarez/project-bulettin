@@ -49,19 +49,19 @@ class ChatToggle extends React.Component {
     let s2 = { top: "-23px!important", right: "7px!important" }
     let s3 = { backgroundColor: "rgb(43, 40, 56)", border: "1px solid white"}
 
-    let badge = null;
-    if(this.state.access){
-      badge = <Badge
+    //let badge = null;
+    // if(this.state.access){
+    let badge = <Badge
         badgeContent={this.checkUnreads()}
         primary={true}
         style={s2}
         />
-    }
+    // }
 
     return (
       <div>
         <RaisedButton
-          label={<div><p id="pToggle">Chat Me</p><i className="fa fa-circle online" id="indicatorOnline"></i></div>}
+          label={<div><p id="pToggle">Chat Me</p><i className={this.props.isOnline?"fa fa-circle online":"fa fa-circle offline"} id="indicatorOnline"></i></div>}
           onTouchTap={this.handleToggle}
           buttonStyle={s3}
           labelColor={"white"}
@@ -82,6 +82,7 @@ function mapStateToProps(state, ownProps) {
   return {
     messages: state.messages,
     admin: state.admin,
+    isOnline: state.isOnline
 
   };
 }
