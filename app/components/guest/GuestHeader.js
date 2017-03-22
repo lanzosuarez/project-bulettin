@@ -22,12 +22,15 @@ const GuestHeader = (props) => {
                 <div id="guestHd">
                     <div>
                         <div id="cpeLogo"><img id="cpeLg" src ="/images/1.png" /></div>
-                        <p id="cpeSub">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+                        <p id="cpeSub">Be updated. Be connected</p>
+                        <p id="cpeSub">Computer Engineering</p>
+                        <p id="cpeSub">Poltechnic University of the Philippines</p>
                     </div>
                 </div>            
             </div>:null}
             {!props.admin?<AppBar id="guestBar"
                 title= {<GuestButton />}
+                showMenuIconButton={false}
                 iconElementRight={
                 <div style={style.iconsRightContainer}>
                   <IconMenu color={white}

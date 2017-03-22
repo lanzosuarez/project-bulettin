@@ -270,6 +270,10 @@ a:hover {
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
 }
+#cpeLogo2{
+    background-color: #4c4a58;
+    text-align: center;
+}
 /*------------END-------------------*/
  /*------------SCHEDULES-------------*/
  .ssheader{

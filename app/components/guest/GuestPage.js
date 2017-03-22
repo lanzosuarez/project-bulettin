@@ -3,14 +3,15 @@ import Paper from 'material-ui/Paper';
 
 const GuestPage = (props) => {
 
-    const {color, size} = props;
+    const {color, size, shadow} = props;
     const styles = {
         size:{
             minHeight: "500px",
             width: "100%", 
             backgroundColor: color,
             color:"white",
-            padding: "46px 38px"
+            padding: "46px 38px",
+            boxShadow: shadow
         }
     };
     return (

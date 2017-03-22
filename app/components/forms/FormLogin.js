@@ -17,7 +17,9 @@ const FormLogin = (props) => {
       minWidth: 320,
       maxWidth: 400,
       height: 'auto',
-      margin: 'auto'
+      margin: 'auto',
+      position: "relative",
+      top:" 144px",
     },
     paper: {
       padding: 20,
@@ -28,7 +30,7 @@ const FormLogin = (props) => {
       padding: 10
     },
     flatButton: {
-      color: grey500
+      color: "white"
     },
     checkRemember: {
       style: {
@@ -73,7 +75,7 @@ const FormLogin = (props) => {
         <div style={styles.loginContainer}>
 
           <Paper style={styles.paper}>
-
+            <div id="cpeLogo2"><img id="nickLg" src ="/images/1.png" /></div>
             <form onSubmit={props.onLogin}>
               <TextField
                 hintText="E-mail"
