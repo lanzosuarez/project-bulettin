@@ -7,16 +7,19 @@ import 'flexboxgrid/css/flexboxgrid.css';
 import configureStore from './store/ConfigureStore';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages } from './actions/SocketActions';
+import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages, isAdminOnline } from './actions/SocketActions';
 import { loadScheds } from './actions/ScheduleActions';
 import { loadEvents } from './actions/EventActions';
 import { loadAnnouncements } from './actions/AnnouncementActions';
+import '../node_modules/sweetalert/dist/sweetalert.css';
+import '../node_modules/sweetalert/dist/sweetalert.min.js';
 
 injectTapEventPlugin();
 const store = configureStore();
 //dispatch socket actions
 store.dispatch(initializeSocket()); //initialize socket
 store.dispatch(onAllUser()); //listener for  all users event
+store.dispatch(isAdminOnline());//listens if admin is online
 store.dispatch(onMessageFromServer()); //initialize listener for messages from server
 store.dispatch(onAllMessages()); //listener for all messages event
 store.dispatch(loadScheds())//load schedules

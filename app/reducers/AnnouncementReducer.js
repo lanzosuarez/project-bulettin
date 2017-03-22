@@ -10,10 +10,10 @@ export default function announcementReducer(state = initialState.announcements, 
     case types.UPDATE_ANNOUNCEMENT_SUCCESS:
       return [
         ...state.filter(announcement => announcement._id !== action.announcement._id),
-        Object.assign({}, action.event)
+        Object.assign({}, action.announcement)
       ];
     case types.DELETE_ANNOUNCEMENT_SUCCESS:
-      return [...state.filter(announcement=>announcement._id !== action.announcement._id)];
+      return [...state.filter(announcement=>announcement._id !== action.id)];
     default:
       return state;
   }

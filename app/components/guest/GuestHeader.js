@@ -9,7 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import GuestButton from './GuestButton';
 import {white} from 'material-ui/styles/colors';
 
-const GuestHeader = () => {
+const GuestHeader = (props) => {
     const style = {
         height: "373px",
         width: "100%",
@@ -26,7 +26,7 @@ const GuestHeader = () => {
                     </div>
                 </div>            
             </div>
-            <AppBar id="guestBar"
+            {!props.admin?<AppBar id="guestBar"
                 title= {<GuestButton />}
                 iconElementRight={
                 <div style={style.iconsRightContainer}>
@@ -41,7 +41,7 @@ const GuestHeader = () => {
                   </IconMenu>
                 </div>
               }
-            />
+            />:null}
          </div>
     );
 };

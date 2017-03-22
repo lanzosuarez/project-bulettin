@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import AuthApi from '../api/AuthApi';
 import {connect} from 'react-redux';
 import FormLogin from '../components/forms/FormLogin'
+import swal from 'sweetalert';
 
 class LoginCon extends React.Component{
   constructor(props){
@@ -30,26 +31,40 @@ class LoginCon extends React.Component{
     this.setState({user:user});
   }
 
+  
+  errorAlert(err){
+    swal("Oooops!",err,"error")
+  }
+
+  redirect(){
+     swal({
+        title: "Authenticated",
+        text: "Redirecting to dashboard...",
+        timer: 3000,
+        showConfirmButton: false
+      });
+  }
+
   handleErrors(errs){
     let errMsg="";
     Object.keys(errs).forEach(err=>{
       errMsg+=`- ${errs[err].message} \n`;
     }); 
-    alert(errMsg);
+    this.errorAlert(errMsg);
   }
 
   handleLogin(e){
     e.preventDefault();
     AuthApi.onLogin(this.state.user)
-    .then(res=>{
+    .then(res=>{  
       if(res.data.success){
-        alert("success");
+        this.redirect();
         window.location = "/dashboard";
         return;
       }
-      alert(res.data.response);
+      this.errorAlert(res.data.response);
     }).catch(err=>{
-      alert(err);
+      this.errorAlert(err);
       throw(err);
     });
   }

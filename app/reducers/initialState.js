@@ -8,5 +8,6 @@ export default {
     schedules: [],
     events:[],
     socket: null,
-    ajaxCallInProgress:0
+    ajaxCallInProgress:0,
+    isOnline: false
 };

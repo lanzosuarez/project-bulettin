@@ -18,7 +18,7 @@ class SchedulesCon extends React.Component {
     this.state = {
       sched: Object.assign({}, props.sched),
       infos: {
-        year: 2,
+        year: 1,
         section: 1
       },
       keyword: ""
@@ -64,7 +64,6 @@ class SchedulesCon extends React.Component {
           s.section_code.indexOf(keyword) > -1
       });
     }
-
     return s
   }
   onSearch(e) {
@@ -83,22 +82,67 @@ class SchedulesCon extends React.Component {
     this.setState({ sched: Object.assign({}, sched) });
   }
 
+  handleErrors(errs){
+        let errMsg="";
+        Object.keys(errs).forEach(err=>{
+        errMsg+=`- ${errs[err].message} \n`;
+        }); 
+        this.errorAlert(errMsg);
+    }
+
+  checkErrors(errObj){
+      if(errObj.errors){
+          this.handleErrors(errObj.errors);
+      } else {
+          this.errorAlert(errObj.response);
+      }
+  }
+
+  errorAlert(err){
+    swal("Oooops!",err,"error")
+  }
+
+  successAlert(msg){
+    swal("Success",msg,"success");
+  } 
+
   onSaveSched(e) {
     e.preventDefault();
-    this.props.scheduleActions.saveSched(this.state.sched);
+    this.props.scheduleActions.saveSched(this.state.sched).then(res => {
+      if (res.data.success) {
+        let { updateSchedSuccess, saveSchedSuccess } = this.props.scheduleActions;
+        this.routerPush();
+        this.state.sched._id ?
+        updateSchedSuccess(res.data.response) :
+        saveSchedSuccess(res.data.response);
+        this.successAlert("Schedule Added!")
+        
+      } else {
+        this.checkErrors(res.data.response);
+      }
+    }).catch(err => {
+      this.errorAlert(err);
+      throw err;
+    })
   }
 
   onDeleteEvent(id) {
     this.props.scheduleActions.deleteEvent(id).then(res => {
       if (res.data.success) {
-        this.context.router.push('/schedules');
+        this.routerPush();
         this.props.scheduleActions.deleteSchedSuccess(res.data.response);
         return;
+      } else {
+        this.checkErrors(res.data.response);
       }
-      console.log(res.data);
     }).catch(err => {
+      this.errorAlert(err);
       throw err;
     });
+  }
+
+  routerPush() {
+    this.context.router.push('/schedules');
   }
 
   render() {
@@ -114,6 +158,7 @@ class SchedulesCon extends React.Component {
           onDeleteEvent={this.onDeleteEvent}
         />
         <Schedules
+          id={this.props.admin}
           onSearch={this.onSearch}
           schedules={filtered}
           defYearValue={this.state.infos.year}
@@ -133,6 +178,10 @@ function findSched(schedules, id) {
   });
 }
 
+function freshSched() {
+  return { section: 1, year: 1, description: '', schedule: '', subject_code: '', section_code: '', lec: '', lab: '', units: '', room_no: '' };
+}
+
 function mapStateToProps(state, ownProps) {
   let sched;
   if (ownProps.routeParams.sched) {
@@ -140,11 +189,14 @@ function mapStateToProps(state, ownProps) {
       let id = ownProps.routeParams.sched;
       sched = findSched(state.schedules, id);
       console.log("onfind", sched);
+    } else {
+      sched = freshSched();
     }
   } else {
-    sched = { section: 1, year: 1, description: '', schedule: '', subject_code: '', section_code: '', lec: '', lab: '', units: '', room_no: '' };
+    sched = freshSched();
   }
   return {
+    admin: state.admin,
     sched: sched,
     schedules: state.schedules
   };

@@ -8,11 +8,11 @@ const schedSchema = new Schema({
   },
   subject_code:{
     type: String,
-    required: [true, "Please supply a subject code"]
+    required: [true, "Subject Code was not supplied"]
   },
   description:{
     type: String,
-    required: [true, "Please supply a description"]
+    required: [true, "Name of the subject is missing"]
   },
   section_code:{
     type: String,
@@ -36,7 +36,7 @@ const schedSchema = new Schema({
   },
   schedule:{
     type: String,
-    required: [true, "Subject schedule is required"]
+    required: [true, "Subject schedule is missing"]
   },
   section: {
     type:Number,

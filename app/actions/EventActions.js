@@ -1,16 +1,16 @@
 import * as types from './ActionTypes';
 import EventApi from '../api/EventApi';
-import {browserHistory} from 'react-dom';
+import { browserHistory } from 'react-dom';
 
 function loadEventsSuccess(events) {
   return { type: types.LOAD_EVENTS_SUCCESS, events }
 }
 
-function saveEventsSuccess(event) {
+export function saveEventSuccess(event) {
   return { type: types.SAVE_EVENT_SUCCESS, event }
 }
 
-function updateEventSuccess(event) {
+export function updateEventSuccess(event) {
   return { type: types.UPDATE_EVENT_SUCCESS, event }
 }
 
@@ -35,15 +35,8 @@ export function loadEvents() {
 
 export function saveEvent(event) {
   return function (dispatch) {
-    let lastEvnt = event
     return EventApi.onAddEvent(event).then(res => {
-      if (res.data.success) {
-        lastEvnt._id ?
-          dispatch(updateEventSuccess(res.data.response)) :
-          dispatch(saveEventsSuccess(res.data.response));
-        return;
-      }
-      console.log(res.data);
+      return res;
     }).catch(err => {
       throw err;
     });

@@ -17,7 +17,14 @@ class AnnouncementApi{
       throw err;
     });
   }
-  
+
+  static onDelete(id){
+    return axios.delete('/announcement/'+id).then(res=>{
+      return res;
+    }).catch(err=>{
+      throw err;
+    })
+  }
 }
 
 export default AnnouncementApi

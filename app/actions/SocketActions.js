@@ -6,12 +6,22 @@ export function initializeSocketSuccess() {
     return { type: types.INITIALIZE_SOCKET_SUCCESS }
 };
 
+function adminOnline(status){
+    return { type: types.ADMIN_ONLINE, status };
+}
+
+function adminOffline(status){
+    return { type: types.ADMIN_OFFLINE, status };
+}
+
 //open socket
 export function initializeSocket() {
     return function (dispatch) {
         dispatch(initializeSocketSuccess());
     };
 };
+
+
 //load all user listener
 export function onAllUser() {
     return function (dispatch, getState) {
@@ -31,6 +41,15 @@ export function onMessageFromServer() {
         });
     };
 };
+// admin online listener
+export function isAdminOnline(){
+    return function (dispatch, getState){
+        const { socket } = getState();
+        socket.on('admin-online', status=>{
+            dispatch(adminOnline(status));
+        });
+    }
+}
 
 //load all messages for newly joined user
 export function onAllMessages() {
@@ -51,10 +70,10 @@ export function emitMessageFromUser(message) {
     };
 };
 //join emitter
-export function emitJoinClient(nickname) {
+export function emitJoinClient(nickname, password=null) {
     return function (dispatch, getState) {
         const { socket } = getState();
-        socket.emit('join', nickname);
+        socket.emit('join', {nickname,password});
     };
 };
 
@@ -64,5 +83,22 @@ export function seenAll(){
         socket.emit('seen-all');
     };
 }
+
+export function clearAll(){
+    return function(dispatch, getState){
+        const {socket} = getState();
+        socket.emit('clear');
+    };
+}
+
+// export function adminLogout(){
+//     return function(dispatch,getState){
+//         console.log("logout on socket actions");
+//         const {socket} = getState();
+//         socket.emit('admin-logout');
+//     }
+// }
+
+
 
 

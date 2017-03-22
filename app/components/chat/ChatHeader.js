@@ -31,15 +31,17 @@ const ChatHeader = (props) => {
           <Avatar src="/images/elyse.png" />
           <div>
             <h1 id="adName">Admin</h1>
-            <i className="fa fa-circle online" id="isOnline"></i>
-            <h1 id="adOl">is online</h1>
+            <i className={props.isOnline?"fa fa-circle online":"fa fa-circle offline"} id="isOnline"></i>
+            <h1 id="adOl">{props.isOnline?"is Online":"is Offline"}</h1>
           </div>
           <FontIcon className="muidocs-icon-custom-sort" />
           <ToolbarSeparator />
-           <RaisedButton label="Clear All" 
+           {props.admin?<RaisedButton label="Clear All" 
            style={styles.bg}
            buttonStyle={styles.top}
-           secondary={true}/>
+           secondary={true}
+           onTouchTap={props.clear}
+           />:null}
         </ToolbarGroup>
       </Toolbar>
   );

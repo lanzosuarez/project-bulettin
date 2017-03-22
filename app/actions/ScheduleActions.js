@@ -5,8 +5,12 @@ function loadSchedsSuccess(schedules) {
   return { type: types.LOAD_SCHEDULES_SUCCESS, schedules };
 }
 
-function saveSchedSuccess(schedule) {
-  return { type: types.SAVE_SCHEDULE_SUCCESS, schedule }
+export function saveSchedSuccess(schedule) {
+  return { type: types.SAVE_SCHEDULE_SUCCESS, schedule };
+}
+
+export function updateSchedSuccess(schedule){
+  return { type: types.UPDATE_SCHEDULE_SUCCESS, schedule };
 }
 
 export function deleteSchedSuccess(schedule){
@@ -29,27 +33,11 @@ export function loadScheds() {
   }
 };
 
-function findIndex(scheds, toFind) {
-  let index;
-  for (var x = 0; x < scheds.length; x++) {
-    if (scheds[x]._id == toFind) {
-      index = x;
-      break;
-    }
-  }
-  return index;
-}
 
 export function saveSched(schedule) {
-  return function (dispatch, getState) {
-    let { schedules } = getState();
-    SchedApi.saveSched(schedule).then(res => {
-      if (res.data.success) {
-        let i = [...schedules];
-        let index = findIndex(i, res.data.response._id);
-        i.splice(index, 1, res.data.response);
-        dispatch(loadScheds(i));
-      }
+  return function (dispatch) {
+    return SchedApi.saveSched(schedule).then(res => {
+      return res;
     }).catch(err => {
       alert(err);
       throw err;
@@ -57,7 +45,6 @@ export function saveSched(schedule) {
   }
 
 }
-
 
 export function deleteEvent(id) {
   return function (dispatch) {

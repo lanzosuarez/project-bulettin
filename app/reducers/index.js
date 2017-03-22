@@ -6,6 +6,7 @@ import admin from './AdminReducer';
 import schedules from './ScheduleReducer';
 import events from './EventReducer';
 import announcements from './AnnouncementReducer';
+import isOnline from './IsOnlineReducer';
 
 const rootReducer = combineReducers({
     messages,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     admin,
     schedules,
     events,
-    announcements
+    announcements,
+    isOnline
 });
 
 export default rootReducer;
