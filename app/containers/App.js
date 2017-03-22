@@ -58,7 +58,7 @@ class App extends React.Component {
     if(location.pathname==="/login"||location.pathname==="/register"){
       guestHeader=null;
     } else {
-      guestHeader=<GuestHeader admin={this.state.admin}/>
+      guestHeader=<GuestHeader path={location.pathname} admin={this.state.admin}/>
     }
 
     if (this.state.admin) {

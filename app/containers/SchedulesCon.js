@@ -126,11 +126,38 @@ class SchedulesCon extends React.Component {
     })
   }
 
+  confirmDeletion(id,self){
+    swal({
+      title: "Are you sure?",
+      text: "Click cancel to go back",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        self.processDeletion(id);
+      } else {
+        swal("Cancelled!","Deletion canceled","error");
+      }
+    });
+  }
+
   onDeleteEvent(id) {
+    let self=this
+    this.confirmDeletion(id,self);
+  }
+
+  processDeletion(id){
     this.props.scheduleActions.deleteEvent(id).then(res => {
       if (res.data.success) {
         this.routerPush();
         this.props.scheduleActions.deleteSchedSuccess(res.data.response);
+        this.successAlert("Schedule deleted!");
         return;
       } else {
         this.checkErrors(res.data.response);
@@ -187,8 +214,11 @@ function mapStateToProps(state, ownProps) {
   if (ownProps.routeParams.sched) {
     if (state.schedules.length > 0) {
       let id = ownProps.routeParams.sched;
-      sched = findSched(state.schedules, id);
-      console.log("onfind", sched);
+      let found = findSched(state.schedules, id);
+      if(!found){
+        window.location="/schedules";
+      }
+      sched=found;
     } else {
       sched = freshSched();
     }

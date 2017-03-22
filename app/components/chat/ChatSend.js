@@ -16,6 +16,7 @@ const ChatSend = (props) => {
             <div style={s1}>
               <TextField
               disabled={!props.isOnline}
+              onMouseEnter={props.handleSeenMessages}
               onFocus={props.handleSeenMessages}
               hintText="Message Field"
               floatingLabelText="Message"
