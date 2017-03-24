@@ -113,14 +113,12 @@ const FormLogin = (props) => {
             <Link to="/register">
               <FlatButton
                 label="Register"
-                href="/"
                 style={styles.flatButton}
                 icon={<PersonAdd />}
               />
             </Link>
             <FlatButton
               label="Forgot Password?"
-              href="/"
               style={styles.flatButton}
               icon={<Help />}
             />

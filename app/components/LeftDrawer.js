@@ -13,7 +13,7 @@ import swal from 'sweetalert';
 const redirect = ()=>{
     swal({
         title: "Logging out",
-        text: "Redirecting to dashboard...",
+        text: "Redirecting to guest viewww...",
         timer: 4000,
         showConfirmButton: false
       });

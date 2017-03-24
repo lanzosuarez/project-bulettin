@@ -22,6 +22,8 @@ class DashboardCon extends React.Component {
   constructor(props, context) {
     super(props);
     this.navigateToGuest = this.navigateToGuest.bind(this);
+    this.getRandomColor = this.getRandomColor.bind(this)
+    this.supplyIcon = this.supplyIcon.bind(this);
   }
 
   componentDidMount() {
@@ -32,45 +34,42 @@ class DashboardCon extends React.Component {
     this.context.router.push("/");
   }
 
+  getRandomColor(arr) {
+    let randNum = Math.floor(Math.random() * 4);
+    return arr[randNum];
+  }
+
+  supplyIcon(arr) {
+    let randNum = Math.floor(Math.random() * 2)
+    return arr[randNum];
+  }
+
   render() {
+     const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let colors = [pink600, cyan600, purple600, orange600];
+        let icons = [Faculties, Assessment];
+        let announcements = this.props.announcements.map((announcement, index) => {
+            let getColor = this.getRandomColor(colors);
+            let getIcon = this.supplyIcon(icons);
+            let d = new Date(announcement.createDate);
+            return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+                <InfoBox Icon={getIcon}
+                    id={announcement._id}
+                    color={getColor}
+                    title={announcement.title}
+                    value={announcement.description}
+                    date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
+                    key={index}
+                    admin={this.props.admin}
+                />
+            </div>
+        });
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
         <RaisedButton label="Go to Guest" secondary={true} className="goTo" onTouchTap={this.navigateToGuest} />
         <div className="row">
-
-          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <InfoBox Icon={Faculties}
-              color={pink600}
-              title="Announcement"
-              value="Announcement subheader"
-            />
-          </div>
-
-
-          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <InfoBox Icon={ThumbUp}
-              color={cyan600}
-              title="Announcement"
-              value="Announcement subheader"
-            />
-          </div>
-
-          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <InfoBox Icon={Assessment}
-              color={purple600}
-              title="Announcement"
-              value="Announcement subheader"
-            />
-          </div>
-
-          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <InfoBox Icon={Face}
-              color={orange600}
-              title="Announcement"
-              value="Announcement subheader"
-            />
-          </div>
+          {announcements}
         </div>
 
         <div className="row">
@@ -104,7 +103,8 @@ DashboardCon.contextTypes = {
 function mapStateToProps(state, ownProps) {
   return {
     admin: state.admin,
-    events: state.events
+    events: state.events,
+    announcements: state.announcements
   };
 }
 

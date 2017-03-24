@@ -6,6 +6,7 @@ import ChatBox from '../components/chat/ChatBox';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Loading from '../components/Loading';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -21,7 +22,7 @@ class ChatBoxCon extends React.Component {
                 nickname: "",
             },
             joined: false,
-            unreads:0
+            unreads: 0,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,27 +32,27 @@ class ChatBoxCon extends React.Component {
         this.clear = this.clear.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let n = this.getNickname();
-        if(n){
+        if (n) {
             this.emitJoin(n);
         }
     }
- 
+
     componentWillReceiveProps(nextProps) {
         if (this.props.admin != nextProps.admin) {
             this.setState({
-                admin:Object.assign({},nextProps.admin),
-                infos:{
-                    nickname:"admin"
+                admin: Object.assign({}, nextProps.admin),
+                infos: {
+                    nickname: "admin"
                 },
-                joined:true
+                joined: true
             });
             this.props.socketActions.emitJoinClient("admin", "d887d8s7ds8");
         }
     }
 
-    emitJoin(n){
+    emitJoin(n) {
         localStorage.setItem('nickname', n);
         this.props.socketActions.emitJoinClient(this.getNickname());
         this.setState({ joined: true });
@@ -59,7 +60,7 @@ class ChatBoxCon extends React.Component {
 
     handleGuestJoin(e) {
         e.preventDefault();
-        if(this.state.infos.nickname==="admin"){
+        if (this.state.infos.nickname === "admin") {
             alert("Please try another nickname");
         } else {
             this.emitJoin(this.state.infos.nickname);
@@ -72,6 +73,7 @@ class ChatBoxCon extends React.Component {
 
     handleSend(e) {
         e.preventDefault();
+        console.log(e.target.reset());
         this.props.socketActions.emitMessageFromUser(this.state.infos.message);
     }
 
@@ -81,52 +83,52 @@ class ChatBoxCon extends React.Component {
         this.setState({ infos: infos });
     }
 
-    handleSeenMessages(){
+    handleSeenMessages() {
         this.props.socketActions.seenAll();
     }
 
-    
+
     checkUnreads() {
         const adminMsgs = this.props.messages.filter(message => message.nickname !== this.infos.nickname);
         const unreads = adminMsgs.filter(message => message.seen === false);
-        this.setState({unreads:unreads.length});
+        this.setState({ unreads: unreads.length });
     }
 
-    clear(){
+    clear() {
         console.log("dsdsa");
         this.props.socketActions.clearAll();
     }
 
 
-    render() {    
+    render() {
         const styles = {
             paper: {
                 height: "100%",
                 padding: 10
             },
-            nick:{
+            nick: {
                 maxWidth: "309px",
                 padding: "27px",
                 margin: "157px 0px 0px 47px",
                 color: "rgb(255, 255, 255) !important",
                 backgroundColor: "rgb(127, 126, 138) !important"
             },
-            nickSubmit:{
-               backgroundColor:" #525154",
-               boxShadow:"none !important",
+            nickSubmit: {
+                backgroundColor: " #525154",
+                boxShadow: "none !important",
             },
-            float:{
-                color:"white"
+            float: {
+                color: "white"
             },
-            input:{
-                color:"rgb(199, 199, 199)"
+            input: {
+                color: "rgb(199, 199, 199)"
             }
         };
         if (!this.state.joined) {
             return (
                 <Paper style={styles.nick} zDepth={2} className="nickPaper">
                     <form onSubmit={this.handleGuestJoin}>
-                        <div id="cpeLogo"><img id="nickLg" src ="/images/1.png" /></div>
+                        <div id="cpeLogo"><img id="nickLg" src="/images/1.png" /></div>
                         <h2 id="nickh2">Enter your twitter username or a nickname</h2>
                         <TextField
                             hintText="Your Nickname"
@@ -138,42 +140,47 @@ class ChatBoxCon extends React.Component {
                             className="nickText"
                             floatingLabelStyle={styles.float}
                             inputStyle={styles.input}
-                            />
+                        />
                         <div>
-                        <RaisedButton label="Submit"
-                            type="submit"
-                            style={styles.nickSubmit}
-                            labelColor={"white"}
-                            backgroundColor={"#2b2838"}
-                            buttonStyle={styles.float}
-                            fullWidth={true}/>
+                            <RaisedButton label="Submit"
+                                type="submit"
+                                style={styles.nickSubmit}
+                                labelColor={"white"}
+                                backgroundColor={"#2b2838"}
+                                buttonStyle={styles.float}
+                                fullWidth={true} />
                         </div>
                     </form>
                 </Paper>
             );
         }
-        return (
-            <div>
-                <ChatBox >
-                    <ChatHeader 
-                        clear={this.clear}
-                        admin={this.props.admin}
-                        isOnline={this.props.isOnline}/>
-                    <ChatItem messages={this.props.messages} />
-                    <ChatSend
-                        isOnline={this.props.isOnline}
-                        handleSeenMessages={this.handleSeenMessages}
-                        handleChange={this.handleChange}
-                        handleSend={this.handleSend}
-                    />
-                </ChatBox>
-            </div>
-        );
+        if (this.props.isLoading) {
+            return <Loading />
+        } else {
+            return (
+                <div>
+                    <ChatBox >
+                        <ChatHeader
+                            clear={this.clear}
+                            admin={this.props.admin}
+                            isOnline={this.props.isOnline} />
+                        <ChatItem messages={this.props.messages} />
+                        <ChatSend
+                            isOnline={this.props.isOnline}
+                            handleSeenMessages={this.handleSeenMessages}
+                            handleChange={this.handleChange}
+                            handleSend={this.handleSend}
+                        />
+                    </ChatBox>
+                </div>
+            );
+        }
+
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log("on chat box con",state);
+    console.log("on chat box con", state);
     return {
         messages: state.messages,
         guests: state.guests,

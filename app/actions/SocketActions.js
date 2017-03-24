@@ -1,6 +1,8 @@
 import * as types from './ActionTypes';
 import * as messagesActions from '../actions/MessagesActions';
 import * as guestActions from '../actions/GuestActions';
+import * as ajaxStatusActions from '../actions/AjaxStatusActions';
+import AuthApi from '../api/AuthApi';
 
 export function initializeSocketSuccess() {
     return { type: types.INITIALIZE_SOCKET_SUCCESS }
@@ -91,7 +93,7 @@ export function clearAll(){
     };
 }
 
-// export function adminLogout(){
+//export function adminLogout(){
 //     return function(dispatch,getState){
 //         console.log("logout on socket actions");
 //         const {socket} = getState();

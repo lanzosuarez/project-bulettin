@@ -16,7 +16,6 @@ const data = {
     { text: 'Announcements', icon: <Web/>, link: '/announcements' },
     { text: 'CpE Schedules', icon: <GridOn/>, link: '/schedules' },
     { text: 'Calendar', icon: <Event/>, link: '/events' },
-    { text: 'Chat Admin', icon: <Chat/>, link: '/chat' },
     { text: 'Guest View', icon:<Web/>, link: '/' },
 
   ],

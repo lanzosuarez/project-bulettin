@@ -21,7 +21,6 @@ const routes = (
         <Route path="schedules/:sched" component={SchedulesCon} />
         <Route path="events/:event" component={CalendarCon} />
         <Route path="events" component={CalendarCon} />
-        <Route path="chat" component={ChatBoxCon} />
         <Route path="register" component={RegisterCon} />
         <Route path="login" component={LoginCon} />
         <Route path="*" component={NotFoundPage} />
