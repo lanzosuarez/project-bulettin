@@ -20,12 +20,10 @@ export function deleteAnnouncementSuccess(id){
 export function loadAnnouncements() {
   return function (dispatch) {
     AnnouncementApi.onGetAll().then(res => {
-      console.log(res);
       if (res.data.success) {
         dispatch(loadAnnouncementsSuccess(res.data.response));
         return;
       }
-      console.log(res.data.response);
     }).catch(err => {
       throw err;
     });
@@ -37,7 +35,6 @@ export function saveAnnouncement(announcement){
     let a = announcement
     return AnnouncementApi.onSave(announcement).then(res=>{
       return res;
-      console.log(res.data.response);
     }).catch(err=>{
       throw err;
     });

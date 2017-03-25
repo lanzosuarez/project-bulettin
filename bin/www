@@ -131,7 +131,8 @@ io.on('connect', socket => {
       message: data.message,
       seen: false,
       sendDate: moment().format('LT'),
-      seenDate: null
+      seenDate: null,
+      url: data.url
     };
     console.log(toSend);
     messages.push(toSend);

@@ -16,12 +16,10 @@ class App extends React.Component {
       navDrawerOpen: false,
       admin: false
     };
-    console.log(context.store);
   }
 
   componentDidMount() {
     this.context.store.subscribe(() => {
-      console.log(this.context.store.getState());
       this.setState({ admin: this.context.store.getState().admin })
     })
   }

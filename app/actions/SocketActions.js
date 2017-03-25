@@ -38,7 +38,6 @@ export function onMessageFromServer() {
     return function (dispatch, getState) {
         const { socket } = getState();
         socket.on('message-from-server', message => {
-            console.log("on msg from server", message);
             dispatch(messagesActions.saveMessageSuccess(message));
         });
     };
@@ -58,17 +57,16 @@ export function onAllMessages() {
     return function (dispatch, getState) {
         const { socket } = getState();
         socket.on('all-messages', messages => {
-            console.log("all-messages", messages);
             dispatch(messagesActions.loadMessagesSuccess(messages));
         });
     };
 };
 
 //message emitter
-export function emitMessageFromUser(message) {
+export function emitMessageFromUser(message,url) {
     return function (dispatch, getState) {
         const { socket } = getState();
-        socket.emit('message-from-user', { message });
+        socket.emit('message-from-user', { message,url });
     };
 };
 //join emitter

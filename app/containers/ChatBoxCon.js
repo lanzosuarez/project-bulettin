@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Loading from '../components/Loading';
+import AuthApi from '../api/AuthApi';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,6 +21,7 @@ class ChatBoxCon extends React.Component {
             infos: {
                 message: "",
                 nickname: "",
+                image_url:""
             },
             joined: false,
             unreads: 0,
@@ -34,8 +36,8 @@ class ChatBoxCon extends React.Component {
 
     componentDidMount() {
         let n = this.getNickname();
-        if (n) {
-            this.emitJoin(n);
+        if (n!=="") {
+            this.getTwitter();
         }
     }
 
@@ -63,18 +65,39 @@ class ChatBoxCon extends React.Component {
         if (this.state.infos.nickname === "admin") {
             alert("Please try another nickname");
         } else {
-            this.emitJoin(this.state.infos.nickname);
+            this.getTwitter();
         }
     }
 
+    getTwitter(){
+        AuthApi.getTwitterUser(this.state.infos.nickname).then(res=>{
+            console.log(res);
+            if(res.data.success){
+                let l = this.state.infos;
+                l["image_url"] = res.data.response.profile_image_url
+                this.setState({infos:l});
+                this.emitJoin(this.state.infos.nickname);
+                return true;
+            }
+            this.emitJoin(this.state.infos.nickname);
+            return false
+                 
+        }).catch(err=>{
+            alert(err);
+            throw err;
+        });
+    }
+
+
     getNickname() {
-        return localStorage.getItem('nickname');
+        let l  = localStorage.getItem('nickname')
+        return l;
     }
 
     handleSend(e) {
         e.preventDefault();
         console.log(e.target.reset());
-        this.props.socketActions.emitMessageFromUser(this.state.infos.message);
+        this.props.socketActions.emitMessageFromUser(this.state.infos.message,this.state.infos.image_url);
     }
 
     handleChange(e) {
@@ -95,12 +118,12 @@ class ChatBoxCon extends React.Component {
     }
 
     clear() {
-        console.log("dsdsa");
         this.props.socketActions.clearAll();
     }
 
 
     render() {
+        console.log(this.state);
         const styles = {
             paper: {
                 height: "100%",
@@ -164,7 +187,7 @@ class ChatBoxCon extends React.Component {
                             clear={this.clear}
                             admin={this.props.admin}
                             isOnline={this.props.isOnline} />
-                        <ChatItem messages={this.props.messages} />
+                        <ChatItem messages={this.props.messages}/>
                         <ChatSend
                             isOnline={this.props.isOnline}
                             handleSeenMessages={this.handleSeenMessages}
@@ -180,7 +203,6 @@ class ChatBoxCon extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log("on chat box con", state);
     return {
         messages: state.messages,
         guests: state.guests,

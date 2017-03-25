@@ -7,6 +7,18 @@ import ListItem from 'material-ui/List/ListItem';
 import { grey400, darkBlack, lightBlack } from 'material-ui/styles/colors';
 
 
+function chkUrl(msg){
+    if(msg.nickname==="admin"){
+        return "/images/elyse.png";
+    } else {
+        if(msg.url){
+            console.log("onstasdsadsa");
+            return msg.url;
+        } else {
+            return "/images/jenny.jpg";
+        }
+    }
+}
 
 const loopTruMsgs = (messages) => {
     const styles = {
@@ -18,10 +30,11 @@ const loopTruMsgs = (messages) => {
             "whiteSpace": "initial"
         }
     };
-    return messages.map((msg) => {
+    let msgs = messages.map((msg) => {
+        let urlImg = chkUrl(msg);
         return <div style={styles.chat}>
             <ListItem
-                leftAvatar={<Avatar src={msg.nickname==="admin"?"/images/elyse.png":"/images/jenny.jpg"} />}
+                leftAvatar={<Avatar src={urlImg} />}
                 secondaryTextLines={2}
             >
                 <div className="talk-bubble tri-right left-top">
@@ -38,6 +51,7 @@ const loopTruMsgs = (messages) => {
             </ListItem>
         </div>
     });
+    return msgs;
 
 };
 

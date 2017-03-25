@@ -22,7 +22,6 @@ export function deleteSchedSuccess(schedule){
 export function loadScheds() {
   return function (dispatch) {
     SchedApi.getAllScheds().then(res => {
-      console.log(res);
       if (res.data.success) {
         console.log("on loadScheds", res.data.response);
         dispatch(loadSchedsSuccess(res.data.response));
