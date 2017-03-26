@@ -38,8 +38,7 @@ const Visitors = (props) => {
             <XAxis dataKey="name" stroke="none" tick={{ fill: white }} />
             <Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8"
               label="uv" />
-
-            <Bar dataKey="uv" fill={pink500} label="uv"/>
+            <Bar dataKey="uv" fill={pink500} />
             <XAxis dataKey="name" stroke="none" tick={{fill: white}}/>
 
           </BarChart>

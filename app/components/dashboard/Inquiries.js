@@ -12,11 +12,8 @@ const Inquiries = (props) => {
       height: 222
     },
     div: {
-      height: 95,
-      padding: '5px 15px 0 15px',
-
-      height: 120,
-      padding: '18px 15px 0px;'
+      height: "168px",
+      padding: "9px 22px 0px 0px"
     },
     header: {
       fontSize: 24,
@@ -33,8 +30,8 @@ const Inquiries = (props) => {
       <div style={styles.div}>
         <ResponsiveContainer >
           <LineChart data={props.data}>
-            <XAxis dataKey="name"/>
-            <YAxis />
+            <XAxis dataKey="name" fill={"rgba(255, 255, 255, 0.870588)"}/>
+            <YAxis fill={"rgba(255, 255, 255, 0.870588)"} />
             <CartesianGrid strokeDasharray="3 3" tick={{ fill: white }}/>
             <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
           </LineChart>
