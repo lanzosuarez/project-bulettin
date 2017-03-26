@@ -106,12 +106,38 @@ class CalendarCon extends React.Component {
     onEditEvent(id) {
         this.context.router.push('/events/' + id);
     }
+    confirmDeletion(id,self){
+        swal({
+            title: "Are you sure?",
+            text: "Click cancel to go back",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                self.processDeletion(id);
+            } else {
+                swal("Cancelled!","Deletion canceled","error");
+            }
+        });
+    }
 
     onDeleteEvent(id) {
+        let self=this;
+        this.confirmDeletion(id,self);
+    }
+
+    processDeletion(id) {
         this.props.eventActions.deleteEvent(id).then(res => {
             if (res.data.success) {
                 this.routerPush();
                 this.props.eventActions.deleteEventSuccess(res.data.response);
+                this.successAlert("Event deleted!");
                 return;
             } else {
                 this.checkErrors(res.data.response);

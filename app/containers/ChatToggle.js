@@ -14,8 +14,16 @@ class ChatToggle extends React.Component {
   constructor(props) {
     super(props);
     this.handleToggle = this.handleToggle.bind(this);
-    this.state = { open: false, access: false };
+    this.state = { 
+      open: false, 
+      access: false, 
+      isLoading:true 
+    };
     this.checkUnreads = this.checkUnreads.bind(this);
+  }
+
+  componentDidMount(){
+    this.setState({isLoading:false});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,7 +78,7 @@ class ChatToggle extends React.Component {
         />
         {badge}
         <Drawer width={400} openSecondary={true} open={this.state.open}>
-          <ChatBoxCon />
+          <ChatBoxCon isLoading={this.state.isLoading}/>
         </Drawer>
       </div>
     );

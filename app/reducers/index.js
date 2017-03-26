@@ -7,6 +7,7 @@ import schedules from './ScheduleReducer';
 import events from './EventReducer';
 import announcements from './AnnouncementReducer';
 import isOnline from './IsOnlineReducer';
+import ajaxCallsInProgress from './AjaxStatusReducer';
 
 const rootReducer = combineReducers({
     messages,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     schedules,
     events,
     announcements,
-    isOnline
+    isOnline,
+    ajaxCallsInProgress
 });
 
 export default rootReducer;

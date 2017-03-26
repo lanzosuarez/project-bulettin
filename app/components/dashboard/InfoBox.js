@@ -4,11 +4,12 @@ import {white, grey800} from 'material-ui/styles/colors';
 import {typography} from 'material-ui/styles';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import {Link} from 'react-router';
 
 class InfoBox extends React.Component {
 
   render() {
-    const {color, title, value, Icon, date} = this.props;
+    const {color, title, value, Icon, date, admin, id} = this.props;
 
     const styles = {
       content: {
@@ -86,7 +87,11 @@ class InfoBox extends React.Component {
           subtitleColor={"white"}
         />
         <CardActions>
-          <FlatButton style={styles.white} label="Edit" />
+        {admin?
+          <Link to={"/announcements/"+id}>
+            <FlatButton style={styles.white} label="Edit" />
+          </Link>:null
+        }
         </CardActions>
         <CardText style={styles.fontcolor} expandable={true}>
           {value}

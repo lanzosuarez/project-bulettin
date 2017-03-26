@@ -100,6 +100,9 @@ let messages = [];
 let users = [];
 let io = require('socket.io')(server);
 io.on('connect', socket => {
+  if(admin){
+    io.emit('admin-online', true);
+  }
   socket.on('join', user => {
     console.log(user.nickname + " has connected!");
     if (user.nickname === "admin" && user.password) { //check if admin
@@ -128,7 +131,8 @@ io.on('connect', socket => {
       message: data.message,
       seen: false,
       sendDate: moment().format('LT'),
-      seenDate: null
+      seenDate: null,
+      url: data.url
     };
     console.log(toSend);
     messages.push(toSend);
@@ -174,6 +178,8 @@ io.on('connect', socket => {
   socket.on('disconnect', () => {
     if (socket.nickname === "admin") {
       io.emit('admin-online', false);
+      messages=[];
+      io.emit('all-messages', messages);
       console.log(socket.nickname + ' has disconnected');
       return;
     }

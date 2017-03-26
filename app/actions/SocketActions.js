@@ -1,6 +1,8 @@
 import * as types from './ActionTypes';
 import * as messagesActions from '../actions/MessagesActions';
 import * as guestActions from '../actions/GuestActions';
+import * as ajaxStatusActions from '../actions/AjaxStatusActions';
+import AuthApi from '../api/AuthApi';
 
 export function initializeSocketSuccess() {
     return { type: types.INITIALIZE_SOCKET_SUCCESS }
@@ -36,7 +38,6 @@ export function onMessageFromServer() {
     return function (dispatch, getState) {
         const { socket } = getState();
         socket.on('message-from-server', message => {
-            console.log("on msg from server", message);
             dispatch(messagesActions.saveMessageSuccess(message));
         });
     };
@@ -56,17 +57,16 @@ export function onAllMessages() {
     return function (dispatch, getState) {
         const { socket } = getState();
         socket.on('all-messages', messages => {
-            console.log("all-messages", messages);
             dispatch(messagesActions.loadMessagesSuccess(messages));
         });
     };
 };
 
 //message emitter
-export function emitMessageFromUser(message) {
+export function emitMessageFromUser(message,url) {
     return function (dispatch, getState) {
         const { socket } = getState();
-        socket.emit('message-from-user', { message });
+        socket.emit('message-from-user', { message,url });
     };
 };
 //join emitter
@@ -91,7 +91,7 @@ export function clearAll(){
     };
 }
 
-// export function adminLogout(){
+//export function adminLogout(){
 //     return function(dispatch,getState){
 //         console.log("logout on socket actions");
 //         const {socket} = getState();

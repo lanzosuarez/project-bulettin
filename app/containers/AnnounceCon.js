@@ -68,7 +68,6 @@ class AnnounceCon extends React.Component {
         swal("Success",msg,"success");
     } 
 
-
     onSave(e) {
         e.preventDefault();
         this.props.announcementActions.saveAnnouncement(this.state.announcement).then(res => {
@@ -88,12 +87,38 @@ class AnnounceCon extends React.Component {
         });
     }
 
-    onDelete(id){
-        console.log(id);
+    confirmDeletion(id,self){
+        swal({
+            title: "Are you sure?",
+            text: "Click cancel to go back",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                self.processDeletion(id);
+            } else {
+                swal("Cancelled!","Deletion canceled","error")
+            }
+        });
+    }
+
+    onDelete(id) {
+        let self = this;
+        this.confirmDeletion(id,self);
+    }
+
+    processDeletion(id){
         this.props.announcementActions.deleteAnnouncement(id).then(res=>{
             if(res.data.success){
                 this.pushRoute()
                 this.props.announcementActions.deleteAnnouncementSuccess(id);
+                this.successAlert("Schedule deleted!");
                 return;
             } else {
                 this.checkErrors(res.data.response);
@@ -109,7 +134,6 @@ class AnnounceCon extends React.Component {
     }
 
     render() {
-        console.log("on render",this.state.announcement);
         return (
             <div>
                 <FormAnnounce

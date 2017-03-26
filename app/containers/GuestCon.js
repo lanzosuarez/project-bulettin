@@ -12,7 +12,9 @@ import Footer from '../components/Footer';
 import Schedules from '../components/schedules/Schedules';
 import FlatButton from 'material-ui/FlatButton';
 import Data from '../data';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
+import { concat } from 'lodash';
+import Loading from '../components/Loading';
 
 import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
@@ -29,7 +31,10 @@ class GuestCon extends React.Component {
                 year: 1,
                 section: 1
             },
-            keyword: ""
+            keyword: "",
+            AnnSliceLen: 1,
+            EvntSliceLen: 1,
+            isLoading: true,
         };
         this.filterScheds = this.filterScheds.bind(this);
         this.updateState = this.updateState.bind(this);
@@ -37,11 +42,21 @@ class GuestCon extends React.Component {
         this.onEditEvent = this.onEditEvent.bind(this);
         this.onDeleteEvent = this.onDeleteEvent.bind(this);
         this.getRandomColor = this.getRandomColor.bind(this)
+        this.addSlices = this.addSlices.bind(this);
+        this.buttonText = this.buttonText.bind(this);
+    }
+
+    componenWillReceiveProps(nextProps) {
+        if (nextProps.announcements.length !== this.props.ann.length) {
+            this.setState({ slices: nextProps.announcements.slice(0, 4) })
+        }
     }
 
     componentDidMount() {
         this.props.adminActions.checkAdminAccess();
+        this.setState({isLoading:false});
     }
+
     updateState(value, field) {
         let i = this.state.infos;
         i[field] = value;
@@ -87,6 +102,36 @@ class GuestCon extends React.Component {
         return arr[randNum];
     }
 
+    supplySlicesLen(arr) {
+        return Math.ceil(arr.length / 4);
+    }
+
+    addSlices(field = null) {
+        if (field) {
+            if (this.state.AnnSliceLen === this.supplySlicesLen(this.props.announcements)) {
+                this.setState({ AnnSliceLen: 1 });
+                return;
+            }
+            this.setState({ AnnSliceLen: this.state.AnnSliceLen + 1 });
+        } else {
+            if (this.state.EvntSliceLen === this.supplySlicesLen(this.props.events)) {
+                this.setState({ EvntSliceLen: 1 });
+                return;
+            }
+            this.setState({ EvntSliceLen: this.state.EvntSliceLen + 1 });
+        }
+    }
+
+    buttonText(arr1, arr2, flag=null) {
+        if (arr2.length <= 4) {
+            return null;
+        } else {
+            return <button onClick={() => { this.addSlices((flag ? 1 : null)) }}>
+                {arr1.length === arr2.length ? "View Less" : "View More"}
+            </button>
+        }
+
+    }
 
     render() {
         const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -97,47 +142,21 @@ class GuestCon extends React.Component {
             let getIcon = this.supplyIcon(icons);
             let d = new Date(announcement.createDate);
             return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                <InfoBox Icon={getIcon}
-                    color={getColor}
-                    title={announcement.title}
-                    value={announcement.description}
-                    date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
-                    key={index}
-                />
-                {
-                    this.props.admin?
-                    <Link to={"/announcements/"+announcement._id}><FlatButton style={{ color: "white" }} label="Edit" /></Link>:
-                    null
-                }
-            </div>
-        });
-        
-           
-        let filtered = this.filterScheds();
-return (
-    <div>
-        <GuestTitle title={"Annoucements"} />
-        <div className="row" id="gCon">
-            {announcements}
-        </div>
-        <GuestPage color={"#2b2838"}>
-            <GuestTitle title={"Schedules"}
-                size={2} />
-            <Schedules
-                id={this.props.admin}
-                onSearch={this.onSearch}
-                schedules={filtered}
-                defYearValue={this.state.infos.year}
-                updateState={this.updateState}
-            />
-        </GuestPage>
-        <GuestPage color={"rgb(56, 53, 74)"} shadow={"none"}>
-            <GuestTitle title={"Events"}
-                size={0} />
-            <div className="row eventPads" >
-                {this.props.events.map((ev, index) =>
-                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                        <GuestEvent 
+                        <InfoBox Icon={getIcon}
+                            id={announcement._id}
+                            color={getColor}
+                            title={announcement.title}
+                            value={announcement.description}
+                            date={months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()}
+                            key={index}
+                            admin={this.props.admin}
+                        />
+                    </div>
+            });
+
+        let events = this.props.events.map((ev, index) => {
+            return <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
+                        <GuestEvent
                             key={index}
                             id={this.props.admin}
                             onEditEvent={this.onEditEvent}
@@ -145,13 +164,46 @@ return (
                             index={index} ev={ev}
                             param={this.props.routeParams.event}
                         />
+                    </div>;
+            }
+        )
+
+        //let filteredEvents = events.filter((a, i) => i < this.state.EvntSliceLen * 4);
+        let filteredEvents = events.slice(0, this.state.EvntSliceLen * 4);
+        let filteredAnnouncements = announcements.filter((a, i) => i < this.state.AnnSliceLen * 4);
+        let filteredScheds = this.filterScheds();
+        return (
+            <div>
+                <GuestTitle title={"Annoucements"} />
+                <div className="row" id="gCon" id="announcements">
+                    {filteredAnnouncements}
+                </div>
+                {this.buttonText(filteredAnnouncements,this.props.announcements,1)}
+                <GuestPage color={"#2b2838"}>
+                    <GuestTitle title={"Schedules"}
+                        size={2} />
+                    <div id="schedules">
+                        <Schedules
+                            id={this.props.admin}
+                            onSearch={this.onSearch}
+                            schedules={filteredScheds}
+                            defYearValue={this.state.infos.year}
+                            updateState={this.updateState}
+                        />
                     </div>
-                )}
+                </GuestPage>
+                <GuestPage color={"rgb(56, 53, 74)"} shadow={"none"}>
+                    <GuestTitle title={"Events"}
+                        size={0} />
+                    <div className="row eventPads" id="events" >
+                        {filteredEvents}
+                    </div>
+                    {this.buttonText(filteredEvents, this.props.events)}
+                </GuestPage>
+
+                <Footer />
             </div>
-        </GuestPage>
-        <Footer />
-    </div>
-);
+        );
     }
 }
 
@@ -168,13 +220,13 @@ GuestCon.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    console.log(state);
     return {
         guests: state.guests,
         admin: state.admin,
         schedules: state.schedules,
         events: state.events,
-        announcements: state.announcements
+        announcements: state.announcements,
+        ajaxCallInProgress: state.ajaxCallsInProgress
     };
 }
 

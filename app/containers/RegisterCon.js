@@ -33,7 +33,6 @@ class RegisterCon extends React.Component{
   handleErrors(errs){
     let errMsg="";
     Object.keys(errs).forEach(err=>{
-      console.log(errs[err].message);
       errMsg+=`- ${errs[err].message} \n`;
     }); 
     swal("Oooops!",errMsg,"error");

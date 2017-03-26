@@ -18,7 +18,7 @@ const GuestHeader = (props) => {
 
     return (
         <div>
-            <div id="guestHeader">
+            {props.path==="/"?<div id="guestHeader">
                 <div id="guestHd">
                     <div>
                         <div id="cpeLogo"><img id="cpeLg" src ="/images/1.png" /></div>
@@ -27,7 +27,7 @@ const GuestHeader = (props) => {
                         <p id="cpeSub">Poltechnic University of the Philippines</p>
                     </div>
                 </div>            
-            </div>
+            </div>:null}
             {!props.admin?<AppBar id="guestBar"
                 title= {<GuestButton />}
                 showMenuIconButton={false}

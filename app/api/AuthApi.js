@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { OAuth } from 'oauth';
 
 class AuthApi {
 
@@ -28,22 +29,30 @@ class AuthApi {
         throw err;
       });
   }
-  static onLogout(){
+  static onLogout() {
     return axios.post('/auth/logout')
-    .then(res=>{
-      window.location=res.data.redirect
+      .then(res => {
+        window.location = res.data.redirect
+      }).catch(err => {
+        throw err;
+      });
+  }
+  static saveData() {
+    return axios.get('/auth/save')
+      .then(res => {
+        console.log(res)
+      }).catch(err => {
+        throw err;
+        console.log(err);
+      })
+  }
+
+  static getTwitterUser(name) {
+    return axios.get('/auth/getTwitter/'+name).then(res=>{
+      return res;
     }).catch(err=>{
       throw err;
     });
-  }
-  static saveData(){
-    return axios.get('/auth/save')
-    .then(res=>{
-      console.log(res)
-    }).catch(err=>{
-      throw err;
-      console.log(err);
-    })
   }
 }
 
