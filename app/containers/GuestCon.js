@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 import { cyan600, pink600, purple600, orange600 } from 'material-ui/styles/colors';
 import Assessment from 'material-ui/svg-icons/action/assessment';
 import Face from 'material-ui/svg-icons/action/face';
@@ -28,7 +29,7 @@ class GuestCon extends React.Component {
         super(props, context);
         this.state = {
             infos: {
-                year: 1,
+                year: 2,
                 section: 1
             },
             keyword: "",
@@ -126,9 +127,11 @@ class GuestCon extends React.Component {
         if (arr2.length <= 4) {
             return null;
         } else {
-            return <button onClick={() => { this.addSlices((flag ? 1 : null)) }}>
-                {arr1.length === arr2.length ? "View Less" : "View More"}
-            </button>
+            return <RaisedButton label={arr1.length === arr2.length ? "View Less" : "View More"} 
+            onTouchTap={() => { this.addSlices((flag ? 1 : null)) }}
+            buttonStyle={{backgroundColor: "rgb(43, 40, 56)", border: "1px solid white"}}
+            labelColor={"white"}
+            />
         }
 
     }
@@ -174,11 +177,15 @@ class GuestCon extends React.Component {
         let filteredScheds = this.filterScheds();
         return (
             <div>
-                <GuestTitle title={"Annoucements"} />
-                <div className="row" id="gCon" id="announcements">
-                    {filteredAnnouncements}
+                <div>
+                    <GuestTitle title={"Annoucements"} />
+                    <div className="row" id="gCon">
+                        {filteredAnnouncements}
+                    </div>
+                    <div id="viewMe">
+                        {this.buttonText(filteredAnnouncements,this.props.announcements,1)}
+                    </div>
                 </div>
-                {this.buttonText(filteredAnnouncements,this.props.announcements,1)}
                 <GuestPage color={"#2b2838"}>
                     <GuestTitle title={"Schedules"}
                         size={2} />
@@ -198,7 +205,9 @@ class GuestCon extends React.Component {
                     <div className="row eventPads" id="events" >
                         {filteredEvents}
                     </div>
-                    {this.buttonText(filteredEvents, this.props.events)}
+                    <div id="viewMe2">
+                        {this.buttonText(filteredAnnouncements,this.props.announcements,1)}
+                    </div>
                 </GuestPage>
 
                 <Footer />
