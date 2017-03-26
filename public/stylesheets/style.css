@@ -396,8 +396,11 @@ svg#loader-pencil {
 /*--------------LOAD----------------*/
 #loadMe{
     width: 100%;
-    height: 737px;
+    height: 818px;
     background-color: white;
+    position: fixed;
+    top: -4px;
+    z-index: 3;
 }
 .paintroller {
   z-index: 10;
