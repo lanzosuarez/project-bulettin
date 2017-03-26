@@ -12,13 +12,11 @@ const Inquiries = (props) => {
       height: 222
     },
     div: {
-<<<<<<< HEAD
       height: 95,
       padding: '5px 15px 0 15px',
-=======
+
       height: 120,
       padding: '18px 15px 0px;'
->>>>>>> c2f51f4c897e45afdccfd6d90b720193a2a6b9e8
     },
     header: {
       fontSize: 24,

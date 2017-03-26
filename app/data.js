@@ -106,7 +106,6 @@ const data = {
       {name: 'Dec', uv: 2480}
     ],
     inquiries: [
-<<<<<<< HEAD
       {name: 'Jan', pv: 1700},
       {name: 'Feb', pv: 3000},
       {name: 'Mar', pv: 2000},
@@ -119,15 +118,6 @@ const data = {
       {name: 'Oct', pv: 3000},
       {name: 'Nov', pv: 2400},
       {name: 'Dec', pv: 2780}
-=======
-      {pv: 2400},
-      {pv: 1398},
-      {pv: 4800},
-      {pv: 3908},
-      {pv: 4800},
-      {pv: 3490},
-      {pv: 4300}
->>>>>>> c2f51f4c897e45afdccfd6d90b720193a2a6b9e8
     ],
     bulletinData: [
       {name: 'Schedules', value: 800, color: cyan600, icon: <ExpandMore/>},

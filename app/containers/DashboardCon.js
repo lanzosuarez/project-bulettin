@@ -12,6 +12,7 @@ import Calendar from '../components/dashboard/Calendar';
 import BulletinData from '../components/dashboard/BulletinData';
 import globalStyles from '../styles';
 import Data from '../data';
+import Load from '../components/Load';
 
 import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
@@ -21,13 +22,18 @@ import {bindActionCreators} from 'redux';
 class DashboardCon extends React.Component {
   constructor(props, context) {
     super(props);
+    this.state={
+      isLoading:true
+    }
     this.navigateToGuest = this.navigateToGuest.bind(this);
     this.getRandomColor = this.getRandomColor.bind(this)
     this.supplyIcon = this.supplyIcon.bind(this);
   }
 
   componentDidMount() {
-    this.props.adminActions.checkAdmin();
+    this.props.adminActions.checkAdmin().then(()=>{
+      this.setState({isLoading:false});
+    });
   }
 
   navigateToGuest(){
@@ -45,29 +51,9 @@ class DashboardCon extends React.Component {
   }
 
   render() {
-     const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let colors = [pink600, cyan600, purple600, orange600];
-        let icons = [Faculties, Assessment];
-        // let announcements = this.props.announcements.map((announcement, index) => {
-        //     let getColor = this.getRandomColor(colors);
-        //     let getIcon = this.supplyIcon(icons);
-        //     let d = new Date(announcement.createDate);
-        //     return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-        //         <InfoBox Icon={getIcon}
-        //             id={announcement._id}
-        //             color={getColor}
-        //             title={announcement.title}
-        //             value={announcement.description}
-        //             date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
-        //             key={index}
-        //             admin={this.props.admin}
-        //         />
-        //     </div>
-        // });
-        // <div className="row">
-        //   {announcements}
-        // </div>
-        
+    if(this.state.isLoading){
+      return <Load />;
+    } 
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>

@@ -7,6 +7,8 @@ import ThemeDefault from '../theme-default';
 import ChatToggle from './ChatToggle';
 import GuestHeader from '../components/guest/GuestHeader';
 import Data from '../data';
+import Loading from '../components/Loading'
+import Load from '../components/Load';
 
 class App extends React.Component {
 
@@ -14,14 +16,16 @@ class App extends React.Component {
     super(props, context);
     this.state = {
       navDrawerOpen: false,
-      admin: false
+      admin: false,
     };
   }
 
   componentDidMount() {
     this.context.store.subscribe(() => {
-      this.setState({ admin: this.context.store.getState().admin })
-    })
+      this.setState({ 
+        admin: this.context.store.getState().admin,
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
