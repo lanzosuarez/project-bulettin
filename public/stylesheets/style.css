@@ -393,3 +393,63 @@ svg#loader-pencil {
     transform: translateY(-150px);
   }
 }
+/*--------------LOAD----------------*/
+#loadMe{
+    width: 100%;
+    height: 737px;
+    background-color: white;
+}
+.paintroller {
+  z-index: 10;
+  position: absolute;
+  width: 100px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: rotate(-25deg); 
+  }
+  .paintroller .paint {
+    -webkit-transform-origin: top center;
+    transform-origin: top center;
+    -webkit-animation: paintit 2s infinite 3s linear alternate;
+    -moz-animation: paintit 2s infinite 3s linear alternate;
+    -ms-animation: paintit 2s infinite 3s linear alternate;
+    -o-animation: paintit 2s infinite 3s linear alternate;
+    animation: paintit 2s infinite 3s linear alternate; }
+  .paintroller .roller {
+    -webkit-transform-origin: top center;
+    transform-origin: top center;
+    -webkit-animation: moveroller 2s infinite 3s linear alternate;
+    -moz-animation: moveroller 2s infinite 3s linear alternate;
+    -ms-animation: moveroller 2s infinite 3s linear alternate;
+    -o-animation: moveroller 2s infinite 3s linear alternate;
+    animation: moveroller 2s infinite 3s linear alternate; }
+
+@-webkit-keyframes paintit {
+  0% {
+    -webkit-transform: scaleY(0);
+    opacity: 0; }
+  25% {
+    -webkit-transform: scaleY(0.35);
+    opacity: 1; }
+  50% {
+    -webkit-transform: scaleY(0.7); }
+  75% {
+    -webkit-transform: scaleY(0.8); }
+  100% {
+    -webkit-transform: scaleY(0.7); } 
+  }
+
+@-webkit-keyframes moveroller {
+  0% {
+    -webkit-transform: translateY(0%); }
+  25% {
+    -webkit-transform: translateY(20%); }
+  50% {
+    -webkit-transform: translateY(50%); }
+  75% {
+    -webkit-transform: translateY(60%); }
+  100% {
+    -webkit-transform: translateY(45%); } 
+  }
+/*---------------END---------------*/

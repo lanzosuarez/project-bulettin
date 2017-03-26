@@ -9,14 +9,15 @@ const Visitors = (props) => {
   const styles = {
     paper: {
       backgroundColor: pink600,
-      height: 150
+      height: 222
     },
     div: {
       marginTop: '21px',
       marginLeft: 'auto',
       marginRight: 'auto',
+      marginTop: "21px",
       width: '95%',
-      height: 85
+      height: 137
     },
     header: {
       color: white,
@@ -31,11 +32,16 @@ const Visitors = (props) => {
       <div style={styles.div}>
         <ResponsiveContainer>
           <BarChart data={props.data} >
+
             <Bar dataKey="uv" fill={pink500} />
             <YAxis />
             <XAxis dataKey="name" stroke="none" tick={{ fill: white }} />
             <Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8"
               label="uv" />
+
+            <Bar dataKey="uv" fill={pink500} label="uv"/>
+            <XAxis dataKey="name" stroke="none" tick={{fill: white}}/>
+
           </BarChart>
         </ResponsiveContainer>
       </div>
