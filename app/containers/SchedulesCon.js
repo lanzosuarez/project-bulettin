@@ -78,9 +78,14 @@ class SchedulesCon extends React.Component {
 
   updateSchedForSelect(e, key, payload) {
     let sched = this.state.sched;
-    sched[payload] = key + 1;
-    this.setState({ sched: Object.assign({}, sched) });
+    let field = payload.slice(0,payload.length-1);
+    let value = payload.slice(-1,payload.length);
+    console.log(field,value);
+    // sched[payload] = key + 1;
+    // this.setState({ sched: Object.assign({}, sched) });
   }
+ 
+  
 
   handleErrors(errs){
         let errMsg="";
@@ -111,10 +116,10 @@ class SchedulesCon extends React.Component {
     this.props.scheduleActions.saveSched(this.state.sched).then(res => {
       if (res.data.success) {
         let { updateSchedSuccess, saveSchedSuccess } = this.props.scheduleActions;
-        this.routerPush();
         this.state.sched._id ?
         updateSchedSuccess(res.data.response) :
         saveSchedSuccess(res.data.response);
+        this.routerPush();
         this.successAlert("Schedule Added!")
         
       } else {

@@ -87,7 +87,7 @@ const data = {
       {id: 9, name: 'John Doe', subject: 'Data Communications'}
     ],
     visitors: [
-      {name: 'Jan', uv: 3700},
+      {name: 'Jan', uv: 1700},
       {name: 'Feb', uv: 3000},
       {name: 'Mar', uv: 2000},
       {name: 'Apr', uv: 2780},
@@ -101,13 +101,18 @@ const data = {
       {name: 'Dec', uv: 2780}
     ],
     inquiries: [
-      {pv: 2400},
-      {pv: 1398},
-      {pv: 9800},
-      {pv: 3908},
-      {pv: 4800},
-      {pv: 3490},
-      {pv: 4300}
+      {name: 'Jan', pv: 1700},
+      {name: 'Feb', pv: 3000},
+      {name: 'Mar', pv: 2000},
+      {name: 'Apr', pv: 2780},
+      {name: 'May', pv: 2000},
+      {name: 'Jun', pv: 1800},
+      {name: 'Jul', pv: 2600},
+      {name: 'Aug', pv: 2900},
+      {name: 'Sep', pv: 3500},
+      {name: 'Oct', pv: 3000},
+      {name: 'Nov', pv: 2400},
+      {name: 'Dec', pv: 2780}
     ],
     bulletinData: [
       {name: 'Schedules', value: 800, color: cyan600, icon: <ExpandMore/>},

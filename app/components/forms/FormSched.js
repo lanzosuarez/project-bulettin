@@ -60,14 +60,14 @@ const FormSched = (props) => {
             <SelectField
               hintText={sched.year}
               onChange={updateSchedForSelect}
-              value={String(sched.year)}
+              value={sched.year}
               floatingLabelText="Year"
               fullWidth={true}>
-              <MenuItem value="year" primaryText="1" />
-              <MenuItem value="year" primaryText="2" />
-              <MenuItem value="year" primaryText="3" />
-              <MenuItem value="year" primaryText="4" />
-              <MenuItem value="year" primaryText="5" />
+              <MenuItem value="year1" primaryText="1" />
+              <MenuItem value="year2" primaryText="2" />
+              <MenuItem value="year3" primaryText="3" />
+              <MenuItem value="year4" primaryText="4" />
+              <MenuItem value="year5" primaryText="5" />
             </SelectField>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
@@ -76,11 +76,11 @@ const FormSched = (props) => {
               floatingLabelText="Sec"
               value={sched.section}
               fullWidth={true}>
-              <MenuItem value="section" primaryText="1" />
-              <MenuItem value="section" primaryText="2" />
-              <MenuItem value="section" primaryText="3" />
-              <MenuItem value="section" primaryText="4" />
-              <MenuItem value="section" primaryText="5" />
+              <MenuItem value="section1" primaryText="1" />
+              <MenuItem value="section2" primaryText="2" />
+              <MenuItem value="section3" primaryText="3" />
+              <MenuItem value="section4" primaryText="4" />
+              <MenuItem value="section5" primaryText="5" />
             </SelectField>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
@@ -89,12 +89,12 @@ const FormSched = (props) => {
               floatingLabelText="Lec"
               value={sched.lec}
               fullWidth={true}>
-              <MenuItem value="lec" primaryText="1" />
-              <MenuItem value="lec" primaryText="2" />
-              <MenuItem value="lec" primaryText="3" />
-              <MenuItem value="lec" primaryText="4" />
-              <MenuItem value="lec" primaryText="5" />
-              <MenuItem value="lec" primaryText="6" />
+              <MenuItem value="lec1" primaryText="1" />
+              <MenuItem value="lec2" primaryText="2" />
+              <MenuItem value="lec3" primaryText="3" />
+              <MenuItem value="lec4" primaryText="4" />
+              <MenuItem value="lec5" primaryText="5" />
+              <MenuItem value="lec6" primaryText="6" />
             </SelectField>
           </div>
 
@@ -104,12 +104,12 @@ const FormSched = (props) => {
               floatingLabelText="Lab"
               value={sched.lab}
               fullWidth={true}>
-              <MenuItem value="lab" primaryText="1" />
-              <MenuItem value="lab" primaryText="2" />
-              <MenuItem value="lab" primaryText="3" />
-              <MenuItem value="lab" primaryText="4" />
-              <MenuItem value="lab" primaryText="5" />
-              <MenuItem value="lab" primaryText="6" />
+              <MenuItem value="lab1" primaryText="1" />
+              <MenuItem value="lab2" primaryText="2" />
+              <MenuItem value="lab3" primaryText="3" />
+              <MenuItem value="lab4" primaryText="4" />
+              <MenuItem value="lab5" primaryText="5" />
+              <MenuItem value="lab6" primaryText="6" />
             </SelectField>
           </div>
 
