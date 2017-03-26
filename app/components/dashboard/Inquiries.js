@@ -9,11 +9,11 @@ const Inquiries = (props) => {
   const styles = {
     paper: {
       backgroundColor: purple500,
-      height: 150
+      height: 222
     },
     div: {
-      height: 95,
-      padding: '5px 15px 0 15px'
+      height: 120,
+      padding: '18px 15px 0px;'
     },
     header: {
       fontSize: 24,

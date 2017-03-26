@@ -68,7 +68,7 @@ const EventTable = (props) => {
   return (
     <div>
       <PageBase title="Announcements"
-                navigation="Application / Announcements">
+                navigation="Application / Events">
         <Table
           selectable={false}
           multiSelectable={false}
