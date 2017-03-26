@@ -18,10 +18,10 @@ const ChatHeader = (props) => {
       bg:{
         backgroundColor:"#a5a4ad",
         boxShadow:"none",
-        height: "55px"
+        height: "36px"
       },
       top:{
-        top: "0px"
+        top: "-14px"
       }
     };
 

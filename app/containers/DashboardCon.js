@@ -48,30 +48,30 @@ class DashboardCon extends React.Component {
      const months = ["January", "Februay", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let colors = [pink600, cyan600, purple600, orange600];
         let icons = [Faculties, Assessment];
-        let announcements = this.props.announcements.map((announcement, index) => {
-            let getColor = this.getRandomColor(colors);
-            let getIcon = this.supplyIcon(icons);
-            let d = new Date(announcement.createDate);
-            return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                <InfoBox Icon={getIcon}
-                    id={announcement._id}
-                    color={getColor}
-                    title={announcement.title}
-                    value={announcement.description}
-                    date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
-                    key={index}
-                    admin={this.props.admin}
-                />
-            </div>
-        });
+        // let announcements = this.props.announcements.map((announcement, index) => {
+        //     let getColor = this.getRandomColor(colors);
+        //     let getIcon = this.supplyIcon(icons);
+        //     let d = new Date(announcement.createDate);
+        //     return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+        //         <InfoBox Icon={getIcon}
+        //             id={announcement._id}
+        //             color={getColor}
+        //             title={announcement.title}
+        //             value={announcement.description}
+        //             date={months[d.getMonth()]+" "+d.getDate()+", "+ d.getFullYear()}
+        //             key={index}
+        //             admin={this.props.admin}
+        //         />
+        //     </div>
+        // });
+        // <div className="row">
+        //   {announcements}
+        // </div>
         
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
         <RaisedButton label="Go to Guest" secondary={true} className="goTo" onTouchTap={this.navigateToGuest} />
-        <div className="row">
-          {announcements}
-        </div>
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-md m-b-15">
             <Inquiries data={Data.dashBoardPage.inquiries} />
