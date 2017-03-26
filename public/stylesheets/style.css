@@ -107,7 +107,7 @@ a:hover {
   width: 100%!important;
 }
 .rbc-calendar{
-  height: 493px!important;
+  height: 326px!important;
 }
 .rbc-today {
     background-color: rgba(165, 164, 173, 0.51)!important;
@@ -168,7 +168,14 @@ a:hover {
   color:white!important;
 }
 #gCon {
-    margin: 28px 20px 110px 20px !important;
+    margin: 28px 20px 28px 20px !important;
+}
+#viewMe{
+    text-align: right;
+    margin: 0px 37px 48px 28px;
+}
+#viewMe2{
+    text-align: right;
 }
 #gConHeader{
     max-width: 571px;
@@ -200,7 +207,7 @@ a:hover {
   color:white;
 }
 .eventPads{
-  padding: 47px 0px;
+  padding: 47px 0px 28px 0px;
 }
 /*-------------END-----------------*/
 /*------------CHAT-----------------*/
