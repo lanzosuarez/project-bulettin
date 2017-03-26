@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Paper from 'material-ui/Paper';
 import {white, purple600, purple500} from 'material-ui/styles/colors';
-import {LineChart, Line, ResponsiveContainer} from 'recharts';
+import {LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid} from 'recharts';
 import {typography} from 'material-ui/styles';
 
 const Inquiries = (props) => {
@@ -12,6 +12,9 @@ const Inquiries = (props) => {
       height: 222
     },
     div: {
+      height: 95,
+      padding: '5px 15px 0 15px',
+
       height: 120,
       padding: '18px 15px 0px;'
     },
@@ -26,10 +29,13 @@ const Inquiries = (props) => {
 
   return (
     <Paper style={styles.paper}>
-      <div style={styles.header}>Students Activity</div>
+      <div style={styles.header}>Students Inquiries</div>
       <div style={styles.div}>
         <ResponsiveContainer >
           <LineChart data={props.data}>
+            <XAxis dataKey="name"/>
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" tick={{ fill: white }}/>
             <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>

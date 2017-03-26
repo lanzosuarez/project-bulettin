@@ -35,7 +35,7 @@ class CalendarCon extends React.Component {
         if (nextProps.event._id !== this.state.event._id) {
             this.setState({ event: Object.assign({}, nextProps.event) });
         } else {
-            if(nextProps.event.title!==this.state.event.title);
+            if (nextProps.event.title !== this.state.event.title);
             this.setState({ event: Object.assign({}, nextProps.event) });
         }
     }
@@ -59,42 +59,42 @@ class CalendarCon extends React.Component {
         this.setState({ infos: Object.assign({}, e) });
     }
 
-    handleErrors(errs){
-        let errMsg="";
-        Object.keys(errs).forEach(err=>{
-        errMsg+=`- ${errs[err].message} \n`;
-        }); 
+    handleErrors(errs) {
+        let errMsg = "";
+        Object.keys(errs).forEach(err => {
+            errMsg += `- ${errs[err].message} \n`;
+        });
         this.errorAlert(errMsg);
     }
 
 
-    checkErrors(errObj){
-        if(errObj.errors){
+    checkErrors(errObj) {
+        if (errObj.errors) {
             this.handleErrors(errObj.errors);
         } else {
             this.errorAlert(errObj.response);
         }
     }
 
-    errorAlert(err){
-        swal("Oooops!",err,"error")
+    errorAlert(err) {
+        swal("Oooops!", err, "error")
     }
 
-    successAlert(msg){
-        swal("Success",msg,"success");
-    } 
+    successAlert(msg) {
+        swal("Success", msg, "success");
+    }
 
     saveEvent(e) {
         e.preventDefault();
         this.props.eventActions.saveEvent(this.state.event).then(res => {
             if (res.data.success) {
-                this.routerPush();
                 this.state.event._id ?
                     this.props.eventActions.updateEventSuccess(res.data.response) :
                     this.props.eventActions.saveEventSuccess(res.data.response);
-                    this.successAlert("Event saved!");
+                this.routerPush();
+                this.successAlert("Event saved!");
                 return;
-            } else{
+            } else {
                 this.checkErrors(res.data.response);
             }
         }).catch(err => {
@@ -106,7 +106,7 @@ class CalendarCon extends React.Component {
     onEditEvent(id) {
         this.context.router.push('/events/' + id);
     }
-    confirmDeletion(id,self){
+    confirmDeletion(id, self) {
         swal({
             title: "Are you sure?",
             text: "Click cancel to go back",
@@ -118,18 +118,18 @@ class CalendarCon extends React.Component {
             closeOnConfirm: false,
             closeOnCancel: false
         },
-        function(isConfirm){
-            if (isConfirm) {
-                self.processDeletion(id);
-            } else {
-                swal("Cancelled!","Deletion canceled","error");
-            }
-        });
+            function (isConfirm) {
+                if (isConfirm) {
+                    self.processDeletion(id);
+                } else {
+                    swal("Cancelled!", "Deletion canceled", "error");
+                }
+            });
     }
 
     onDeleteEvent(id) {
-        let self=this;
-        this.confirmDeletion(id,self);
+        let self = this;
+        this.confirmDeletion(id, self);
     }
 
     processDeletion(id) {
@@ -163,7 +163,7 @@ class CalendarCon extends React.Component {
                     updateEnd={this.updateEnd}
                     updateStart={this.updateStart}
                     onDeleteEvent={this.onDeleteEvent} />
-                <EventTable 
+                <EventTable
                     events={this.props.events}
                     onEditEvent={this.onEditEvent}
                     param={this.props.routeParams.event}
@@ -189,12 +189,12 @@ function mapStateToProps(state, ownProps) {
     if (ownProps.routeParams.event) {
         if (state.events.length > 0) {
             let found = findEvent(state.events, ownProps.routeParams.event);
-            if(!found){
-                window.location="/events";
+            if (!found) {
+                window.location = "/events";
             }
             event = found[0];
         } else {
-            event = { title: "", description: "", start: new Date(),end: new Date() };
+            event = { title: "", description: "", start: new Date(), end: new Date() };
         }
     } else {
         event = { title: "", description: "", end: new Date(), start: new Date() };

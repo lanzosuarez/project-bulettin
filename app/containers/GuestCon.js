@@ -124,6 +124,7 @@ class GuestCon extends React.Component {
     }
 
     buttonText(arr1, arr2, flag=null) {
+        console.log("on button context",flag)
         if (arr2.length <= 4) {
             return null;
         } else {
@@ -171,8 +172,8 @@ class GuestCon extends React.Component {
             }
         )
 
-        //let filteredEvents = events.filter((a, i) => i < this.state.EvntSliceLen * 4);
-        let filteredEvents = events.slice(0, this.state.EvntSliceLen * 4);
+        let filteredEvents = events.filter((a, i) => i < this.state.EvntSliceLen * 4);
+        //let filteredEvents = events.slice(0, this.state.EvntSliceLen * 4);
         let filteredAnnouncements = announcements.filter((a, i) => i < this.state.AnnSliceLen * 4);
         let filteredScheds = this.filterScheds();
         return (
@@ -206,7 +207,7 @@ class GuestCon extends React.Component {
                         {filteredEvents}
                     </div>
                     <div id="viewMe2">
-                        {this.buttonText(filteredAnnouncements,this.props.announcements,1)}
+                        {this.buttonText(filteredEvents,this.props.events)}
                     </div>
                 </GuestPage>
 
