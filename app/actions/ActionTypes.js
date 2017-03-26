@@ -37,3 +37,6 @@ export const ADMIN_OFFLINE = 'ADMIN_OFFLINE';
 //AJAX CALLS
 export const BEGIN_AJAX_CALL = 'BEGIN_AJAX_CALL';
 export const AJAX_CALL_ERROR = 'AJAX_CALL_ERROR';
+
+//isLoading
+export const ISLOADING = 'ISLOADING';

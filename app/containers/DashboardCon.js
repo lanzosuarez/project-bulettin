@@ -12,27 +12,29 @@ import Calendar from '../components/dashboard/Calendar';
 import BulletinData from '../components/dashboard/BulletinData';
 import globalStyles from '../styles';
 import Data from '../data';
-import Load from '../components/Load';
+import LoadBox from '../components/LoadBox';
 
 import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
 import * as adminActions from '../actions/AdminActions';
+import * as isLoadingActions from '../actions/IsLoadingActions';
 import {bindActionCreators} from 'redux';
 
 class DashboardCon extends React.Component {
   constructor(props, context) {
     super(props);
-    this.state={
-      isLoading:true
-    }
     this.navigateToGuest = this.navigateToGuest.bind(this);
     this.getRandomColor = this.getRandomColor.bind(this)
     this.supplyIcon = this.supplyIcon.bind(this);
   }
 
+  componentWillMount(){
+    this.props.isLoadingActions.isLoading(true);
+  }
+
   componentDidMount() {
     this.props.adminActions.checkAdmin().then(()=>{
-      this.setState({isLoading:false});
+      this.props.isLoadingActions.isLoading(false);
     });
   }
 
@@ -51,8 +53,8 @@ class DashboardCon extends React.Component {
   }
 
   render() {
-    if(this.state.isLoading){
-      return <Load />;
+    if(this.props.isLoading){
+      return <LoadBox />;
     } 
     return (
       <div>
@@ -90,13 +92,15 @@ function mapStateToProps(state, ownProps) {
   return {
     admin: state.admin,
     events: state.events,
-    announcements: state.announcements
+    announcements: state.announcements,
+    isLoading: state.isLoading
   };
 }
 
 function mapDispatchToProps(dispatch){
   return{
-    adminActions: bindActionCreators(adminActions, dispatch)
+    adminActions: bindActionCreators(adminActions, dispatch),
+    isLoadingActions: bindActionCreators(isLoadingActions, dispatch)
   };
 }
 

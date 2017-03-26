@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 import { white, pink600, pink500 } from 'material-ui/styles/colors';
-import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import GlobalStyles from '../../styles';
 
 const Visitors = (props) => {
@@ -33,12 +33,11 @@ const Visitors = (props) => {
         <ResponsiveContainer>
           <BarChart data={props.data} >
 
-            <Bar dataKey="uv" fill={pink500} />
+            <Tooltip />
             <YAxis />
             <XAxis dataKey="name" stroke="none" tick={{ fill: white }} />
-            <Bar type="monotone" dataKey="uv" barSize={30} fill="#8884d8"
-              label="uv" />
-            <Bar dataKey="uv" fill={pink500} />
+            <CartesianGrid strokeDasharray="1" tick={{ fill: white }}/>
+            <Bar type="monotone" dataKey="visitors" barSize={10} fill="#8884d8"/>
             <XAxis dataKey="name" stroke="none" tick={{fill: white}}/>
 
           </BarChart>
