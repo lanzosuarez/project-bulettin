@@ -15,7 +15,7 @@ const data = {
     { text: 'DashBoard', icon: <Assessment/>, link: '/dashboard' },
     { text: 'Announcements', icon: <Web/>, link: '/announcements' },
     { text: 'CpE Schedules', icon: <GridOn/>, link: '/schedules' },
-    { text: 'Calendar', icon: <Event/>, link: '/events' },
+    { text: 'Events', icon: <Event/>, link: '/events' },
     { text: 'Guest View', icon:<Web/>, link: '/' },
 
   ],
@@ -86,7 +86,7 @@ const data = {
       {id: 8, name: 'John Doe', subject: 'Circuits II'},
       {id: 9, name: 'John Doe', subject: 'Data Communications'}
     ],
-    monthlySales: [
+    visitors: [
       {name: 'Jan', uv: 3700},
       {name: 'Feb', uv: 3000},
       {name: 'Mar', uv: 2000},
@@ -100,7 +100,7 @@ const data = {
       {name: 'Nov', uv: 2400},
       {name: 'Dec', uv: 2780}
     ],
-    newOrders: [
+    inquiries: [
       {pv: 2400},
       {pv: 1398},
       {pv: 9800},
@@ -109,10 +109,10 @@ const data = {
       {pv: 3490},
       {pv: 4300}
     ],
-    browserUsage: [
-      {name: 'Chrome', value: 800, color: cyan600, icon: <ExpandMore/>},
-      {name: 'Firefox', value: 300, color: pink600, icon: <ChevronRight/>},
-      {name: 'Safari', value: 300, color: purple600, icon: <ExpandLess/>}
+    bulletinData: [
+      {name: 'Schedules', value: 800, color: cyan600, icon: <ExpandMore/>},
+      {name: 'Events', value: 300, color: pink600, icon: <ChevronRight/>},
+      {name: 'Announcements', value: 300, color: purple600, icon: <ExpandLess/>}
     ],
     events:[
        {

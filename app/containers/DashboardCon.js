@@ -6,10 +6,10 @@ import Face from 'material-ui/svg-icons/action/face';
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import Faculties from 'material-ui/svg-icons/action/supervisor-account';
 import InfoBox from '../components/dashboard/InfoBox';
-import NewOrders from '../components/dashboard/NewOrders';
-import MonthlySales from '../components/dashboard/MonthlySales';
+import Inquiries from '../components/dashboard/Inquiries';
+import Visitors from '../components/dashboard/Visitors';
 import Calendar from '../components/dashboard/Calendar';
-import DeptTop from '../components/dashboard/DeptTop';
+import BulletinData from '../components/dashboard/BulletinData';
 import globalStyles from '../styles';
 import Data from '../data';
 
@@ -64,6 +64,7 @@ class DashboardCon extends React.Component {
                 />
             </div>
         });
+        
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
@@ -71,20 +72,19 @@ class DashboardCon extends React.Component {
         <div className="row">
           {announcements}
         </div>
-
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-md m-b-15">
-            <NewOrders data={Data.dashBoardPage.newOrders} />
+            <Inquiries data={Data.dashBoardPage.inquiries} />
           </div>
 
           <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 m-b-15">
-            <MonthlySales data={Data.dashBoardPage.monthlySales} />
+            <Visitors data={Data.dashBoardPage.visitors} />
           </div>
         </div>
 
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-            <DeptTop data={Data.dashBoardPage.deptTop} />
+            <BulletinData data={Data.dashBoardPage.bulletinData}  />
           </div>
 
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
