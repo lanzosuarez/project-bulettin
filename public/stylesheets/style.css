@@ -456,3 +456,12 @@ svg#loader-pencil {
     -webkit-transform: translateY(45%); } 
   }
 /*---------------END---------------*/
+/*--------------CHARTS--------------*/
+.recharts-cartesian-axis text {
+  fill:rgba(255, 255, 255, 0.870588);
+}
+.recharts-bar-labels text {
+  fill:rgba(255, 255, 255, 0.870588);
+  font-size: 12px;
+}
+/*----------------END----------------*/
