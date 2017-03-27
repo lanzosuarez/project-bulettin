@@ -89,12 +89,12 @@ const FormSched = (props) => {
               floatingLabelText="Lec"
               value={sched.lec}
               fullWidth={true}>
+              <MenuItem value={0} primaryText="0" />
               <MenuItem value={1} primaryText="1" />
               <MenuItem value={2} primaryText="2" />
               <MenuItem value={3} primaryText="3" />
               <MenuItem value={4} primaryText="4" />
               <MenuItem value={5} primaryText="5" />
-              <MenuItem value={6} primaryText="6" />
             </SelectField>
           </div>
 
@@ -104,12 +104,12 @@ const FormSched = (props) => {
               floatingLabelText="Lab"
               value={sched.lab}
               fullWidth={true}>
+              <MenuItem value={0} primaryText="0" />
               <MenuItem value={1} primaryText="1" />
               <MenuItem value={2} primaryText="2" />
               <MenuItem value={3} primaryText="3" />
               <MenuItem value={4} primaryText="4" />
               <MenuItem value={5} primaryText="5" />
-              <MenuItem value={6} primaryText="6" />
             </SelectField>
           </div>
 

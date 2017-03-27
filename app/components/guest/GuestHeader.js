@@ -17,7 +17,7 @@ const GuestHeader = (props) => {
     };
 
     return (
-        <div>
+        <div id="up">
             {props.path==="/"?<div id="guestHeader">
                 <div id="guestHd">
                     <div>
