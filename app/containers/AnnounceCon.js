@@ -7,8 +7,10 @@ import swal from 'sweetalert';
 import { connect } from 'react-redux';
 import * as announcementActions from '../actions/AnnouncementActions';
 import * as adminActions from '../actions/AdminActions';
+import * as isLoadingActions from '../actions/IsLoadingActions';
 import { bindActionCreators } from 'redux';
 import AnnouncementApi from '../api/AnnouncementApi';
+import LoadBox from '../components/LoadBox';
 
 class AnnounceCon extends React.Component {
     constructor(props, context) {
@@ -22,17 +24,23 @@ class AnnounceCon extends React.Component {
         this.onDelete = this.onDelete.bind(this);
     }
 
+    componentWillMount() {
+        this.props.isLoadingActions.isLoading(true);
+    }
+
     componentDidMount() {
-        this.props.adminActions.checkAdmin();
+        this.props.adminActions.checkAdminAccess().then(() => {
+            this.props.isLoadingActions.isLoading(false);
+        });
     }
 
     componentWillReceiveProps(nextProps) {
         console.log(this.state.announcement);
         console.log("on next", nextProps);
-        if (nextProps.announcement._id!==this.state.announcement._id) {
+        if (nextProps.announcement._id !== this.state.announcement._id) {
             this.setState({ announcement: Object.assign({}, nextProps.announcement) });
         } else {
-            if(nextProps.announcement.title!==this.state.announcement.title);
+            if (nextProps.announcement.title !== this.state.announcement.title);
             this.setState({ announcement: Object.assign({}, nextProps.announcement) });
         }
     }
@@ -44,29 +52,29 @@ class AnnounceCon extends React.Component {
         this.setState({ announcement: Object.assign({}, i) });
     }
 
-    handleErrors(errs){
-        let errMsg="";
-        Object.keys(errs).forEach(err=>{
-        errMsg+=`- ${errs[err].message} \n`;
-        }); 
+    handleErrors(errs) {
+        let errMsg = "";
+        Object.keys(errs).forEach(err => {
+            errMsg += `- ${errs[err].message} \n`;
+        });
         this.errorAlert(errMsg);
     }
 
-    checkErrors(errObj){
-        if(errObj.errors){
+    checkErrors(errObj) {
+        if (errObj.errors) {
             this.handleErrors(errObj.errors);
         } else {
             this.errorAlert(errObj.response);
         }
     }
 
-    errorAlert(err){
-        swal("Oooops!",err,"error")
+    errorAlert(err) {
+        swal("Oooops!", err, "error")
     }
 
-    successAlert(msg){
-        swal("Success",msg,"success");
-    } 
+    successAlert(msg) {
+        swal("Success", msg, "success");
+    }
 
     onSave(e) {
         e.preventDefault();
@@ -76,9 +84,9 @@ class AnnounceCon extends React.Component {
                 !this.state.announcement._id ?
                     this.props.announcementActions.saveAnnouncementSuccess(res.data.response) :
                     this.props.announcementActions.updateAnnouncementSuccess(res.data.response);
-                    this.successAlert("Announcement saved!");
+                this.successAlert("Announcement saved!");
                 return;
-            } else{
+            } else {
                 this.checkErrors(res.data.response);
             }
         }).catch(err => {
@@ -87,7 +95,7 @@ class AnnounceCon extends React.Component {
         });
     }
 
-    confirmDeletion(id,self){
+    confirmDeletion(id, self) {
         swal({
             title: "Are you sure?",
             text: "Click cancel to go back",
@@ -99,23 +107,23 @@ class AnnounceCon extends React.Component {
             closeOnConfirm: false,
             closeOnCancel: false
         },
-        function(isConfirm){
-            if (isConfirm) {
-                self.processDeletion(id);
-            } else {
-                swal("Cancelled!","Deletion canceled","error")
-            }
-        });
+            function (isConfirm) {
+                if (isConfirm) {
+                    self.processDeletion(id);
+                } else {
+                    swal("Cancelled!", "Deletion canceled", "error")
+                }
+            });
     }
 
     onDelete(id) {
         let self = this;
-        this.confirmDeletion(id,self);
+        this.confirmDeletion(id, self);
     }
 
-    processDeletion(id){
-        this.props.announcementActions.deleteAnnouncement(id).then(res=>{
-            if(res.data.success){
+    processDeletion(id) {
+        this.props.announcementActions.deleteAnnouncement(id).then(res => {
+            if (res.data.success) {
                 this.pushRoute()
                 this.props.announcementActions.deleteAnnouncementSuccess(id);
                 this.successAlert("Schedule deleted!");
@@ -123,17 +131,20 @@ class AnnounceCon extends React.Component {
             } else {
                 this.checkErrors(res.data.response);
             }
-        }).catch(err=>{
+        }).catch(err => {
             this.errorAlert(err);
             throw err;
         });
     }
 
-    pushRoute(){
+    pushRoute() {
         this.context.router.push("/announcements");
     }
 
     render() {
+        if (this.props.isLoading) {
+            return <LoadBox />;
+        }
         return (
             <div>
                 <FormAnnounce
@@ -164,7 +175,7 @@ function mapStateToProps(state, ownProps) {
     if (ownProps.routeParams.ann) {
         if (state.announcements.length > 0) {
             let found = findAnnouncement(state.announcements, ownProps.routeParams.ann);
-            if(!found.length){
+            if (!found.length) {
                 window.location = "/*";
             }
             ann = found[0];
@@ -177,14 +188,16 @@ function mapStateToProps(state, ownProps) {
     }
     return {
         announcement: ann,
-        announcements: state.announcements
+        announcements: state.announcements,
+        isLoading: state.isLoading
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         adminActions: bindActionCreators(adminActions, dispatch),
-        announcementActions: bindActionCreators(announcementActions, dispatch)
+        announcementActions: bindActionCreators(announcementActions, dispatch),
+        isLoadingActions: bindActionCreators(isLoadingActions, dispatch)
     };
 }
 

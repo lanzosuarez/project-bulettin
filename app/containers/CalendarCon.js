@@ -10,8 +10,10 @@ import EventTable from '../components/tables/EventTable';
 import { connect } from 'react-redux';
 import * as eventActions from '../actions/EventActions';
 import * as adminActions from '../actions/AdminActions';
+import * as isLoadingActions from '../actions/IsLoadingActions';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import LoadBox from '../components/LoadBox';
 
 class CalendarCon extends React.Component {
     constructor(props, context) {
@@ -28,7 +30,13 @@ class CalendarCon extends React.Component {
     }
 
     componentWillMount() {
-        this.props.adminActions.checkAdmin();
+        this.props.isLoadingActions.isLoading(true);
+    }
+
+    componentDidMount() {
+        this.props.adminActions.checkAdminAccess().then(() => {
+            this.props.isLoadingActions.isLoading(false);
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -153,6 +161,9 @@ class CalendarCon extends React.Component {
     }
 
     render() {
+        if (this.props.isLoading) {
+            return <LoadBox />;
+        }
         return (
             <div>
                 <FormEvent
@@ -201,7 +212,8 @@ function mapStateToProps(state, ownProps) {
     }
     return {
         event: event,
-        events: state.events
+        events: state.events,
+        isLoading: state.isLoading
     };
 }
 
@@ -209,6 +221,7 @@ function mapDispatchToProps(dispatch) {
     return {
         adminActions: bindActionCreators(adminActions, dispatch),
         eventActions: bindActionCreators(eventActions, dispatch),
+        isLoadingActions: bindActionCreators(isLoadingActions, dispatch)
     };
 }
 

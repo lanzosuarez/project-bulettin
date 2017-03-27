@@ -33,6 +33,7 @@ class DashboardCon extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.announcements.length);
     this.props.adminActions.checkAdmin().then(()=>{
       this.props.isLoadingActions.isLoading(false);
     });
@@ -62,11 +63,11 @@ class DashboardCon extends React.Component {
         <RaisedButton label="Go to Guest" secondary={true} className="goTo" onTouchTap={this.navigateToGuest} />
         <div className="row">
           <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-md m-b-15">
-            <Inquiries data={Data.dashBoardPage.inquiries} />
+            <Inquiries data={this.props.stats.stats} />
           </div>
 
           <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 m-b-15">
-            <Visitors data={Data.dashBoardPage.visitors} />
+            <Visitors data={this.props.stats.stats} />
           </div>
         </div>
 
@@ -89,11 +90,18 @@ DashboardCon.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+    let {bulletinData} = Data.dashBoardPage;
+    bulletinData[0].value=state.schedules.length;
+    bulletinData[1].value=state.events.length;
+    bulletinData[2].value=state.announcements.length;
+    console.log("on dcon", state.stats);
   return {
     admin: state.admin,
     events: state.events,
     announcements: state.announcements,
-    isLoading: state.isLoading
+    schedules: state.schedules,
+    isLoading: state.isLoading,
+    stats: state.stats
   };
 }
 

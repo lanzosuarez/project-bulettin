@@ -11,4 +11,5 @@ export default {
     ajaxCallInProgress:0,
     isOnline: false,
     isLoading: true,
+    stats: {}
 };

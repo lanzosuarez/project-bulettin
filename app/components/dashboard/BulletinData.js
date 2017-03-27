@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
-import {PieChart, Pie, Cell, ResponsiveContainer} from 'recharts';
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from 'recharts';
 import Avatar from 'material-ui/Avatar';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
@@ -34,6 +34,7 @@ const BulletinData = (props) => {
           <div style={styles.pieChartDiv}>
             <ResponsiveContainer>
               <PieChart >
+                <Tooltip />
                 <Pie
                   innerRadius={80}
                   outerRadius={130}

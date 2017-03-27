@@ -7,7 +7,7 @@ import 'flexboxgrid/css/flexboxgrid.css';
 import configureStore from './store/ConfigureStore';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages, isAdminOnline } from './actions/SocketActions';
+import { initializeSocket, onMessageFromServer, onAllUser, onAllMessages, isAdminOnline, onLoadStats } from './actions/SocketActions';
 import { loadScheds } from './actions/ScheduleActions';
 import { loadEvents } from './actions/EventActions';
 import { loadAnnouncements } from './actions/AnnouncementActions';
@@ -25,6 +25,7 @@ store.dispatch(onAllMessages()); //listener for all messages event
 store.dispatch(loadScheds())//load schedules
 store.dispatch(loadEvents());//load events
 store.dispatch(loadAnnouncements());//load loadAnnouncements
+store.dispatch(onLoadStats());
 
 render(
     <Provider store={store}>

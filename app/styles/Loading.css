@@ -1,6 +1,6 @@
 html,
 body {
-  background-color: #404456;
+  background-color: #38354a;
 }
 
 #loader {
@@ -11,7 +11,7 @@ body {
   margin-left: -2.7em;
   width: 5.4em;
   height: 5.4em;
-  background-color: #404456;
+  background-color: #38354a;
 }
 
 #hill {
@@ -31,7 +31,7 @@ body {
   width: 7.1em;
   height: 7.1em;
   left: 0;
-  background-color: #404456;
+  background-color: #38354a;
 }
 
 #box {

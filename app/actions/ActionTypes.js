@@ -40,3 +40,6 @@ export const AJAX_CALL_ERROR = 'AJAX_CALL_ERROR';
 
 //isLoading
 export const ISLOADING = 'ISLOADING';
+
+//stats
+export const LOAD_STATS_SUCCESS = 'LOAD_STATS_SUCCESS';
