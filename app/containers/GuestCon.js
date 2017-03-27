@@ -87,7 +87,6 @@ class GuestCon extends React.Component {
     }
 
     onEditEvent(id) {
-        console.log(id);
         this.context.router.push('/events/' + id);
     }
 
@@ -126,7 +125,6 @@ class GuestCon extends React.Component {
     }
 
     buttonText(arr1, arr2, flag = null) {
-        console.log("on button context", flag)
         if (arr2.length <= 4) {
             return null;
         } else {

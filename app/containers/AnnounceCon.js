@@ -35,8 +35,6 @@ class AnnounceCon extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(this.state.announcement);
-        console.log("on next", nextProps);
         if (nextProps.announcement._id !== this.state.announcement._id) {
             this.setState({ announcement: Object.assign({}, nextProps.announcement) });
         } else {
@@ -46,7 +44,6 @@ class AnnounceCon extends React.Component {
     }
 
     updateState(e) {
-        console.log(e.target.value);
         let i = this.state.announcement;
         i[e.target.name] = e.target.value;
         this.setState({ announcement: Object.assign({}, i) });

@@ -196,7 +196,6 @@ class SchedulesCon extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     let filtered = this.filterScheds();
     if (this.props.isLoading) {
       return <LoadBox />;

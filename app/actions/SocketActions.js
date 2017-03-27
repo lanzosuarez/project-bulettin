@@ -68,7 +68,6 @@ export function onLoadStats() {
     return function (dispatch, getState) {
         const { socket } = getState();
         socket.on('stats', stats => {
-            console.log("onload Stats",stats);
             dispatch(statsActions.loadStatsSuccess(stats));
         });
     };
@@ -103,13 +102,6 @@ export function clearAll() {
     };
 }
 
-//export function adminLogout(){
-//     return function(dispatch,getState){
-//         console.log("logout on socket actions");
-//         const {socket} = getState();
-//         socket.emit('admin-logout');
-//     }
-// }
 
 
 

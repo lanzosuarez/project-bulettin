@@ -33,7 +33,6 @@ class DashboardCon extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.announcements.length);
     this.props.adminActions.checkAdmin().then(()=>{
       this.props.isLoadingActions.isLoading(false);
     });
@@ -94,7 +93,6 @@ function mapStateToProps(state, ownProps) {
     bulletinData[0].value=state.schedules.length;
     bulletinData[1].value=state.events.length;
     bulletinData[2].value=state.announcements.length;
-    console.log("on dcon", state.stats);
   return {
     admin: state.admin,
     events: state.events,

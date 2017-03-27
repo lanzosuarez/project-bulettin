@@ -71,7 +71,6 @@ class ChatBoxCon extends React.Component {
 
     getTwitter(){
         AuthApi.getTwitterUser(this.state.infos.nickname).then(res=>{
-            console.log(res);
             if(res.data.success){
                 let l = this.state.infos;
                 l["image_url"] = res.data.response.profile_image_url
@@ -96,7 +95,6 @@ class ChatBoxCon extends React.Component {
 
     handleSend(e) {
         e.preventDefault();
-        console.log(e.target.reset());
         this.props.socketActions.emitMessageFromUser(this.state.infos.message,this.state.infos.image_url);
     }
 
@@ -123,7 +121,6 @@ class ChatBoxCon extends React.Component {
 
 
     render() {
-        console.log(this.state);
         const styles = {
             paper: {
                 height: "100%",

@@ -41,7 +41,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("on app.js",this.context.store.getState().isLoading )
     let { navDrawerOpen } = this.state;
     const paddingLeftDrawerOpen = 236;
     const styles = {

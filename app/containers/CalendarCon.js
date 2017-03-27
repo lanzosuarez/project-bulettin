@@ -49,7 +49,6 @@ class CalendarCon extends React.Component {
     }
 
     updateState(e) {
-        console.log(e.target.value);
         let i = this.state.event;
         i[e.target.name] = e.target.value;
         this.setState({ event: Object.assign({}, i) });
@@ -195,7 +194,6 @@ function findEvent(events, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log("on state", state);
     let event;
     if (ownProps.routeParams.event) {
         if (state.events.length > 0) {
