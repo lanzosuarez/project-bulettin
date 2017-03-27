@@ -179,7 +179,7 @@ class GuestCon extends React.Component {
         return (
 
             <div>
-                <div>
+                <div id="announcie">
                     <GuestTitle title={"Annoucements"} />
                     <div className="row" id="gCon">
                         {filteredAnnouncements}
@@ -188,29 +188,33 @@ class GuestCon extends React.Component {
                         {this.buttonText(filteredAnnouncements, this.props.announcements, 1)}
                     </div>
                 </div>
-                <GuestPage color={"#2b2838"}>
-                    <GuestTitle title={"Schedules"}
-                        size={2} />
-                    <div id="schedules">
-                        <Schedules
-                            id={this.props.admin}
-                            onSearch={this.onSearch}
-                            schedules={filteredScheds}
-                            defYearValue={this.state.infos.year}
-                            updateState={this.updateState}
-                        />
-                    </div>
-                </GuestPage>
-                <GuestPage color={"rgb(56, 53, 74)"} shadow={"none"}>
-                    <GuestTitle title={"Events"}
-                        size={0} />
-                    <div className="row eventPads" id="events" >
-                        {filteredEvents}
-                    </div>
-                    <div id="viewMe2">
-                        {this.buttonText(filteredEvents, this.props.events)}
-                    </div>
-                </GuestPage>
+                <div id="schedie">
+                    <GuestPage color={"#2b2838"}>
+                        <GuestTitle title={"Schedules"}
+                            size={2} />
+                        <div id="schedules">
+                            <Schedules
+                                id={this.props.admin}
+                                onSearch={this.onSearch}
+                                schedules={filteredScheds}
+                                defYearValue={this.state.infos.year}
+                                updateState={this.updateState}
+                            />
+                        </div>
+                    </GuestPage>
+                </div>
+                <div id="eventsie">
+                    <GuestPage color={"rgb(56, 53, 74)"} shadow={"none"}>
+                        <GuestTitle title={"Events"}
+                            size={0} />
+                        <div className="row eventPads" id="events" >
+                            {filteredEvents}
+                        </div>
+                        <div id="viewMe2">
+                            {this.buttonText(filteredEvents, this.props.events)}
+                        </div>
+                    </GuestPage>
+                </div>
 
                 <Footer />
             </div>
