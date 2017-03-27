@@ -90,99 +90,172 @@ function onListening() {
 }
 
 
+
+
 /*
 * socket io
 */
-const moment = require('moment');
-const _ = require('lodash');
-let admin;
-let messages = [];
-let users = [];
-let io = require('socket.io')(server);
-io.on('connect', socket => {
-  if(admin){
-    io.emit('admin-online', true);
+
+
+
+const template = {
+  stats: [
+    { name: 'Jan', visitors: 0, inquiries: 0 },
+    { name: 'Feb', visitors: 0, inquiries: 0 },
+    { name: 'Mar', visitors: 0, inquiries: 0 },
+    { name: 'Apr', visitors: 0, inquiries: 0 },
+    { name: 'May', visitors: 0, inquiries: 0 },
+    { name: 'Jun', visitors: 0, inquiries: 0 },
+    { name: 'Jul', visitors: 0, inquiries: 0 },
+    { name: 'Aug', visitors: 0, inquiries: 0 },
+    { name: 'Sep', visitors: 0, inquiries: 0 },
+    { name: 'Oct', visitors: 0, inquiries: 0 },
+    { name: 'Nov', visitors: 0, inquiries: 0 },
+    { name: 'Dec', visitors: 0, inquiries: 0 }
+  ],
+}
+
+const moment = require('moment'),
+  _ = require('lodash');
+
+let admin,
+  messages = [],
+  users = [],
+  io = require('socket.io')(server);
+
+const onJoin = (user,socket) => {
+  console.log(user.nickname + " has connected!");
+  if (user.nickname === "admin" && user.password) { //check if admin
+    admin = socket;
+    socket.nickname = user.nickname;
+    console.log("on emite stats");
+    console.log(template);
+    io.emit('stats', template); 
+    io.emit('admin-online', true); //then broadcast tat admin is online
+  } else {
+    socket.nickname = user.nickname;
   }
-  socket.on('join', user => {
-    console.log(user.nickname + " has connected!");
-    if (user.nickname === "admin" && user.password) { //check if admin
-      admin = socket;
-      socket.nickname = user.nickname;
-      io.emit('admin-online', true); //then broadcast tat admin is online
-    } else {
-       socket.nickname = user.nickname;
-    }
-    if (messages.length > 110) {
-      _.drop(messages, 10)
-    }
-    if(admin){
-      console.log("emit online");
-      io.emit('admin-online', true);
-    } else {
-      io.emit('admin-online', false);
-    }
-    socket.emit('all-messages', messages);
-    console.log("messages", messages);
-  });
+  if (messages.length > 110) {
+    _.drop(messages, 10)
+  }
+  if (admin) {
+    console.log("emit online");
+    io.emit('admin-online', true);
+  } else {
+    io.emit('admin-online', false);
+  }
+  socket.emit('all-messages', messages);
+  console.log("messages", messages);
+};
 
-  socket.on('message-from-user', data => {
-    let toSend = {
-      nickname: socket.nickname,
-      message: data.message,
-      seen: false,
-      sendDate: moment().format('LT'),
-      seenDate: null,
-      url: data.url
-    };
-    console.log(toSend);
-    messages.push(toSend);
-    io.emit('message-from-server', toSend);
-  });
+const msgFromUser = (data,socket) => {
+  if(data.nickname!=="admin"){
+    //add to inquiries
+    setStats(0,1);
+  }
+  let toSend = {
+    nickname: socket.nickname,
+    message: data.message,
+    seen: false,
+    sendDate: moment().format('LT'),
+    seenDate: null,
+    url: data.url
+  };
+  console.log(toSend);
+  messages.push(toSend);
+  io.emit('message-from-server', toSend);
+};
 
-  socket.on('seen-all', () => {
-    console.log("on seen all");
-    if(socket.nickname ==="admin"){
-      messages.map(msg=>{
-          if (msg.nickname !== "admin") {
-            if(!msg.seen){
-              msg.seen = true;
-              msg.seenDate = moment().format('LT');
-            }
-          }
-      })
-    } else {
-      messages.map(msg => {
-      if (msg.nickname !== socket.nickname && msg.nickname==="admin") {
+const onSeenAll = (socket) => {
+  console.log("on seen all");
+  if (socket.nickname === "admin") {
+    messages.map(msg => {
+      if (msg.nickname !== "admin") {
+        if (!msg.seen) {
+          msg.seen = true;
+          msg.seenDate = moment().format('LT');
+        }
+      }
+    })
+  } else {
+    messages.map(msg => {
+      if (msg.nickname !== socket.nickname && msg.nickname === "admin") {
         if (!msg.seen) {
           msg.seen = true;
           msg.seenDate = moment().format('LT')
         }
       }
     });
-    }
+  }
+  io.emit('all-messages', messages);
+};
+
+const onLogout = (socket) => {
+  console.log("onlogout")
+  admin.disconnect();
+  admin = null;
+};
+
+const onDisconnect = (socket) => {
+  if (socket.nickname === "admin") {
+    io.emit('admin-online', false);
+    messages = [];
     io.emit('all-messages', messages);
-  });
-
-  socket.on('admin-logout', ()=>{
-    console.log("onlogout")
-    admin.disconnect();
-    admin=null;
-  });
-
-  socket.on('clear', ()=>{
-    console.log("on clear");
-    messages=[];
-    io.emit('all-messages', messages);
-  });
-
-  socket.on('disconnect', () => {
-    if (socket.nickname === "admin") {
-      io.emit('admin-online', false);
-      messages=[];
-      io.emit('all-messages', messages);
-      console.log(socket.nickname + ' has disconnected');
-      return;
-    }
     console.log(socket.nickname + ' has disconnected');
+    return;
+  }
+  console.log(socket.nickname + ' has disconnected');
+};
+
+const onClear = ()=>{
+  console.log("on clear");
+  messages = [];
+}
+
+const findMonth = () => {
+  const date = new Date(Date.now());
+  return date.getMonth();
+};
+
+const setStats = (visit,inquire)=>{
+  let month = findMonth();
+  console.log(month);
+  if(visit){
+    console.log("on add visitors");
+    template.stats[month].visitors=template.stats[month].visitors+1;
+  } else {
+    console.log("on add on inquiries");
+    template.stats[month].inquiries=template.stats[month].inquiries+1;
+  }
+}
+
+//MAIN
+io.on('connect', socket => {
+
+  setStats(1);//add to visitors
+  console.log(template);
+  if (admin) {
+    console.log("on emite stats");
+    io.emit('stats', template); //emit stats;
+    io.emit('admin-online', true);
+  }
+  socket.on('join', user => {
+    onJoin(user,socket);
+  });
+  socket.on('message-from-user', data => {
+    msgFromUser(data,socket);
+  });
+  socket.on('seen-all', () => {
+    onSeenAll(socket);
+  });
+  socket.on('admin-logout', () => {
+    onLogout(socket);
+  });
+  socket.on('clear', () => {
+    onClear();
+    io.emit('all-messages', messages);
+  });
+  socket.on('disconnect', () => {
+    onDisconnect(socket);
   });
 });

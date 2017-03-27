@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Paper from 'material-ui/Paper';
 import {white, purple600, purple500} from 'material-ui/styles/colors';
-import {LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid} from 'recharts';
+import {LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 import {typography} from 'material-ui/styles';
 
 const Inquiries = (props) => {
@@ -30,10 +30,11 @@ const Inquiries = (props) => {
       <div style={styles.div}>
         <ResponsiveContainer >
           <LineChart data={props.data}>
+            <Tooltip />
             <XAxis dataKey="name" fill={"rgba(255, 255, 255, 0.870588)"}/>
             <YAxis fill={"rgba(255, 255, 255, 0.870588)"} />
             <CartesianGrid strokeDasharray="3 3" tick={{ fill: white }}/>
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
+            <Line type="monotone" dataKey="inquiries" stroke="#8884d8" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>
       </div>

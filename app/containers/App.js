@@ -41,6 +41,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("on app.js",this.context.store.getState().isLoading )
     let { navDrawerOpen } = this.state;
     const paddingLeftDrawerOpen = 236;
     const styles = {
@@ -59,7 +60,9 @@ class App extends React.Component {
     let guestHeader;
     if(location.pathname==="/login"||location.pathname==="/register"){
       guestHeader=null;
-    } else {
+    } else if(this.context.store.getState().isLoading ){
+      guestHeader=null;
+    }else {
       guestHeader=<GuestHeader path={location.pathname} admin={this.state.admin}/>
     }
 

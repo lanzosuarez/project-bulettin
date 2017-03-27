@@ -1,18 +1,18 @@
 import * as types from './ActionTypes';
 import * as messagesActions from '../actions/MessagesActions';
 import * as guestActions from '../actions/GuestActions';
-import * as ajaxStatusActions from '../actions/AjaxStatusActions';
+import * as statsActions from '../actions/StatsActions';
 import AuthApi from '../api/AuthApi';
 
 export function initializeSocketSuccess() {
     return { type: types.INITIALIZE_SOCKET_SUCCESS }
 };
 
-function adminOnline(status){
+function adminOnline(status) {
     return { type: types.ADMIN_ONLINE, status };
 }
 
-function adminOffline(status){
+function adminOffline(status) {
     return { type: types.ADMIN_OFFLINE, status };
 }
 
@@ -43,10 +43,10 @@ export function onMessageFromServer() {
     };
 };
 // admin online listener
-export function isAdminOnline(){
-    return function (dispatch, getState){
+export function isAdminOnline() {
+    return function (dispatch, getState) {
         const { socket } = getState();
-        socket.on('admin-online', status=>{
+        socket.on('admin-online', status => {
             dispatch(adminOnline(status));
         });
     }
@@ -62,31 +62,43 @@ export function onAllMessages() {
     };
 };
 
-//message emitter
-export function emitMessageFromUser(message,url) {
+//stats listener
+
+export function onLoadStats() {
     return function (dispatch, getState) {
         const { socket } = getState();
-        socket.emit('message-from-user', { message,url });
+        socket.on('stats', stats => {
+            console.log("onload Stats",stats);
+            dispatch(statsActions.loadStatsSuccess(stats));
+        });
+    };
+}
+
+//message emitter
+export function emitMessageFromUser(message, url) {
+    return function (dispatch, getState) {
+        const { socket } = getState();
+        socket.emit('message-from-user', { message, url });
     };
 };
 //join emitter
-export function emitJoinClient(nickname, password=null) {
+export function emitJoinClient(nickname, password = null) {
     return function (dispatch, getState) {
         const { socket } = getState();
-        socket.emit('join', {nickname,password});
+        socket.emit('join', { nickname, password });
     };
 };
 
-export function seenAll(){
-    return function(dispatch, getState){
-        const {socket} = getState();
+export function seenAll() {
+    return function (dispatch, getState) {
+        const { socket } = getState();
         socket.emit('seen-all');
     };
 }
 
-export function clearAll(){
-    return function(dispatch, getState){
-        const {socket} = getState();
+export function clearAll() {
+    return function (dispatch, getState) {
+        const { socket } = getState();
         socket.emit('clear');
     };
 }

@@ -8,7 +8,7 @@ import PageBase from '../PageBase';
 
 const FormSched = (props) => {
   console.log(props);
-  let { sched, updateSchedForText, updateSchedForSelect, onSaveSched, params } = props;
+  let { sched, updateSchedForText, onSaveSched, params } = props;
   const styles = {
     buttons: {
       marginTop: 30,
@@ -59,57 +59,57 @@ const FormSched = (props) => {
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
             <SelectField
               hintText={sched.year}
-              onChange={updateSchedForSelect}
+              onChange={props.updateYear}
               value={sched.year}
               floatingLabelText="Year"
               fullWidth={true}>
-              <MenuItem value="year1" primaryText="1" />
-              <MenuItem value="year2" primaryText="2" />
-              <MenuItem value="year3" primaryText="3" />
-              <MenuItem value="year4" primaryText="4" />
-              <MenuItem value="year5" primaryText="5" />
+              <MenuItem value={1} primaryText="1" />
+              <MenuItem value={2} primaryText="2" />
+              <MenuItem value={3} primaryText="3" />
+              <MenuItem value={4} primaryText="4" />
+              <MenuItem value={5} primaryText="5" />
             </SelectField>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
             <SelectField
-              onChange={updateSchedForSelect}
+              onChange={props.updateSection}
               floatingLabelText="Sec"
               value={sched.section}
               fullWidth={true}>
-              <MenuItem value="section1" primaryText="1" />
-              <MenuItem value="section2" primaryText="2" />
-              <MenuItem value="section3" primaryText="3" />
-              <MenuItem value="section4" primaryText="4" />
-              <MenuItem value="section5" primaryText="5" />
+              <MenuItem value={1} primaryText="1" />
+              <MenuItem value={2} primaryText="2" />
+              <MenuItem value={3} primaryText="3" />
+              <MenuItem value={4} primaryText="4" />
+              <MenuItem value={5} primaryText="5" />
             </SelectField>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
             <SelectField
-              onChange={updateSchedForSelect}
+              onChange={props.updateLec}
               floatingLabelText="Lec"
               value={sched.lec}
               fullWidth={true}>
-              <MenuItem value="lec1" primaryText="1" />
-              <MenuItem value="lec2" primaryText="2" />
-              <MenuItem value="lec3" primaryText="3" />
-              <MenuItem value="lec4" primaryText="4" />
-              <MenuItem value="lec5" primaryText="5" />
-              <MenuItem value="lec6" primaryText="6" />
+              <MenuItem value={1} primaryText="1" />
+              <MenuItem value={2} primaryText="2" />
+              <MenuItem value={3} primaryText="3" />
+              <MenuItem value={4} primaryText="4" />
+              <MenuItem value={5} primaryText="5" />
+              <MenuItem value={6} primaryText="6" />
             </SelectField>
           </div>
 
           <div className="col-xs-12 col-sm-6 col-md-1 col-lg-1 m-b-15 ">
             <SelectField
-              onChange={updateSchedForSelect}
+              onChange={props.updateLab}
               floatingLabelText="Lab"
               value={sched.lab}
               fullWidth={true}>
-              <MenuItem value="lab1" primaryText="1" />
-              <MenuItem value="lab2" primaryText="2" />
-              <MenuItem value="lab3" primaryText="3" />
-              <MenuItem value="lab4" primaryText="4" />
-              <MenuItem value="lab5" primaryText="5" />
-              <MenuItem value="lab6" primaryText="6" />
+              <MenuItem value={1} primaryText="1" />
+              <MenuItem value={2} primaryText="2" />
+              <MenuItem value={3} primaryText="3" />
+              <MenuItem value={4} primaryText="4" />
+              <MenuItem value={5} primaryText="5" />
+              <MenuItem value={6} primaryText="6" />
             </SelectField>
           </div>
 
@@ -147,9 +147,9 @@ const FormSched = (props) => {
           </div>
         </div>
         <div style={styles.buttons}>
-          <Link to={params?"/schedules":"/"}>
+          <Link to={params ? "/schedules" : "/"}>
             <RaisedButton label="Cancel"
-              style={styles.saveButton}/>
+              style={styles.saveButton} />
           </Link>
           {params ?
             <RaisedButton label="Delete"

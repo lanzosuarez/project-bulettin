@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as scheduleActions from '../actions/ScheduleActions';
 import * as adminActions from '../actions/AdminActions';
+import * as isLoadingActions from '../actions/IsLoadingActions';
 import SchedApi from '../api/SchedApi';
 import { browserHistory } from 'react-router';
-
-
+import LoadBox from '../components/LoadBox';
 
 class SchedulesCon extends React.Component {
   constructor(props, context) {
@@ -26,13 +26,23 @@ class SchedulesCon extends React.Component {
     this.filterScheds = this.filterScheds.bind(this);
     this.updateState = this.updateState.bind(this);
     this.updateSchedForText = this.updateSchedForText.bind(this);
-    this.updateSchedForSelect = this.updateSchedForSelect.bind(this);
     this.onSaveSched = this.onSaveSched.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onDeleteEvent = this.onDeleteEvent.bind(this);
+    this.updateLab = this.updateLab.bind(this);
+    this.updateLec = this.updateLec.bind(this);
+    this.updateYear = this.updateYear.bind(this);
+    this.updateSection = this.updateSection.bind(this);
   }
+
+  componentWillMount() {
+    this.props.isLoadingActions.isLoading(true);
+  }
+
   componentDidMount() {
-    this.props.adminActions.checkAdmin();
+    this.props.adminActions.checkAdminAccess().then(() => {
+      this.props.isLoadingActions.isLoading(false);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,46 +80,54 @@ class SchedulesCon extends React.Component {
     this.setState({ keyword: e.target.value });
   }
 
-  updateSchedForText(e) {
+
+  updateState(field, value) {
     let sched = this.state.sched;
-    sched[e.target.name] = e.target.value;
+    sched[field] = value;
     this.setState({ sched: Object.assign({}, sched) });
   }
-
-  updateSchedForSelect(e, key, payload) {
-    let sched = this.state.sched;
-    let field = payload.slice(0,payload.length-1);
-    let value = payload.slice(-1,payload.length);
-    console.log(field,value);
-    // sched[payload] = key + 1;
-    // this.setState({ sched: Object.assign({}, sched) });
+  updateSchedForText(e) {
+    this.updateState(e.target.name, e.target.value);
   }
- 
-  
 
-  handleErrors(errs){
-        let errMsg="";
-        Object.keys(errs).forEach(err=>{
-        errMsg+=`- ${errs[err].message} \n`;
-        }); 
-        this.errorAlert(errMsg);
+  updateLec(e, key, payload) {
+    this.updateState("lec", payload);
+  }
+  updateLab(e, key, payload) {
+    this.updateState("lab", payload)
+  }
+  updateYear(e, key, payload) {
+    this.updateState("year", payload)
+  }
+  updateSection(e, key, payload) {
+    this.updateState("section", payload)
+  }
+
+
+
+  handleErrors(errs) {
+    let errMsg = "";
+    Object.keys(errs).forEach(err => {
+      errMsg += `- ${errs[err].message} \n`;
+    });
+    this.errorAlert(errMsg);
+  }
+
+  checkErrors(errObj) {
+    if (errObj.errors) {
+      this.handleErrors(errObj.errors);
+    } else {
+      this.errorAlert(errObj.response);
     }
-
-  checkErrors(errObj){
-      if(errObj.errors){
-          this.handleErrors(errObj.errors);
-      } else {
-          this.errorAlert(errObj.response);
-      }
   }
 
-  errorAlert(err){
-    swal("Oooops!",err,"error")
+  errorAlert(err) {
+    swal("Oooops!", err, "error")
   }
 
-  successAlert(msg){
-    swal("Success",msg,"success");
-  } 
+  successAlert(msg) {
+    swal("Success", msg, "success");
+  }
 
   onSaveSched(e) {
     e.preventDefault();
@@ -117,11 +135,11 @@ class SchedulesCon extends React.Component {
       if (res.data.success) {
         let { updateSchedSuccess, saveSchedSuccess } = this.props.scheduleActions;
         this.state.sched._id ?
-        updateSchedSuccess(res.data.response) :
-        saveSchedSuccess(res.data.response);
+          updateSchedSuccess(res.data.response) :
+          saveSchedSuccess(res.data.response);
         this.routerPush();
         this.successAlert("Schedule Added!")
-        
+
       } else {
         this.checkErrors(res.data.response);
       }
@@ -131,7 +149,7 @@ class SchedulesCon extends React.Component {
     })
   }
 
-  confirmDeletion(id,self){
+  confirmDeletion(id, self) {
     swal({
       title: "Are you sure?",
       text: "Click cancel to go back",
@@ -143,21 +161,21 @@ class SchedulesCon extends React.Component {
       closeOnConfirm: false,
       closeOnCancel: false
     },
-    function(isConfirm){
-      if (isConfirm) {
-        self.processDeletion(id);
-      } else {
-        swal("Cancelled!","Deletion canceled","error");
-      }
-    });
+      function (isConfirm) {
+        if (isConfirm) {
+          self.processDeletion(id);
+        } else {
+          swal("Cancelled!", "Deletion canceled", "error");
+        }
+      });
   }
 
   onDeleteEvent(id) {
-    let self=this
-    this.confirmDeletion(id,self);
+    let self = this
+    this.confirmDeletion(id, self);
   }
 
-  processDeletion(id){
+  processDeletion(id) {
     this.props.scheduleActions.deleteEvent(id).then(res => {
       if (res.data.success) {
         this.routerPush();
@@ -178,7 +196,11 @@ class SchedulesCon extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     let filtered = this.filterScheds();
+    if (this.props.isLoading) {
+      return <LoadBox />;
+    }
     return (
       <div>
         <FormSched
@@ -186,7 +208,10 @@ class SchedulesCon extends React.Component {
           onSaveSched={this.onSaveSched}
           sched={this.state.sched}
           updateSchedForText={this.updateSchedForText}
-          updateSchedForSelect={this.updateSchedForSelect}
+          updateLab={this.updateLab}
+          updateLec={this.updateLec}
+          updateYear={this.updateYear}
+          updateSection={this.updateSection}
           onDeleteEvent={this.onDeleteEvent}
         />
         <Schedules
@@ -220,10 +245,10 @@ function mapStateToProps(state, ownProps) {
     if (state.schedules.length > 0) {
       let id = ownProps.routeParams.sched;
       let found = findSched(state.schedules, id);
-      if(!found){
-        window.location="/schedules";
+      if (!found) {
+        window.location = "/schedules";
       }
-      sched=found;
+      sched = found;
     } else {
       sched = freshSched();
     }
@@ -233,14 +258,16 @@ function mapStateToProps(state, ownProps) {
   return {
     admin: state.admin,
     sched: sched,
-    schedules: state.schedules
+    schedules: state.schedules,
+    isLoading: state.isLoading
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     scheduleActions: bindActionCreators(scheduleActions, dispatch),
-    adminActions: bindActionCreators(adminActions, dispatch)
+    adminActions: bindActionCreators(adminActions, dispatch),
+    isLoadingActions: bindActionCreators(isLoadingActions, dispatch)
   };
 }
 

@@ -3,7 +3,6 @@ import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import localizer from 'react-big-calendar/lib/localizers/moment';
 import moment from 'moment';
-import Data from '../../data';
 import Paper from 'material-ui/Paper';
 
 
@@ -24,7 +23,7 @@ const Calendar = (props) => {
         <div>
             <Paper style={styles.paper}>
                 <BigCalendar
-                events={Data.dashBoardPage.events}
+                events={[]}
                 startAccessor='startDate'
                 endAccessor='endDate'
                 />

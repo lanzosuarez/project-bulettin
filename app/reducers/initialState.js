@@ -9,5 +9,7 @@ export default {
     events:[],
     socket: null,
     ajaxCallInProgress:0,
-    isOnline: false
+    isOnline: false,
+    isLoading: true,
+    stats: {}
 };

@@ -12,16 +12,15 @@ import InfoBox from '../components/dashboard/InfoBox';
 import Footer from '../components/Footer';
 import Schedules from '../components/schedules/Schedules';
 import FlatButton from 'material-ui/FlatButton';
-import Data from '../data';
 import { Link } from 'react-router';
-import { concat } from 'lodash';
-import Loading from '../components/Loading';
+import LoadBox from '../components/LoadBox';
 
 import { connect } from 'react-redux';
 import AuthApi from '../api/AuthApi';
 import { isEmpty } from 'lodash';
 import * as adminActions from '../actions/AdminActions';
 import * as scheduleActions from '../actions/ScheduleActions';
+import * as isLoadingActions from '../actions/IsLoadingActions';
 import { bindActionCreators } from 'redux';
 
 class GuestCon extends React.Component {
@@ -35,7 +34,6 @@ class GuestCon extends React.Component {
             keyword: "",
             AnnSliceLen: 1,
             EvntSliceLen: 1,
-            isLoading: true,
         };
         this.filterScheds = this.filterScheds.bind(this);
         this.updateState = this.updateState.bind(this);
@@ -47,15 +45,19 @@ class GuestCon extends React.Component {
         this.buttonText = this.buttonText.bind(this);
     }
 
+    componentWillMount() {
+        this.props.isLoadingActions.isLoading(true);
+    }
+    componentDidMount() {
+        this.props.adminActions.checkAdminAccess().then(() => {
+            this.props.isLoadingActions.isLoading(false);
+        });
+    }
+
     componenWillReceiveProps(nextProps) {
         if (nextProps.announcements.length !== this.props.ann.length) {
             this.setState({ slices: nextProps.announcements.slice(0, 4) })
         }
-    }
-
-    componentDidMount() {
-        this.props.adminActions.checkAdminAccess();
-        this.setState({isLoading:false});
     }
 
     updateState(value, field) {
@@ -123,18 +125,17 @@ class GuestCon extends React.Component {
         }
     }
 
-    buttonText(arr1, arr2, flag=null) {
-        console.log("on button context",flag)
+    buttonText(arr1, arr2, flag = null) {
+        console.log("on button context", flag)
         if (arr2.length <= 4) {
             return null;
         } else {
-            return <RaisedButton label={arr1.length === arr2.length ? "View Less" : "View More"} 
-            onTouchTap={() => { this.addSlices((flag ? 1 : null)) }}
-            buttonStyle={{backgroundColor: "rgb(43, 40, 56)", border: "1px solid white"}}
-            labelColor={"white"}
+            return <RaisedButton label={arr1.length === arr2.length ? "View Less" : "View More"}
+                onTouchTap={() => { this.addSlices((flag ? 1 : null)) }}
+                buttonStyle={{ backgroundColor: "rgb(43, 40, 56)", border: "1px solid white" }}
+                labelColor={"white"}
             />
         }
-
     }
 
     render() {
@@ -146,37 +147,39 @@ class GuestCon extends React.Component {
             let getIcon = this.supplyIcon(icons);
             let d = new Date(announcement.createDate);
             return <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-                        <InfoBox Icon={getIcon}
-                            id={announcement._id}
-                            color={getColor}
-                            title={announcement.title}
-                            value={announcement.description}
-                            date={months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()}
-                            key={index}
-                            admin={this.props.admin}
-                        />
-                    </div>
-            });
+                <InfoBox Icon={getIcon}
+                    id={announcement._id}
+                    color={getColor}
+                    title={announcement.title}
+                    value={announcement.description}
+                    date={months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()}
+                    key={index}
+                    admin={this.props.admin}
+                />
+            </div>
+        });
 
         let events = this.props.events.map((ev, index) => {
             return <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-                        <GuestEvent
-                            key={index}
-                            id={this.props.admin}
-                            onEditEvent={this.onEditEvent}
-                            onDeleteEvent={this.onDeleteEvent}
-                            index={index} ev={ev}
-                            param={this.props.routeParams.event}
-                        />
-                    </div>;
-            }
+                <GuestEvent
+                    key={index}
+                    id={this.props.admin}
+                    onEditEvent={this.onEditEvent}
+                    onDeleteEvent={this.onDeleteEvent}
+                    index={index} ev={ev}
+                    param={this.props.routeParams.event}
+                />
+            </div>;
+        }
         )
-
         let filteredEvents = events.filter((a, i) => i < this.state.EvntSliceLen * 4);
-        //let filteredEvents = events.slice(0, this.state.EvntSliceLen * 4);
         let filteredAnnouncements = announcements.filter((a, i) => i < this.state.AnnSliceLen * 4);
         let filteredScheds = this.filterScheds();
+        if (this.props.isLoading) {
+            return <LoadBox />;
+        }
         return (
+
             <div>
                 <div>
                     <GuestTitle title={"Annoucements"} />
@@ -184,7 +187,7 @@ class GuestCon extends React.Component {
                         {filteredAnnouncements}
                     </div>
                     <div id="viewMe">
-                        {this.buttonText(filteredAnnouncements,this.props.announcements,1)}
+                        {this.buttonText(filteredAnnouncements, this.props.announcements, 1)}
                     </div>
                 </div>
                 <GuestPage color={"#2b2838"}>
@@ -207,7 +210,7 @@ class GuestCon extends React.Component {
                         {filteredEvents}
                     </div>
                     <div id="viewMe2">
-                        {this.buttonText(filteredEvents,this.props.events)}
+                        {this.buttonText(filteredEvents, this.props.events)}
                     </div>
                 </GuestPage>
 
@@ -221,7 +224,6 @@ GuestCon.propTypes = {
     messages: PropTypes.array,
     guests: PropTypes.array,
     socket: PropTypes.object,
-    socketActions: PropTypes.object.isRequired,
     admin: PropTypes.object
 };
 
@@ -236,14 +238,15 @@ function mapStateToProps(state, ownProps) {
         schedules: state.schedules,
         events: state.events,
         announcements: state.announcements,
-        ajaxCallInProgress: state.ajaxCallsInProgress
+        isLoading: state.isLoading
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         adminActions: bindActionCreators(adminActions, dispatch),
-        scheduleActions: bindActionCreators(scheduleActions, dispatch)
+        scheduleActions: bindActionCreators(scheduleActions, dispatch),
+        isLoadingActions: bindActionCreators(isLoadingActions, dispatch)
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GuestCon);
