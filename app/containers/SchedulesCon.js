@@ -18,11 +18,12 @@ class SchedulesCon extends React.Component {
     this.state = {
       sched: Object.assign({}, props.sched),
       infos: {
-        year: 1,
+        year: 2,
         section: 1
       },
       keyword: ""
     }
+    this.updateInfoState = this.updateInfoState.bind(this);
     this.filterScheds = this.filterScheds.bind(this);
     this.updateState = this.updateState.bind(this);
     this.updateSchedForText = this.updateSchedForText.bind(this);
@@ -55,10 +56,11 @@ class SchedulesCon extends React.Component {
     }
   }
 
-  updateState(value, field) {
+  updateInfoState(value, field) {
+    console.log(value,field);
     let i = this.state.infos;
     i[field] = value;
-    this.setState({ infos: i })
+    this.setState({ infos: i });
   }
 
   filterScheds() {
@@ -81,7 +83,7 @@ class SchedulesCon extends React.Component {
   }
 
 
-  updateState(field, value) {
+  updateState(value, field) {
     let sched = this.state.sched;
     sched[field] = value;
     this.setState({ sched: Object.assign({}, sched) });
@@ -218,7 +220,7 @@ class SchedulesCon extends React.Component {
           onSearch={this.onSearch}
           schedules={filtered}
           defYearValue={this.state.infos.year}
-          updateState={this.updateState} />
+          updateInfoState={this.updateInfoState} />
       </div>
     );
   }
