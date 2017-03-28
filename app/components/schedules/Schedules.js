@@ -89,7 +89,7 @@ const Schedules = (props) => {
         <SchedHeader
           onSearch={props.onSearch}
           defYearValue={props.defYearValue}
-          updateInfoState={props.updateInfoState}
+          updateState={props.updateState}
           style={styles.header}
         />
         <Table

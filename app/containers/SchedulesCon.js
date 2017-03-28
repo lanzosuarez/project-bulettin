@@ -23,9 +23,8 @@ class SchedulesCon extends React.Component {
       },
       keyword: ""
     }
-    this.updateInfoState = this.updateInfoState.bind(this);
-    this.filterScheds = this.filterScheds.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.filterScheds = this.filterScheds.bind(this);
     this.updateSchedForText = this.updateSchedForText.bind(this);
     this.onSaveSched = this.onSaveSched.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -56,7 +55,7 @@ class SchedulesCon extends React.Component {
     }
   }
 
-  updateInfoState(value, field) {
+  updateState(value, field) {
     console.log(value,field);
     let i = this.state.infos;
     i[field] = value;
@@ -83,26 +82,27 @@ class SchedulesCon extends React.Component {
   }
 
 
-  updateState(value, field) {
+  updateFormState(field, value) {
     let sched = this.state.sched;
     sched[field] = value;
     this.setState({ sched: Object.assign({}, sched) });
   }
+
   updateSchedForText(e) {
-    this.updateState(e.target.name, e.target.value);
+    this.updateFormState(e.target.name, e.target.value);
   }
 
   updateLec(e, key, payload) {
-    this.updateState("lec", payload);
+    this.updateFormState("lec", payload);
   }
   updateLab(e, key, payload) {
-    this.updateState("lab", payload)
+    this.updateFormState("lab", payload)
   }
   updateYear(e, key, payload) {
-    this.updateState("year", payload)
+    this.updateFormState("year", payload)
   }
   updateSection(e, key, payload) {
-    this.updateState("section", payload)
+    this.updateFormState("section", payload)
   }
 
 
@@ -220,7 +220,7 @@ class SchedulesCon extends React.Component {
           onSearch={this.onSearch}
           schedules={filtered}
           defYearValue={this.state.infos.year}
-          updateInfoState={this.updateInfoState} />
+          updateState={this.updateState} />
       </div>
     );
   }

@@ -15,7 +15,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-
 const SchedHeader = (props)=>{
   const ddChange = (event, key, value)=>{
     console.log(value);
-    props.updateInfoState(value,"year");
+    props.updateState(value,"year");
   };
     return (
       <Toolbar>
